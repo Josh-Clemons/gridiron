@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+out/
+.output/
+*.tsbuildinfo
+
+# Test / coverage output
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Tool caches
+.cache/
+.vite/
+.vitest/
+.oxlintcache
+.prettiercache
+
+# Secrets and local config.
+# .env.* is broad on purpose — it catches .env.local, .env.production and anything
+# else added later. Example/template files are the deliberate exceptions.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+
+# Local database / container volumes (docker-compose bind mounts, Phase 5)
+pgdata/
+.data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NOTE: pnpm-lock.yaml is intentionally NOT ignored. The old gridiron-react repo
+# gitignored its lockfile, which meant no reproducible installs and no `npm ci`.
