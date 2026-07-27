@@ -23,7 +23,7 @@ export function requireAuth(deps: Deps) {
     c.set('sessionId', session.id);
 
     const extended = await refreshIfStale(deps, session);
-    if (extended !== undefined) setSessionCookie(c, deps.config, token, extended);
+    if (extended !== undefined) setSessionCookie(c, deps.config, token);
 
     await next();
   });

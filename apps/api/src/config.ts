@@ -29,6 +29,17 @@ const configSchema = z.object({
    */
   RATE_LIMIT: z.enum(['on', 'off']).optional(),
 
+  /**
+   * Run the server at a simulated moment, as an ISO instant — for manual testing
+   * against a finished season, where every kickoff is in the past and so every slot
+   * would otherwise render locked.
+   *
+   * It sets an *offset* from real time rather than freezing the clock, so time still
+   * advances from that instant and a slot can be watched locking. Refused outright in
+   * production, where a wrong clock would silently accept picks after kickoff.
+   */
+  CLOCK_OVERRIDE: z.iso.datetime({ offset: true }).optional(),
+
   /** Overridable so tests can point the sync at a stub instead of the real endpoint. */
   ESPN_BASE_URL: z.url().optional(),
   ESPN_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120_000).default(15_000),
@@ -49,6 +60,11 @@ export interface Config {
   readonly resetTokenTtlMs: number;
   readonly mailTransport: 'console' | 'memory';
   readonly rateLimitEnabled: boolean;
+  /**
+   * Milliseconds to add to the real clock. Zero in every normal run; non-zero only
+   * when `CLOCK_OVERRIDE` is set, which production refuses.
+   */
+  readonly clockOffsetMs: number;
   readonly espnBaseUrl: string | undefined;
   readonly espnTimeoutMs: number;
   /** Undefined unless the homeserver, token and room are all configured. */
@@ -73,6 +89,12 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   }
   const value = parsed.data;
 
+  if (value.CLOCK_OVERRIDE !== undefined && value.NODE_ENV === 'production') {
+    throw new Error('invalid environment — CLOCK_OVERRIDE must never be set in production');
+  }
+  const clockOffsetMs =
+    value.CLOCK_OVERRIDE === undefined ? 0 : Date.parse(value.CLOCK_OVERRIDE) - Date.now();
+
   const extra = value.EXTRA_ORIGINS.split(',')
     .map((origin) => origin.trim())
     .filter((origin) => origin !== '');
@@ -88,6 +110,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     mailTransport: value.MAIL_TRANSPORT,
     rateLimitEnabled:
       value.RATE_LIMIT === undefined ? value.NODE_ENV !== 'test' : value.RATE_LIMIT === 'on',
+    clockOffsetMs,
     espnBaseUrl: value.ESPN_BASE_URL,
     espnTimeoutMs: value.ESPN_TIMEOUT_MS,
     matrix:

@@ -14,7 +14,23 @@ import { createMailer } from './mail/mailer';
  */
 const config = loadConfig();
 const { db, sql } = createDatabase(config.databaseUrl, { max: 10 });
-const deps = createDeps({ db, config, mailer: createMailer(config.mailTransport) });
+
+/**
+ * The simulated clock, when one is configured. Every lock decision, every score and
+ * the live-week calculation read `deps.now()`, so this one line moves the whole app
+ * to another moment in history.
+ */
+const clock = (): Date => new Date(Date.now() + config.clockOffsetMs);
+if (config.clockOffsetMs !== 0) {
+  console.warn(`CLOCK OVERRIDE ACTIVE — the server believes it is ${clock().toISOString()}`);
+}
+
+const deps = createDeps({
+  db,
+  config,
+  mailer: createMailer(config.mailTransport),
+  ...(config.clockOffsetMs === 0 ? {} : { now: clock }),
+});
 
 const server = serve(
   { fetch: createApp(deps).fetch, port: config.port, hostname: '127.0.0.1' },

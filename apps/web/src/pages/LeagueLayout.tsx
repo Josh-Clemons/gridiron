@@ -69,19 +69,32 @@ export function LeagueLayout() {
         <Alert severity="info">This season is archived — picks can no longer be changed.</Alert>
       )}
 
+      {/*
+        Each tab carries the current season and week across with it. Without this the
+        router resets the search to `{}`, which silently drops `?season=2023` back to
+        the newest season — the same tab, a different year, and no way to tell.
+      */}
       <Tabs value={tab} variant="fullWidth">
-        <TabLink label="Picks" value="picks" to="/leagues/$leagueId" params={{ leagueId }} />
+        <TabLink
+          label="Picks"
+          value="picks"
+          to="/leagues/$leagueId"
+          params={{ leagueId }}
+          search={(prev) => prev}
+        />
         <TabLink
           label="Teams left"
           value="usage"
           to="/leagues/$leagueId/usage"
           params={{ leagueId }}
+          search={(prev) => prev}
         />
         <TabLink
           label="Standings"
           value="standings"
           to="/leagues/$leagueId/standings"
           params={{ leagueId }}
+          search={(prev) => prev}
         />
       </Tabs>
 

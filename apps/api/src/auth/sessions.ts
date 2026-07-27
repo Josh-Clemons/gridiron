@@ -113,13 +113,23 @@ export async function refreshIfStale(
   return expiresAt;
 }
 
-export function setSessionCookie(c: Context, config: Config, token: string, expiresAt: Date): void {
+/**
+ * `Max-Age`, not `Expires`.
+ *
+ * A duration is measured against the *browser's* clock, an absolute instant against
+ * ours. They are the same thing only when the two clocks agree, and the row in
+ * `sessions` is the real authority either way — the cookie just has to survive as long
+ * as the session does. A device whose clock is days off would otherwise arrive holding
+ * a cookie it thinks expired, and `CLOCK_OVERRIDE` breaks it outright: the server
+ * stamps a date months in the browser's past and every request arrives signed out.
+ */
+export function setSessionCookie(c: Context, config: Config, token: string): void {
   setCookie(c, SESSION_COOKIE, token, {
     httpOnly: true,
     secure: config.cookieSecure,
     sameSite: 'Lax',
     path: '/',
-    expires: expiresAt,
+    maxAge: Math.floor(config.sessionTtlMs / 1000),
   });
 }
 

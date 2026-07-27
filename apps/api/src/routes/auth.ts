@@ -79,7 +79,7 @@ export function authRoutes(deps: Deps) {
       if (row === undefined) throw new Error('user insert returned nothing');
 
       const session = await createSession(deps, row.id);
-      setSessionCookie(c, deps.config, session.token, session.expiresAt);
+      setSessionCookie(c, deps.config, session.token);
 
       const response: SessionResponse = {
         user: toUser(row),
@@ -108,7 +108,7 @@ export function authRoutes(deps: Deps) {
 
       await purgeExpiredSessions(deps);
       const session = await createSession(deps, user.id);
-      setSessionCookie(c, deps.config, session.token, session.expiresAt);
+      setSessionCookie(c, deps.config, session.token);
 
       const response: SessionResponse = {
         user: toUser(user),
