@@ -6,3 +6,13 @@ packages:
 # depend on it, so without this they fail at runtime.
 allowBuilds:
   esbuild: true
+  # The three below arrive via testcontainers -> dockerode, and are all test-only.
+  # None of their install scripts are needed: cpu-features is an optional native
+  # speedup for ssh2 (which we only use over a local Docker socket), ssh2 falls back
+  # to pure JS without it, and protobufjs's postinstall only regenerates bundled
+  # artifacts. Denied rather than left unset so a fresh `pnpm install` never prompts.
+  cpu-features: false
+  protobufjs: false
+  ssh2: false
+minimumReleaseAgeExclude:
+  - '@hono/node-server@2.0.12'

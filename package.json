@@ -8,8 +8,11 @@
     "node": ">=24"
   },
   "scripts": {
+    "dev": "pnpm --filter @gridiron/api dev",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:unit": "vitest run --project unit",
+    "test:api": "vitest run --project api",
     "typecheck": "pnpm -r typecheck",
     "lint": "oxlint --type-aware",
     "format": "prettier --write .",

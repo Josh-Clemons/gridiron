@@ -174,6 +174,32 @@ export const sessions = pgTable(
   ],
 );
 
+/**
+ * Single-use password reset tokens.
+ *
+ * Same shape as a session: the emailed link carries a random secret, only its
+ * SHA-256 is stored, and `usedAt` makes redemption one-shot so a reset link found
+ * later in an inbox is worthless.
+ */
+export const passwordResetTokens = pgTable(
+  'password_reset_tokens',
+  {
+    id: id(),
+    userId: bigint('user_id', { mode: 'number' })
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    tokenHash: text('token_hash').notNull(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    usedAt: timestamp('used_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    uniqueIndex('password_reset_tokens_token_hash_key').on(table.tokenHash),
+    index('password_reset_tokens_user_id_idx').on(table.userId),
+    index('password_reset_tokens_expires_at_idx').on(table.expiresAt),
+  ],
+);
+
 // ---------------------------------------------------------------------------
 // Leagues
 // ---------------------------------------------------------------------------
@@ -344,7 +370,12 @@ export const gamesRelations = relations(games, ({ one }) => ({
 
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
+  passwordResetTokens: many(passwordResetTokens),
   memberships: many(leagueMembers),
+}));
+
+export const passwordResetTokensRelations = relations(passwordResetTokens, ({ one }) => ({
+  user: one(users, { fields: [passwordResetTokens.userId], references: [users.id] }),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
