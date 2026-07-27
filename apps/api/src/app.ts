@@ -10,6 +10,7 @@ import { authRoutes } from './routes/auth';
 import { boardRoutes } from './routes/board';
 import { healthRoutes } from './routes/health';
 import { leagueRoutes } from './routes/leagues';
+import { teamRoutes } from './routes/teams';
 
 /**
  * Build the API.
@@ -40,6 +41,7 @@ export function createApp(deps: Deps) {
   app.use('*', originGuard(deps));
 
   app.route('/', healthRoutes(deps));
+  app.route('/', teamRoutes(deps));
   app.route('/', authRoutes(deps));
   app.route('/', leagueRoutes(deps));
   app.route('/', boardRoutes(deps));

@@ -8,12 +8,19 @@
     "node": ">=24"
   },
   "scripts": {
-    "dev": "pnpm --filter @gridiron/api dev",
+    "dev": "pnpm --parallel --filter @gridiron/api --filter @gridiron/web dev",
+    "dev:api": "pnpm --filter @gridiron/api dev",
+    "dev:web": "pnpm --filter @gridiron/web dev",
+    "build:web": "pnpm --filter @gridiron/web build",
     "sync": "pnpm --filter @gridiron/api sync",
+    "importer": "pnpm --filter @gridiron/importer importer",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:unit": "vitest run --project unit",
     "test:api": "vitest run --project api",
+    "test:importer": "vitest run --project importer",
+    "test:web": "vitest run --project web",
+    "test:e2e": "pnpm --filter @gridiron/web test:e2e",
     "typecheck": "pnpm -r typecheck",
     "lint": "oxlint --type-aware",
     "format": "prettier --write .",
@@ -28,6 +35,7 @@
     "db:reset": "docker compose down -v && pnpm db:up && pnpm db:migrate && pnpm db:seed"
   },
   "devDependencies": {
+    "jsdom": "^29.1.1",
     "oxlint": "^1.75.0",
     "oxlint-tsgolint": "^7.0.2001",
     "prettier": "^3.9.6",

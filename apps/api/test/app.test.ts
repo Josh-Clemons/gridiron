@@ -26,6 +26,26 @@ describe('health', () => {
   });
 });
 
+describe('teams', () => {
+  it('serves the whole catalog, no session required', async () => {
+    const response = await new ApiClient(harness.app).get<{
+      teams: { code: string; name: string; shortName: string }[];
+    }>('/teams');
+
+    expect(response.status).toBe(200);
+    expect(response.body.teams).toHaveLength(32);
+    // Codes, not aliases: the sheet's ARZ/NOR/WAS resolve to these, never the reverse.
+    expect(response.body.teams).toContainEqual({
+      code: 'KC',
+      name: 'Kansas City Chiefs',
+      shortName: 'Chiefs',
+    });
+    expect(response.body.teams.map((team) => team.code)).toEqual(
+      response.body.teams.map((team) => team.code).toSorted(),
+    );
+  });
+});
+
 describe('error envelope', () => {
   it('returns the standard shape for an unknown route', async () => {
     const response = await new ApiClient(harness.app).get<{

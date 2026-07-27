@@ -71,6 +71,11 @@ export class TeamCatalog {
   get codes(): readonly string[] {
     return [...this.byId.values()].map((team) => team.code).toSorted();
   }
+
+  /** Every team, code order — what `GET /teams` serves. */
+  list(): readonly TeamRow[] {
+    return [...this.byId.values()].toSorted((a, b) => a.code.localeCompare(b.code));
+  }
 }
 
 /** Aliases are stored upper-cased and trimmed; the sheet contains at least one `"KC "`. */

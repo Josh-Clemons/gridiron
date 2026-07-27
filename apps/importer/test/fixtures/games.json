@@ -1,0 +1,7202 @@
+[
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "KC",
+    "away": "HOU",
+    "kickoff": "2020-09-11T00:20:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "ATL",
+    "away": "SEA",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "BAL",
+    "away": "CLE",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "BUF",
+    "away": "NYJ",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "CAR",
+    "away": "LV",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "DET",
+    "away": "CHI",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "JAX",
+    "away": "IND",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "MIN",
+    "away": "GB",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "NE",
+    "away": "MIA",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "WSH",
+    "away": "PHI",
+    "kickoff": "2020-09-13T17:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "CIN",
+    "away": "LAC",
+    "kickoff": "2020-09-13T20:05:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "NO",
+    "away": "TB",
+    "kickoff": "2020-09-13T20:25:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "SF",
+    "away": "ARI",
+    "kickoff": "2020-09-13T20:25:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "LAR",
+    "away": "DAL",
+    "kickoff": "2020-09-14T00:20:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "NYG",
+    "away": "PIT",
+    "kickoff": "2020-09-14T23:15:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 1,
+    "home": "DEN",
+    "away": "TEN",
+    "kickoff": "2020-09-15T02:10:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "CLE",
+    "away": "CIN",
+    "kickoff": "2020-09-18T00:20:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "CHI",
+    "away": "NYG",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "DAL",
+    "away": "ATL",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "GB",
+    "away": "DET",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "IND",
+    "away": "MIN",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "MIA",
+    "away": "BUF",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "NYJ",
+    "away": "SF",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "PHI",
+    "away": "LAR",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "PIT",
+    "away": "DEN",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "TB",
+    "away": "CAR",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "TEN",
+    "away": "JAX",
+    "kickoff": "2020-09-20T17:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "ARI",
+    "away": "WSH",
+    "kickoff": "2020-09-20T20:05:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "HOU",
+    "away": "BAL",
+    "kickoff": "2020-09-20T20:25:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "LAC",
+    "away": "KC",
+    "kickoff": "2020-09-20T20:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "SEA",
+    "away": "NE",
+    "kickoff": "2020-09-21T00:20:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 2,
+    "home": "LV",
+    "away": "NO",
+    "kickoff": "2020-09-22T00:15:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "JAX",
+    "away": "MIA",
+    "kickoff": "2020-09-25T00:20:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "ATL",
+    "away": "CHI",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "BUF",
+    "away": "LAR",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "CLE",
+    "away": "WSH",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "MIN",
+    "away": "TEN",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "NE",
+    "away": "LV",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "NYG",
+    "away": "SF",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "PHI",
+    "away": "CIN",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": null
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "PIT",
+    "away": "HOU",
+    "kickoff": "2020-09-27T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "IND",
+    "away": "NYJ",
+    "kickoff": "2020-09-27T20:05:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "LAC",
+    "away": "CAR",
+    "kickoff": "2020-09-27T20:05:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "ARI",
+    "away": "DET",
+    "kickoff": "2020-09-27T20:25:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "DEN",
+    "away": "TB",
+    "kickoff": "2020-09-27T20:25:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "SEA",
+    "away": "DAL",
+    "kickoff": "2020-09-27T20:25:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "NO",
+    "away": "GB",
+    "kickoff": "2020-09-28T00:20:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 3,
+    "home": "BAL",
+    "away": "KC",
+    "kickoff": "2020-09-29T00:15:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "NYJ",
+    "away": "DEN",
+    "kickoff": "2020-10-02T00:20:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "CAR",
+    "away": "ARI",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "CIN",
+    "away": "JAX",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "DAL",
+    "away": "CLE",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "DET",
+    "away": "NO",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "HOU",
+    "away": "MIN",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "MIA",
+    "away": "SEA",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "TB",
+    "away": "LAC",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "WSH",
+    "away": "BAL",
+    "kickoff": "2020-10-04T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "LAR",
+    "away": "NYG",
+    "kickoff": "2020-10-04T20:05:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "CHI",
+    "away": "IND",
+    "kickoff": "2020-10-04T20:25:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "LV",
+    "away": "BUF",
+    "kickoff": "2020-10-04T20:25:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "SF",
+    "away": "PHI",
+    "kickoff": "2020-10-05T00:20:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "KC",
+    "away": "NE",
+    "kickoff": "2020-10-05T23:05:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 4,
+    "home": "GB",
+    "away": "ATL",
+    "kickoff": "2020-10-06T01:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "CHI",
+    "away": "TB",
+    "kickoff": "2020-10-09T00:20:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "ATL",
+    "away": "CAR",
+    "kickoff": "2020-10-11T17:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "BAL",
+    "away": "CIN",
+    "kickoff": "2020-10-11T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "HOU",
+    "away": "JAX",
+    "kickoff": "2020-10-11T17:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "KC",
+    "away": "LV",
+    "kickoff": "2020-10-11T17:00:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "NYJ",
+    "away": "ARI",
+    "kickoff": "2020-10-11T17:00:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "PIT",
+    "away": "PHI",
+    "kickoff": "2020-10-11T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "WSH",
+    "away": "LAR",
+    "kickoff": "2020-10-11T17:00:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "SF",
+    "away": "MIA",
+    "kickoff": "2020-10-11T20:05:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "CLE",
+    "away": "IND",
+    "kickoff": "2020-10-11T20:25:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "DAL",
+    "away": "NYG",
+    "kickoff": "2020-10-11T20:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "SEA",
+    "away": "MIN",
+    "kickoff": "2020-10-12T00:20:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "NO",
+    "away": "LAC",
+    "kickoff": "2020-10-13T00:15:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 5,
+    "home": "TEN",
+    "away": "BUF",
+    "kickoff": "2020-10-13T23:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "CAR",
+    "away": "CHI",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "IND",
+    "away": "CIN",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "JAX",
+    "away": "DET",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "MIN",
+    "away": "ATL",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "NE",
+    "away": "DEN",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "NYG",
+    "away": "WSH",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "PHI",
+    "away": "BAL",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "PIT",
+    "away": "CLE",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "TEN",
+    "away": "HOU",
+    "kickoff": "2020-10-18T17:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "MIA",
+    "away": "NYJ",
+    "kickoff": "2020-10-18T20:05:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "TB",
+    "away": "GB",
+    "kickoff": "2020-10-18T20:25:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "SF",
+    "away": "LAR",
+    "kickoff": "2020-10-19T00:20:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "BUF",
+    "away": "KC",
+    "kickoff": "2020-10-19T21:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 6,
+    "home": "DAL",
+    "away": "ARI",
+    "kickoff": "2020-10-20T00:15:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "PHI",
+    "away": "NYG",
+    "kickoff": "2020-10-23T00:20:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "ATL",
+    "away": "DET",
+    "kickoff": "2020-10-25T17:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "CIN",
+    "away": "CLE",
+    "kickoff": "2020-10-25T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "HOU",
+    "away": "GB",
+    "kickoff": "2020-10-25T17:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "NO",
+    "away": "CAR",
+    "kickoff": "2020-10-25T17:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "NYJ",
+    "away": "BUF",
+    "kickoff": "2020-10-25T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "TEN",
+    "away": "PIT",
+    "kickoff": "2020-10-25T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "WSH",
+    "away": "DAL",
+    "kickoff": "2020-10-25T17:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "LV",
+    "away": "TB",
+    "kickoff": "2020-10-25T20:05:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "DEN",
+    "away": "KC",
+    "kickoff": "2020-10-25T20:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "LAC",
+    "away": "JAX",
+    "kickoff": "2020-10-25T20:25:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "NE",
+    "away": "SF",
+    "kickoff": "2020-10-25T20:25:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "ARI",
+    "away": "SEA",
+    "kickoff": "2020-10-26T00:20:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 7,
+    "home": "LAR",
+    "away": "CHI",
+    "kickoff": "2020-10-27T00:15:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "CAR",
+    "away": "ATL",
+    "kickoff": "2020-10-30T00:20:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "BAL",
+    "away": "PIT",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "BUF",
+    "away": "NE",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "CIN",
+    "away": "TEN",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "CLE",
+    "away": "LV",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "DET",
+    "away": "IND",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "GB",
+    "away": "MIN",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "KC",
+    "away": "NYJ",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "MIA",
+    "away": "LAR",
+    "kickoff": "2020-11-01T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "DEN",
+    "away": "LAC",
+    "kickoff": "2020-11-01T21:05:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "CHI",
+    "away": "NO",
+    "kickoff": "2020-11-01T21:25:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "SEA",
+    "away": "SF",
+    "kickoff": "2020-11-01T21:25:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "PHI",
+    "away": "DAL",
+    "kickoff": "2020-11-02T01:20:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2020,
+    "week": 8,
+    "home": "NYG",
+    "away": "TB",
+    "kickoff": "2020-11-03T01:15:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "SF",
+    "away": "GB",
+    "kickoff": "2020-11-06T01:20:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "ATL",
+    "away": "DEN",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "BUF",
+    "away": "SEA",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "IND",
+    "away": "BAL",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "JAX",
+    "away": "HOU",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "KC",
+    "away": "CAR",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "MIN",
+    "away": "DET",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "TEN",
+    "away": "CHI",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "WSH",
+    "away": "NYG",
+    "kickoff": "2020-11-08T18:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "LAC",
+    "away": "LV",
+    "kickoff": "2020-11-08T21:05:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "ARI",
+    "away": "MIA",
+    "kickoff": "2020-11-08T21:25:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "DAL",
+    "away": "PIT",
+    "kickoff": "2020-11-08T21:25:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "TB",
+    "away": "NO",
+    "kickoff": "2020-11-09T01:20:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 9,
+    "home": "NYJ",
+    "away": "NE",
+    "kickoff": "2020-11-10T01:15:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "TEN",
+    "away": "IND",
+    "kickoff": "2020-11-13T01:20:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "CAR",
+    "away": "TB",
+    "kickoff": "2020-11-15T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "CLE",
+    "away": "HOU",
+    "kickoff": "2020-11-15T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "DET",
+    "away": "WSH",
+    "kickoff": "2020-11-15T18:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "GB",
+    "away": "JAX",
+    "kickoff": "2020-11-15T18:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "NYG",
+    "away": "PHI",
+    "kickoff": "2020-11-15T18:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "ARI",
+    "away": "BUF",
+    "kickoff": "2020-11-15T21:05:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "LV",
+    "away": "DEN",
+    "kickoff": "2020-11-15T21:05:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "MIA",
+    "away": "LAC",
+    "kickoff": "2020-11-15T21:05:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "LAR",
+    "away": "SEA",
+    "kickoff": "2020-11-15T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "NO",
+    "away": "SF",
+    "kickoff": "2020-11-15T21:25:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "PIT",
+    "away": "CIN",
+    "kickoff": "2020-11-15T21:25:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "NE",
+    "away": "BAL",
+    "kickoff": "2020-11-16T01:20:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2020,
+    "week": 10,
+    "home": "CHI",
+    "away": "MIN",
+    "kickoff": "2020-11-17T01:15:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "SEA",
+    "away": "ARI",
+    "kickoff": "2020-11-20T01:20:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "BAL",
+    "away": "TEN",
+    "kickoff": "2020-11-22T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "CAR",
+    "away": "DET",
+    "kickoff": "2020-11-22T18:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "CLE",
+    "away": "PHI",
+    "kickoff": "2020-11-22T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "HOU",
+    "away": "NE",
+    "kickoff": "2020-11-22T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "JAX",
+    "away": "PIT",
+    "kickoff": "2020-11-22T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "NO",
+    "away": "ATL",
+    "kickoff": "2020-11-22T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "WSH",
+    "away": "CIN",
+    "kickoff": "2020-11-22T18:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "DEN",
+    "away": "MIA",
+    "kickoff": "2020-11-22T21:05:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "LAC",
+    "away": "NYJ",
+    "kickoff": "2020-11-22T21:05:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "IND",
+    "away": "GB",
+    "kickoff": "2020-11-22T21:25:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "MIN",
+    "away": "DAL",
+    "kickoff": "2020-11-22T21:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "LV",
+    "away": "KC",
+    "kickoff": "2020-11-23T01:20:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 11,
+    "home": "TB",
+    "away": "LAR",
+    "kickoff": "2020-11-24T01:15:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "DET",
+    "away": "HOU",
+    "kickoff": "2020-11-26T17:30:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "DAL",
+    "away": "WSH",
+    "kickoff": "2020-11-26T21:30:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "ATL",
+    "away": "LV",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "BUF",
+    "away": "LAC",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "CIN",
+    "away": "NYG",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "IND",
+    "away": "TEN",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "JAX",
+    "away": "CLE",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "MIN",
+    "away": "CAR",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "NE",
+    "away": "ARI",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "NYJ",
+    "away": "MIA",
+    "kickoff": "2020-11-29T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "DEN",
+    "away": "NO",
+    "kickoff": "2020-11-29T21:05:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "LAR",
+    "away": "SF",
+    "kickoff": "2020-11-29T21:05:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "TB",
+    "away": "KC",
+    "kickoff": "2020-11-29T21:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "GB",
+    "away": "CHI",
+    "kickoff": "2020-11-30T01:20:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "PHI",
+    "away": "SEA",
+    "kickoff": "2020-12-01T01:15:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 12,
+    "home": "PIT",
+    "away": "BAL",
+    "kickoff": "2020-12-02T20:40:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "ATL",
+    "away": "NO",
+    "kickoff": "2020-12-06T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "CHI",
+    "away": "DET",
+    "kickoff": "2020-12-06T18:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "HOU",
+    "away": "IND",
+    "kickoff": "2020-12-06T18:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "MIA",
+    "away": "CIN",
+    "kickoff": "2020-12-06T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "MIN",
+    "away": "JAX",
+    "kickoff": "2020-12-06T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "NYJ",
+    "away": "LV",
+    "kickoff": "2020-12-06T18:00:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "TEN",
+    "away": "CLE",
+    "kickoff": "2020-12-06T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "ARI",
+    "away": "LAR",
+    "kickoff": "2020-12-06T21:05:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "SEA",
+    "away": "NYG",
+    "kickoff": "2020-12-06T21:05:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "GB",
+    "away": "PHI",
+    "kickoff": "2020-12-06T21:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "LAC",
+    "away": "NE",
+    "kickoff": "2020-12-06T21:25:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "KC",
+    "away": "DEN",
+    "kickoff": "2020-12-07T01:20:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "PIT",
+    "away": "WSH",
+    "kickoff": "2020-12-07T22:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "SF",
+    "away": "BUF",
+    "kickoff": "2020-12-08T01:15:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 13,
+    "home": "BAL",
+    "away": "DAL",
+    "kickoff": "2020-12-09T01:05:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "LAR",
+    "away": "NE",
+    "kickoff": "2020-12-11T01:20:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "CAR",
+    "away": "DEN",
+    "kickoff": "2020-12-13T18:00:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "CHI",
+    "away": "HOU",
+    "kickoff": "2020-12-13T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "CIN",
+    "away": "DAL",
+    "kickoff": "2020-12-13T18:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "JAX",
+    "away": "TEN",
+    "kickoff": "2020-12-13T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "MIA",
+    "away": "KC",
+    "kickoff": "2020-12-13T18:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "NYG",
+    "away": "ARI",
+    "kickoff": "2020-12-13T18:00:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "TB",
+    "away": "MIN",
+    "kickoff": "2020-12-13T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "LV",
+    "away": "IND",
+    "kickoff": "2020-12-13T21:05:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "SEA",
+    "away": "NYJ",
+    "kickoff": "2020-12-13T21:05:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "DET",
+    "away": "GB",
+    "kickoff": "2020-12-13T21:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "LAC",
+    "away": "ATL",
+    "kickoff": "2020-12-13T21:25:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "PHI",
+    "away": "NO",
+    "kickoff": "2020-12-13T21:25:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "SF",
+    "away": "WSH",
+    "kickoff": "2020-12-13T21:25:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "BUF",
+    "away": "PIT",
+    "kickoff": "2020-12-14T01:20:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 14,
+    "home": "CLE",
+    "away": "BAL",
+    "kickoff": "2020-12-15T01:15:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "LV",
+    "away": "LAC",
+    "kickoff": "2020-12-18T01:20:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "DEN",
+    "away": "BUF",
+    "kickoff": "2020-12-19T21:30:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "GB",
+    "away": "CAR",
+    "kickoff": "2020-12-20T01:15:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "ATL",
+    "away": "TB",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "BAL",
+    "away": "JAX",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "DAL",
+    "away": "SF",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "IND",
+    "away": "HOU",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "MIA",
+    "away": "NE",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "MIN",
+    "away": "CHI",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "TEN",
+    "away": "DET",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "WSH",
+    "away": "SEA",
+    "kickoff": "2020-12-20T18:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "ARI",
+    "away": "PHI",
+    "kickoff": "2020-12-20T21:05:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "LAR",
+    "away": "NYJ",
+    "kickoff": "2020-12-20T21:05:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "NO",
+    "away": "KC",
+    "kickoff": "2020-12-20T21:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "NYG",
+    "away": "CLE",
+    "kickoff": "2020-12-21T01:20:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 15,
+    "home": "CIN",
+    "away": "PIT",
+    "kickoff": "2020-12-22T01:15:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "NO",
+    "away": "MIN",
+    "kickoff": "2020-12-25T21:30:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "DET",
+    "away": "TB",
+    "kickoff": "2020-12-26T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "ARI",
+    "away": "SF",
+    "kickoff": "2020-12-26T21:30:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "LV",
+    "away": "MIA",
+    "kickoff": "2020-12-27T01:15:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "BAL",
+    "away": "NYG",
+    "kickoff": "2020-12-27T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "HOU",
+    "away": "CIN",
+    "kickoff": "2020-12-27T18:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "JAX",
+    "away": "CHI",
+    "kickoff": "2020-12-27T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "KC",
+    "away": "ATL",
+    "kickoff": "2020-12-27T18:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "NYJ",
+    "away": "CLE",
+    "kickoff": "2020-12-27T18:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "PIT",
+    "away": "IND",
+    "kickoff": "2020-12-27T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "LAC",
+    "away": "DEN",
+    "kickoff": "2020-12-27T21:05:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "WSH",
+    "away": "CAR",
+    "kickoff": "2020-12-27T21:05:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "DAL",
+    "away": "PHI",
+    "kickoff": "2020-12-27T21:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "SEA",
+    "away": "LAR",
+    "kickoff": "2020-12-27T21:25:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "GB",
+    "away": "TEN",
+    "kickoff": "2020-12-28T01:20:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 16,
+    "home": "NE",
+    "away": "BUF",
+    "kickoff": "2020-12-29T01:15:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "BUF",
+    "away": "MIA",
+    "kickoff": "2021-01-03T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "CIN",
+    "away": "BAL",
+    "kickoff": "2021-01-03T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "CLE",
+    "away": "PIT",
+    "kickoff": "2021-01-03T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "DET",
+    "away": "MIN",
+    "kickoff": "2021-01-03T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "NE",
+    "away": "NYJ",
+    "kickoff": "2021-01-03T18:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "NYG",
+    "away": "DAL",
+    "kickoff": "2021-01-03T18:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "TB",
+    "away": "ATL",
+    "kickoff": "2021-01-03T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "CAR",
+    "away": "NO",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "CHI",
+    "away": "GB",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "DEN",
+    "away": "LV",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "HOU",
+    "away": "TEN",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "IND",
+    "away": "JAX",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "KC",
+    "away": "LAC",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "LAR",
+    "away": "ARI",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "SF",
+    "away": "SEA",
+    "kickoff": "2021-01-03T21:25:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2020,
+    "week": 17,
+    "home": "PHI",
+    "away": "WSH",
+    "kickoff": "2021-01-04T01:20:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "KC",
+    "away": "DET",
+    "kickoff": "2023-09-08T00:20:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "ATL",
+    "away": "CAR",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "BAL",
+    "away": "HOU",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "CLE",
+    "away": "CIN",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "IND",
+    "away": "JAX",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "MIN",
+    "away": "TB",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "NO",
+    "away": "TEN",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "PIT",
+    "away": "SF",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "WSH",
+    "away": "ARI",
+    "kickoff": "2023-09-10T17:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "CHI",
+    "away": "GB",
+    "kickoff": "2023-09-10T20:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "DEN",
+    "away": "LV",
+    "kickoff": "2023-09-10T20:25:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "LAC",
+    "away": "MIA",
+    "kickoff": "2023-09-10T20:25:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "NE",
+    "away": "PHI",
+    "kickoff": "2023-09-10T20:25:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "SEA",
+    "away": "LAR",
+    "kickoff": "2023-09-10T20:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "NYG",
+    "away": "DAL",
+    "kickoff": "2023-09-11T00:20:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 1,
+    "home": "NYJ",
+    "away": "BUF",
+    "kickoff": "2023-09-12T00:15:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "PHI",
+    "away": "MIN",
+    "kickoff": "2023-09-15T00:15:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "ATL",
+    "away": "GB",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "BUF",
+    "away": "LV",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "CIN",
+    "away": "BAL",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "DET",
+    "away": "SEA",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "HOU",
+    "away": "IND",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "JAX",
+    "away": "KC",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "TB",
+    "away": "CHI",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "TEN",
+    "away": "LAC",
+    "kickoff": "2023-09-17T17:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "ARI",
+    "away": "NYG",
+    "kickoff": "2023-09-17T20:05:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "LAR",
+    "away": "SF",
+    "kickoff": "2023-09-17T20:05:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "DAL",
+    "away": "NYJ",
+    "kickoff": "2023-09-17T20:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "DEN",
+    "away": "WSH",
+    "kickoff": "2023-09-17T20:25:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "NE",
+    "away": "MIA",
+    "kickoff": "2023-09-18T00:20:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "CAR",
+    "away": "NO",
+    "kickoff": "2023-09-18T23:15:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 2,
+    "home": "PIT",
+    "away": "CLE",
+    "kickoff": "2023-09-19T00:15:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "SF",
+    "away": "NYG",
+    "kickoff": "2023-09-22T00:15:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "BAL",
+    "away": "IND",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "CLE",
+    "away": "TEN",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "DET",
+    "away": "ATL",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "GB",
+    "away": "NO",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "JAX",
+    "away": "HOU",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "MIA",
+    "away": "DEN",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "MIN",
+    "away": "LAC",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "NYJ",
+    "away": "NE",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "WSH",
+    "away": "BUF",
+    "kickoff": "2023-09-24T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "SEA",
+    "away": "CAR",
+    "kickoff": "2023-09-24T20:05:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "ARI",
+    "away": "DAL",
+    "kickoff": "2023-09-24T20:25:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "KC",
+    "away": "CHI",
+    "kickoff": "2023-09-24T20:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "LV",
+    "away": "PIT",
+    "kickoff": "2023-09-25T00:20:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "TB",
+    "away": "PHI",
+    "kickoff": "2023-09-25T23:15:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 3,
+    "home": "CIN",
+    "away": "LAR",
+    "kickoff": "2023-09-26T00:15:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "GB",
+    "away": "DET",
+    "kickoff": "2023-09-29T00:15:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "JAX",
+    "away": "ATL",
+    "kickoff": "2023-10-01T13:30:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "BUF",
+    "away": "MIA",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "CAR",
+    "away": "MIN",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "CHI",
+    "away": "DEN",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "CLE",
+    "away": "BAL",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "HOU",
+    "away": "PIT",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "IND",
+    "away": "LAR",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "NO",
+    "away": "TB",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "PHI",
+    "away": "WSH",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "TEN",
+    "away": "CIN",
+    "kickoff": "2023-10-01T17:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "LAC",
+    "away": "LV",
+    "kickoff": "2023-10-01T20:05:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "DAL",
+    "away": "NE",
+    "kickoff": "2023-10-01T20:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "SF",
+    "away": "ARI",
+    "kickoff": "2023-10-01T20:25:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "NYJ",
+    "away": "KC",
+    "kickoff": "2023-10-02T00:20:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 4,
+    "home": "NYG",
+    "away": "SEA",
+    "kickoff": "2023-10-03T00:15:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "WSH",
+    "away": "CHI",
+    "kickoff": "2023-10-06T00:15:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "BUF",
+    "away": "JAX",
+    "kickoff": "2023-10-08T13:30:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "ATL",
+    "away": "HOU",
+    "kickoff": "2023-10-08T17:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "DET",
+    "away": "CAR",
+    "kickoff": "2023-10-08T17:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "IND",
+    "away": "TEN",
+    "kickoff": "2023-10-08T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "MIA",
+    "away": "NYG",
+    "kickoff": "2023-10-08T17:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "NE",
+    "away": "NO",
+    "kickoff": "2023-10-08T17:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "PIT",
+    "away": "BAL",
+    "kickoff": "2023-10-08T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "ARI",
+    "away": "CIN",
+    "kickoff": "2023-10-08T20:05:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "LAR",
+    "away": "PHI",
+    "kickoff": "2023-10-08T20:05:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "DEN",
+    "away": "NYJ",
+    "kickoff": "2023-10-08T20:25:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "MIN",
+    "away": "KC",
+    "kickoff": "2023-10-08T20:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "SF",
+    "away": "DAL",
+    "kickoff": "2023-10-09T00:20:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 5,
+    "home": "LV",
+    "away": "GB",
+    "kickoff": "2023-10-10T00:15:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "KC",
+    "away": "DEN",
+    "kickoff": "2023-10-13T00:15:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "TEN",
+    "away": "BAL",
+    "kickoff": "2023-10-15T13:30:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "ATL",
+    "away": "WSH",
+    "kickoff": "2023-10-15T17:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "CHI",
+    "away": "MIN",
+    "kickoff": "2023-10-15T17:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "CIN",
+    "away": "SEA",
+    "kickoff": "2023-10-15T17:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "CLE",
+    "away": "SF",
+    "kickoff": "2023-10-15T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "HOU",
+    "away": "NO",
+    "kickoff": "2023-10-15T17:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "JAX",
+    "away": "IND",
+    "kickoff": "2023-10-15T17:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "MIA",
+    "away": "CAR",
+    "kickoff": "2023-10-15T17:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "LV",
+    "away": "NE",
+    "kickoff": "2023-10-15T20:05:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "LAR",
+    "away": "ARI",
+    "kickoff": "2023-10-15T20:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "NYJ",
+    "away": "PHI",
+    "kickoff": "2023-10-15T20:25:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "TB",
+    "away": "DET",
+    "kickoff": "2023-10-15T20:25:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "BUF",
+    "away": "NYG",
+    "kickoff": "2023-10-16T00:20:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 6,
+    "home": "LAC",
+    "away": "DAL",
+    "kickoff": "2023-10-17T00:15:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "NO",
+    "away": "JAX",
+    "kickoff": "2023-10-20T00:15:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "BAL",
+    "away": "DET",
+    "kickoff": "2023-10-22T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "CHI",
+    "away": "LV",
+    "kickoff": "2023-10-22T17:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "IND",
+    "away": "CLE",
+    "kickoff": "2023-10-22T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "NE",
+    "away": "BUF",
+    "kickoff": "2023-10-22T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "NYG",
+    "away": "WSH",
+    "kickoff": "2023-10-22T17:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "TB",
+    "away": "ATL",
+    "kickoff": "2023-10-22T17:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "LAR",
+    "away": "PIT",
+    "kickoff": "2023-10-22T20:05:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "SEA",
+    "away": "ARI",
+    "kickoff": "2023-10-22T20:05:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "DEN",
+    "away": "GB",
+    "kickoff": "2023-10-22T20:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "KC",
+    "away": "LAC",
+    "kickoff": "2023-10-22T20:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "PHI",
+    "away": "MIA",
+    "kickoff": "2023-10-23T00:20:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 7,
+    "home": "MIN",
+    "away": "SF",
+    "kickoff": "2023-10-24T00:15:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "BUF",
+    "away": "TB",
+    "kickoff": "2023-10-27T00:15:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "CAR",
+    "away": "HOU",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "DAL",
+    "away": "LAR",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "GB",
+    "away": "MIN",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "IND",
+    "away": "NO",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "MIA",
+    "away": "NE",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "NYG",
+    "away": "NYJ",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "PIT",
+    "away": "JAX",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "TEN",
+    "away": "ATL",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "WSH",
+    "away": "PHI",
+    "kickoff": "2023-10-29T17:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "SEA",
+    "away": "CLE",
+    "kickoff": "2023-10-29T20:05:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "ARI",
+    "away": "BAL",
+    "kickoff": "2023-10-29T20:25:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "DEN",
+    "away": "KC",
+    "kickoff": "2023-10-29T20:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "SF",
+    "away": "CIN",
+    "kickoff": "2023-10-29T20:25:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "LAC",
+    "away": "CHI",
+    "kickoff": "2023-10-30T00:20:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2023,
+    "week": 8,
+    "home": "DET",
+    "away": "LV",
+    "kickoff": "2023-10-31T00:15:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "PIT",
+    "away": "TEN",
+    "kickoff": "2023-11-03T00:15:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "KC",
+    "away": "MIA",
+    "kickoff": "2023-11-05T14:30:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "ATL",
+    "away": "MIN",
+    "kickoff": "2023-11-05T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "BAL",
+    "away": "SEA",
+    "kickoff": "2023-11-05T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "CLE",
+    "away": "ARI",
+    "kickoff": "2023-11-05T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "GB",
+    "away": "LAR",
+    "kickoff": "2023-11-05T18:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "HOU",
+    "away": "TB",
+    "kickoff": "2023-11-05T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "NE",
+    "away": "WSH",
+    "kickoff": "2023-11-05T18:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "NO",
+    "away": "CHI",
+    "kickoff": "2023-11-05T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "CAR",
+    "away": "IND",
+    "kickoff": "2023-11-05T21:05:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "LV",
+    "away": "NYG",
+    "kickoff": "2023-11-05T21:25:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "PHI",
+    "away": "DAL",
+    "kickoff": "2023-11-05T21:25:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "CIN",
+    "away": "BUF",
+    "kickoff": "2023-11-06T01:20:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 9,
+    "home": "NYJ",
+    "away": "LAC",
+    "kickoff": "2023-11-07T01:15:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "CHI",
+    "away": "CAR",
+    "kickoff": "2023-11-10T01:15:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "NE",
+    "away": "IND",
+    "kickoff": "2023-11-12T14:30:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "BAL",
+    "away": "CLE",
+    "kickoff": "2023-11-12T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "CIN",
+    "away": "HOU",
+    "kickoff": "2023-11-12T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "JAX",
+    "away": "SF",
+    "kickoff": "2023-11-12T18:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "MIN",
+    "away": "NO",
+    "kickoff": "2023-11-12T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "PIT",
+    "away": "GB",
+    "kickoff": "2023-11-12T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "TB",
+    "away": "TEN",
+    "kickoff": "2023-11-12T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "ARI",
+    "away": "ATL",
+    "kickoff": "2023-11-12T21:05:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "LAC",
+    "away": "DET",
+    "kickoff": "2023-11-12T21:05:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "DAL",
+    "away": "NYG",
+    "kickoff": "2023-11-12T21:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "SEA",
+    "away": "WSH",
+    "kickoff": "2023-11-12T21:25:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "LV",
+    "away": "NYJ",
+    "kickoff": "2023-11-13T01:20:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 10,
+    "home": "BUF",
+    "away": "DEN",
+    "kickoff": "2023-11-14T01:15:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "BAL",
+    "away": "CIN",
+    "kickoff": "2023-11-17T01:15:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "CAR",
+    "away": "DAL",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "CLE",
+    "away": "PIT",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "DET",
+    "away": "CHI",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "GB",
+    "away": "LAC",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "HOU",
+    "away": "ARI",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "JAX",
+    "away": "TEN",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "MIA",
+    "away": "LV",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "WSH",
+    "away": "NYG",
+    "kickoff": "2023-11-19T18:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "SF",
+    "away": "TB",
+    "kickoff": "2023-11-19T21:05:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "BUF",
+    "away": "NYJ",
+    "kickoff": "2023-11-19T21:25:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "LAR",
+    "away": "SEA",
+    "kickoff": "2023-11-19T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "DEN",
+    "away": "MIN",
+    "kickoff": "2023-11-20T01:20:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 11,
+    "home": "KC",
+    "away": "PHI",
+    "kickoff": "2023-11-21T01:15:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "DET",
+    "away": "GB",
+    "kickoff": "2023-11-23T17:30:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "DAL",
+    "away": "WSH",
+    "kickoff": "2023-11-23T21:30:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "SEA",
+    "away": "SF",
+    "kickoff": "2023-11-24T01:20:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "NYJ",
+    "away": "MIA",
+    "kickoff": "2023-11-24T20:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "ATL",
+    "away": "NO",
+    "kickoff": "2023-11-26T18:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "CIN",
+    "away": "PIT",
+    "kickoff": "2023-11-26T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "HOU",
+    "away": "JAX",
+    "kickoff": "2023-11-26T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "IND",
+    "away": "TB",
+    "kickoff": "2023-11-26T18:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "NYG",
+    "away": "NE",
+    "kickoff": "2023-11-26T18:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "TEN",
+    "away": "CAR",
+    "kickoff": "2023-11-26T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "ARI",
+    "away": "LAR",
+    "kickoff": "2023-11-26T21:05:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "DEN",
+    "away": "CLE",
+    "kickoff": "2023-11-26T21:05:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "LV",
+    "away": "KC",
+    "kickoff": "2023-11-26T21:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "PHI",
+    "away": "BUF",
+    "kickoff": "2023-11-26T21:25:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "LAC",
+    "away": "BAL",
+    "kickoff": "2023-11-27T01:20:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 12,
+    "home": "MIN",
+    "away": "CHI",
+    "kickoff": "2023-11-28T01:15:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "DAL",
+    "away": "SEA",
+    "kickoff": "2023-12-01T01:15:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "HOU",
+    "away": "DEN",
+    "kickoff": "2023-12-03T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "NE",
+    "away": "LAC",
+    "kickoff": "2023-12-03T18:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "NO",
+    "away": "DET",
+    "kickoff": "2023-12-03T18:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "NYJ",
+    "away": "ATL",
+    "kickoff": "2023-12-03T18:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "PIT",
+    "away": "ARI",
+    "kickoff": "2023-12-03T18:00:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "TEN",
+    "away": "IND",
+    "kickoff": "2023-12-03T18:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "WSH",
+    "away": "MIA",
+    "kickoff": "2023-12-03T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "TB",
+    "away": "CAR",
+    "kickoff": "2023-12-03T21:05:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "LAR",
+    "away": "CLE",
+    "kickoff": "2023-12-03T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "PHI",
+    "away": "SF",
+    "kickoff": "2023-12-03T21:25:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "GB",
+    "away": "KC",
+    "kickoff": "2023-12-04T01:20:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 13,
+    "home": "JAX",
+    "away": "CIN",
+    "kickoff": "2023-12-05T01:15:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "PIT",
+    "away": "NE",
+    "kickoff": "2023-12-08T01:15:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "ATL",
+    "away": "TB",
+    "kickoff": "2023-12-10T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "BAL",
+    "away": "LAR",
+    "kickoff": "2023-12-10T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "CHI",
+    "away": "DET",
+    "kickoff": "2023-12-10T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "CIN",
+    "away": "IND",
+    "kickoff": "2023-12-10T18:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "CLE",
+    "away": "JAX",
+    "kickoff": "2023-12-10T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "NO",
+    "away": "CAR",
+    "kickoff": "2023-12-10T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "NYJ",
+    "away": "HOU",
+    "kickoff": "2023-12-10T18:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "LV",
+    "away": "MIN",
+    "kickoff": "2023-12-10T21:05:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "SF",
+    "away": "SEA",
+    "kickoff": "2023-12-10T21:05:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "KC",
+    "away": "BUF",
+    "kickoff": "2023-12-10T21:25:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "LAC",
+    "away": "DEN",
+    "kickoff": "2023-12-10T21:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "DAL",
+    "away": "PHI",
+    "kickoff": "2023-12-11T01:20:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "MIA",
+    "away": "TEN",
+    "kickoff": "2023-12-12T01:15:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2023,
+    "week": 14,
+    "home": "NYG",
+    "away": "GB",
+    "kickoff": "2023-12-12T01:15:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "LV",
+    "away": "LAC",
+    "kickoff": "2023-12-15T01:15:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "CIN",
+    "away": "MIN",
+    "kickoff": "2023-12-16T18:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "IND",
+    "away": "PIT",
+    "kickoff": "2023-12-16T21:30:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "DET",
+    "away": "DEN",
+    "kickoff": "2023-12-17T01:15:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "CAR",
+    "away": "ATL",
+    "kickoff": "2023-12-17T18:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "CLE",
+    "away": "CHI",
+    "kickoff": "2023-12-17T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "GB",
+    "away": "TB",
+    "kickoff": "2023-12-17T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "MIA",
+    "away": "NYJ",
+    "kickoff": "2023-12-17T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "NE",
+    "away": "KC",
+    "kickoff": "2023-12-17T18:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "NO",
+    "away": "NYG",
+    "kickoff": "2023-12-17T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "TEN",
+    "away": "HOU",
+    "kickoff": "2023-12-17T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "ARI",
+    "away": "SF",
+    "kickoff": "2023-12-17T21:05:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "LAR",
+    "away": "WSH",
+    "kickoff": "2023-12-17T21:05:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "BUF",
+    "away": "DAL",
+    "kickoff": "2023-12-17T21:25:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "JAX",
+    "away": "BAL",
+    "kickoff": "2023-12-18T01:20:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 15,
+    "home": "SEA",
+    "away": "PHI",
+    "kickoff": "2023-12-19T01:15:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "LAR",
+    "away": "NO",
+    "kickoff": "2023-12-22T01:15:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "PIT",
+    "away": "CIN",
+    "kickoff": "2023-12-23T21:30:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "LAC",
+    "away": "BUF",
+    "kickoff": "2023-12-24T01:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "ATL",
+    "away": "IND",
+    "kickoff": "2023-12-24T18:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "CAR",
+    "away": "GB",
+    "kickoff": "2023-12-24T18:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "HOU",
+    "away": "CLE",
+    "kickoff": "2023-12-24T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "MIN",
+    "away": "DET",
+    "kickoff": "2023-12-24T18:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "NYJ",
+    "away": "WSH",
+    "kickoff": "2023-12-24T18:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "TEN",
+    "away": "SEA",
+    "kickoff": "2023-12-24T18:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "TB",
+    "away": "JAX",
+    "kickoff": "2023-12-24T21:05:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "CHI",
+    "away": "ARI",
+    "kickoff": "2023-12-24T21:25:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "MIA",
+    "away": "DAL",
+    "kickoff": "2023-12-24T21:25:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "DEN",
+    "away": "NE",
+    "kickoff": "2023-12-25T01:15:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "KC",
+    "away": "LV",
+    "kickoff": "2023-12-25T18:00:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "PHI",
+    "away": "NYG",
+    "kickoff": "2023-12-25T21:30:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2023,
+    "week": 16,
+    "home": "SF",
+    "away": "BAL",
+    "kickoff": "2023-12-26T01:15:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "CLE",
+    "away": "NYJ",
+    "kickoff": "2023-12-29T01:15:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "DAL",
+    "away": "DET",
+    "kickoff": "2023-12-31T01:15:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "BAL",
+    "away": "MIA",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "BUF",
+    "away": "NE",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "CHI",
+    "away": "ATL",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "HOU",
+    "away": "TEN",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "IND",
+    "away": "LV",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "JAX",
+    "away": "CAR",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "NYG",
+    "away": "LAR",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "PHI",
+    "away": "ARI",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "TB",
+    "away": "NO",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "WSH",
+    "away": "SF",
+    "kickoff": "2023-12-31T18:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "SEA",
+    "away": "PIT",
+    "kickoff": "2023-12-31T21:05:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "DEN",
+    "away": "LAC",
+    "kickoff": "2023-12-31T21:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "KC",
+    "away": "CIN",
+    "kickoff": "2023-12-31T21:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 17,
+    "home": "MIN",
+    "away": "GB",
+    "kickoff": "2024-01-01T01:20:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "BAL",
+    "away": "PIT",
+    "kickoff": "2024-01-06T21:30:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "IND",
+    "away": "HOU",
+    "kickoff": "2024-01-07T01:15:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "CAR",
+    "away": "TB",
+    "kickoff": "2024-01-07T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "CIN",
+    "away": "CLE",
+    "kickoff": "2024-01-07T18:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "DET",
+    "away": "MIN",
+    "kickoff": "2024-01-07T18:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "NE",
+    "away": "NYJ",
+    "kickoff": "2024-01-07T18:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "NO",
+    "away": "ATL",
+    "kickoff": "2024-01-07T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "TEN",
+    "away": "JAX",
+    "kickoff": "2024-01-07T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "ARI",
+    "away": "SEA",
+    "kickoff": "2024-01-07T21:25:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "GB",
+    "away": "CHI",
+    "kickoff": "2024-01-07T21:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "LAC",
+    "away": "KC",
+    "kickoff": "2024-01-07T21:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "LV",
+    "away": "DEN",
+    "kickoff": "2024-01-07T21:25:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "NYG",
+    "away": "PHI",
+    "kickoff": "2024-01-07T21:25:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "SF",
+    "away": "LAR",
+    "kickoff": "2024-01-07T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "WSH",
+    "away": "DAL",
+    "kickoff": "2024-01-07T21:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2023,
+    "week": 18,
+    "home": "MIA",
+    "away": "BUF",
+    "kickoff": "2024-01-08T01:20:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "PHI",
+    "away": "DAL",
+    "kickoff": "2025-09-05T00:20:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "LAC",
+    "away": "KC",
+    "kickoff": "2025-09-06T00:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "ATL",
+    "away": "TB",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "CLE",
+    "away": "CIN",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "IND",
+    "away": "MIA",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "JAX",
+    "away": "CAR",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "NE",
+    "away": "LV",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "NO",
+    "away": "ARI",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "NYJ",
+    "away": "PIT",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "WSH",
+    "away": "NYG",
+    "kickoff": "2025-09-07T17:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "DEN",
+    "away": "TEN",
+    "kickoff": "2025-09-07T20:05:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "SEA",
+    "away": "SF",
+    "kickoff": "2025-09-07T20:05:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "GB",
+    "away": "DET",
+    "kickoff": "2025-09-07T20:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "LAR",
+    "away": "HOU",
+    "kickoff": "2025-09-07T20:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "BUF",
+    "away": "BAL",
+    "kickoff": "2025-09-08T00:20:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 1,
+    "home": "CHI",
+    "away": "MIN",
+    "kickoff": "2025-09-09T00:15:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "GB",
+    "away": "WSH",
+    "kickoff": "2025-09-12T00:15:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "BAL",
+    "away": "CLE",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "CIN",
+    "away": "JAX",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "DAL",
+    "away": "NYG",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "DET",
+    "away": "CHI",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "MIA",
+    "away": "NE",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "NO",
+    "away": "SF",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "NYJ",
+    "away": "BUF",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "PIT",
+    "away": "SEA",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "TEN",
+    "away": "LAR",
+    "kickoff": "2025-09-14T17:00:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "ARI",
+    "away": "CAR",
+    "kickoff": "2025-09-14T20:05:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "IND",
+    "away": "DEN",
+    "kickoff": "2025-09-14T20:05:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "KC",
+    "away": "PHI",
+    "kickoff": "2025-09-14T20:25:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "MIN",
+    "away": "ATL",
+    "kickoff": "2025-09-15T00:20:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "HOU",
+    "away": "TB",
+    "kickoff": "2025-09-15T23:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 2,
+    "home": "LV",
+    "away": "LAC",
+    "kickoff": "2025-09-16T02:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "BUF",
+    "away": "MIA",
+    "kickoff": "2025-09-19T00:15:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "CAR",
+    "away": "ATL",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "CLE",
+    "away": "GB",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "JAX",
+    "away": "HOU",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "MIN",
+    "away": "CIN",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "NE",
+    "away": "PIT",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "PHI",
+    "away": "LAR",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "TB",
+    "away": "NYJ",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "TEN",
+    "away": "IND",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "WSH",
+    "away": "LV",
+    "kickoff": "2025-09-21T17:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "LAC",
+    "away": "DEN",
+    "kickoff": "2025-09-21T20:05:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "SEA",
+    "away": "NO",
+    "kickoff": "2025-09-21T20:05:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "CHI",
+    "away": "DAL",
+    "kickoff": "2025-09-21T20:25:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "SF",
+    "away": "ARI",
+    "kickoff": "2025-09-21T20:25:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "NYG",
+    "away": "KC",
+    "kickoff": "2025-09-22T00:20:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2025,
+    "week": 3,
+    "home": "BAL",
+    "away": "DET",
+    "kickoff": "2025-09-23T00:15:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "ARI",
+    "away": "SEA",
+    "kickoff": "2025-09-26T00:15:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "PIT",
+    "away": "MIN",
+    "kickoff": "2025-09-28T13:30:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "ATL",
+    "away": "WSH",
+    "kickoff": "2025-09-28T17:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "BUF",
+    "away": "NO",
+    "kickoff": "2025-09-28T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "DET",
+    "away": "CLE",
+    "kickoff": "2025-09-28T17:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "HOU",
+    "away": "TEN",
+    "kickoff": "2025-09-28T17:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "NE",
+    "away": "CAR",
+    "kickoff": "2025-09-28T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "NYG",
+    "away": "LAC",
+    "kickoff": "2025-09-28T17:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "TB",
+    "away": "PHI",
+    "kickoff": "2025-09-28T17:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "LAR",
+    "away": "IND",
+    "kickoff": "2025-09-28T20:05:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "SF",
+    "away": "JAX",
+    "kickoff": "2025-09-28T20:05:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "KC",
+    "away": "BAL",
+    "kickoff": "2025-09-28T20:25:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "LV",
+    "away": "CHI",
+    "kickoff": "2025-09-28T20:25:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "DAL",
+    "away": "GB",
+    "kickoff": "2025-09-29T00:20:00Z",
+    "status": "final",
+    "winner": null
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "MIA",
+    "away": "NYJ",
+    "kickoff": "2025-09-29T23:15:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2025,
+    "week": 4,
+    "home": "DEN",
+    "away": "CIN",
+    "kickoff": "2025-09-30T00:15:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "LAR",
+    "away": "SF",
+    "kickoff": "2025-10-03T00:15:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "CLE",
+    "away": "MIN",
+    "kickoff": "2025-10-05T13:30:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "BAL",
+    "away": "HOU",
+    "kickoff": "2025-10-05T17:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "CAR",
+    "away": "MIA",
+    "kickoff": "2025-10-05T17:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "IND",
+    "away": "LV",
+    "kickoff": "2025-10-05T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "NO",
+    "away": "NYG",
+    "kickoff": "2025-10-05T17:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "NYJ",
+    "away": "DAL",
+    "kickoff": "2025-10-05T17:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "PHI",
+    "away": "DEN",
+    "kickoff": "2025-10-05T17:00:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "ARI",
+    "away": "TEN",
+    "kickoff": "2025-10-05T20:05:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "SEA",
+    "away": "TB",
+    "kickoff": "2025-10-05T20:05:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "CIN",
+    "away": "DET",
+    "kickoff": "2025-10-05T20:25:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "LAC",
+    "away": "WSH",
+    "kickoff": "2025-10-05T20:25:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "BUF",
+    "away": "NE",
+    "kickoff": "2025-10-06T00:20:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 5,
+    "home": "JAX",
+    "away": "KC",
+    "kickoff": "2025-10-07T00:15:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "NYG",
+    "away": "PHI",
+    "kickoff": "2025-10-10T00:15:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "NYJ",
+    "away": "DEN",
+    "kickoff": "2025-10-12T13:30:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "BAL",
+    "away": "LAR",
+    "kickoff": "2025-10-12T17:00:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "CAR",
+    "away": "DAL",
+    "kickoff": "2025-10-12T17:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "IND",
+    "away": "ARI",
+    "kickoff": "2025-10-12T17:00:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "JAX",
+    "away": "SEA",
+    "kickoff": "2025-10-12T17:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "MIA",
+    "away": "LAC",
+    "kickoff": "2025-10-12T17:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "NO",
+    "away": "NE",
+    "kickoff": "2025-10-12T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "PIT",
+    "away": "CLE",
+    "kickoff": "2025-10-12T17:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "LV",
+    "away": "TEN",
+    "kickoff": "2025-10-12T20:05:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "GB",
+    "away": "CIN",
+    "kickoff": "2025-10-12T20:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "TB",
+    "away": "SF",
+    "kickoff": "2025-10-12T20:25:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "KC",
+    "away": "DET",
+    "kickoff": "2025-10-13T00:20:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "ATL",
+    "away": "BUF",
+    "kickoff": "2025-10-13T23:15:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 6,
+    "home": "WSH",
+    "away": "CHI",
+    "kickoff": "2025-10-14T00:15:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "CIN",
+    "away": "PIT",
+    "kickoff": "2025-10-17T00:15:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "JAX",
+    "away": "LAR",
+    "kickoff": "2025-10-19T13:30:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "CHI",
+    "away": "NO",
+    "kickoff": "2025-10-19T17:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "CLE",
+    "away": "MIA",
+    "kickoff": "2025-10-19T17:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "KC",
+    "away": "LV",
+    "kickoff": "2025-10-19T17:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "MIN",
+    "away": "PHI",
+    "kickoff": "2025-10-19T17:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "NYJ",
+    "away": "CAR",
+    "kickoff": "2025-10-19T17:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "TEN",
+    "away": "NE",
+    "kickoff": "2025-10-19T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "DEN",
+    "away": "NYG",
+    "kickoff": "2025-10-19T20:05:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "LAC",
+    "away": "IND",
+    "kickoff": "2025-10-19T20:05:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "ARI",
+    "away": "GB",
+    "kickoff": "2025-10-19T20:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "DAL",
+    "away": "WSH",
+    "kickoff": "2025-10-19T20:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "SF",
+    "away": "ATL",
+    "kickoff": "2025-10-20T00:20:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "DET",
+    "away": "TB",
+    "kickoff": "2025-10-20T23:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 7,
+    "home": "SEA",
+    "away": "HOU",
+    "kickoff": "2025-10-21T02:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "LAC",
+    "away": "MIN",
+    "kickoff": "2025-10-24T00:15:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "ATL",
+    "away": "MIA",
+    "kickoff": "2025-10-26T17:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "BAL",
+    "away": "CHI",
+    "kickoff": "2025-10-26T17:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "CAR",
+    "away": "BUF",
+    "kickoff": "2025-10-26T17:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "CIN",
+    "away": "NYJ",
+    "kickoff": "2025-10-26T17:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "HOU",
+    "away": "SF",
+    "kickoff": "2025-10-26T17:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "NE",
+    "away": "CLE",
+    "kickoff": "2025-10-26T17:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "PHI",
+    "away": "NYG",
+    "kickoff": "2025-10-26T17:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "NO",
+    "away": "TB",
+    "kickoff": "2025-10-26T20:05:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "DEN",
+    "away": "DAL",
+    "kickoff": "2025-10-26T20:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "IND",
+    "away": "TEN",
+    "kickoff": "2025-10-26T20:25:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "PIT",
+    "away": "GB",
+    "kickoff": "2025-10-27T00:20:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 8,
+    "home": "KC",
+    "away": "WSH",
+    "kickoff": "2025-10-28T00:15:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "MIA",
+    "away": "BAL",
+    "kickoff": "2025-10-31T00:15:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "CIN",
+    "away": "CHI",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "DET",
+    "away": "MIN",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "GB",
+    "away": "CAR",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "HOU",
+    "away": "DEN",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "NE",
+    "away": "ATL",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "NYG",
+    "away": "SF",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "PIT",
+    "away": "IND",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "TEN",
+    "away": "LAC",
+    "kickoff": "2025-11-02T18:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "LAR",
+    "away": "NO",
+    "kickoff": "2025-11-02T21:05:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "LV",
+    "away": "JAX",
+    "kickoff": "2025-11-02T21:05:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "BUF",
+    "away": "KC",
+    "kickoff": "2025-11-02T21:25:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "WSH",
+    "away": "SEA",
+    "kickoff": "2025-11-03T01:20:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 9,
+    "home": "DAL",
+    "away": "ARI",
+    "kickoff": "2025-11-04T01:15:00Z",
+    "status": "final",
+    "winner": "ARI"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "DEN",
+    "away": "LV",
+    "kickoff": "2025-11-07T01:15:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "IND",
+    "away": "ATL",
+    "kickoff": "2025-11-09T14:30:00Z",
+    "status": "final",
+    "winner": "IND"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "CAR",
+    "away": "NO",
+    "kickoff": "2025-11-09T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "CHI",
+    "away": "NYG",
+    "kickoff": "2025-11-09T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "HOU",
+    "away": "JAX",
+    "kickoff": "2025-11-09T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "MIA",
+    "away": "BUF",
+    "kickoff": "2025-11-09T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "MIN",
+    "away": "BAL",
+    "kickoff": "2025-11-09T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "NYJ",
+    "away": "CLE",
+    "kickoff": "2025-11-09T18:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "TB",
+    "away": "NE",
+    "kickoff": "2025-11-09T18:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "SEA",
+    "away": "ARI",
+    "kickoff": "2025-11-09T21:05:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "SF",
+    "away": "LAR",
+    "kickoff": "2025-11-09T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "WSH",
+    "away": "DET",
+    "kickoff": "2025-11-09T21:25:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "LAC",
+    "away": "PIT",
+    "kickoff": "2025-11-10T01:20:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 10,
+    "home": "GB",
+    "away": "PHI",
+    "kickoff": "2025-11-11T01:15:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "NE",
+    "away": "NYJ",
+    "kickoff": "2025-11-14T01:15:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "MIA",
+    "away": "WSH",
+    "kickoff": "2025-11-16T14:30:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "ATL",
+    "away": "CAR",
+    "kickoff": "2025-11-16T18:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "BUF",
+    "away": "TB",
+    "kickoff": "2025-11-16T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "JAX",
+    "away": "LAC",
+    "kickoff": "2025-11-16T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "MIN",
+    "away": "CHI",
+    "kickoff": "2025-11-16T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "NYG",
+    "away": "GB",
+    "kickoff": "2025-11-16T18:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "PIT",
+    "away": "CIN",
+    "kickoff": "2025-11-16T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "TEN",
+    "away": "HOU",
+    "kickoff": "2025-11-16T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "ARI",
+    "away": "SF",
+    "kickoff": "2025-11-16T21:05:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "LAR",
+    "away": "SEA",
+    "kickoff": "2025-11-16T21:05:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "CLE",
+    "away": "BAL",
+    "kickoff": "2025-11-16T21:25:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "DEN",
+    "away": "KC",
+    "kickoff": "2025-11-16T21:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "PHI",
+    "away": "DET",
+    "kickoff": "2025-11-17T01:20:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 11,
+    "home": "LV",
+    "away": "DAL",
+    "kickoff": "2025-11-18T01:15:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "HOU",
+    "away": "BUF",
+    "kickoff": "2025-11-21T01:15:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "BAL",
+    "away": "NYJ",
+    "kickoff": "2025-11-23T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "CHI",
+    "away": "PIT",
+    "kickoff": "2025-11-23T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "CIN",
+    "away": "NE",
+    "kickoff": "2025-11-23T18:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "DET",
+    "away": "NYG",
+    "kickoff": "2025-11-23T18:00:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "GB",
+    "away": "MIN",
+    "kickoff": "2025-11-23T18:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "KC",
+    "away": "IND",
+    "kickoff": "2025-11-23T18:00:00Z",
+    "status": "final",
+    "winner": "KC"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "TEN",
+    "away": "SEA",
+    "kickoff": "2025-11-23T18:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "ARI",
+    "away": "JAX",
+    "kickoff": "2025-11-23T21:05:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "LV",
+    "away": "CLE",
+    "kickoff": "2025-11-23T21:05:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "DAL",
+    "away": "PHI",
+    "kickoff": "2025-11-23T21:25:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "NO",
+    "away": "ATL",
+    "kickoff": "2025-11-23T21:25:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "LAR",
+    "away": "TB",
+    "kickoff": "2025-11-24T01:20:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 12,
+    "home": "SF",
+    "away": "CAR",
+    "kickoff": "2025-11-25T01:15:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "DET",
+    "away": "GB",
+    "kickoff": "2025-11-27T18:00:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "DAL",
+    "away": "KC",
+    "kickoff": "2025-11-27T21:30:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "BAL",
+    "away": "CIN",
+    "kickoff": "2025-11-28T01:20:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "PHI",
+    "away": "CHI",
+    "kickoff": "2025-11-28T20:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "CAR",
+    "away": "LAR",
+    "kickoff": "2025-11-30T18:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "CLE",
+    "away": "SF",
+    "kickoff": "2025-11-30T18:00:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "IND",
+    "away": "HOU",
+    "kickoff": "2025-11-30T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "MIA",
+    "away": "NO",
+    "kickoff": "2025-11-30T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "NYJ",
+    "away": "ATL",
+    "kickoff": "2025-11-30T18:00:00Z",
+    "status": "final",
+    "winner": "NYJ"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "TB",
+    "away": "ARI",
+    "kickoff": "2025-11-30T18:00:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "TEN",
+    "away": "JAX",
+    "kickoff": "2025-11-30T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "SEA",
+    "away": "MIN",
+    "kickoff": "2025-11-30T21:05:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "LAC",
+    "away": "LV",
+    "kickoff": "2025-11-30T21:25:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "PIT",
+    "away": "BUF",
+    "kickoff": "2025-11-30T21:25:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "WSH",
+    "away": "DEN",
+    "kickoff": "2025-12-01T01:20:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 13,
+    "home": "NE",
+    "away": "NYG",
+    "kickoff": "2025-12-02T01:15:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "DET",
+    "away": "DAL",
+    "kickoff": "2025-12-05T01:15:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "ATL",
+    "away": "SEA",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "BAL",
+    "away": "PIT",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "BUF",
+    "away": "CIN",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "CLE",
+    "away": "TEN",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "JAX",
+    "away": "IND",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "MIN",
+    "away": "WSH",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "NYJ",
+    "away": "MIA",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "TB",
+    "away": "NO",
+    "kickoff": "2025-12-07T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "LV",
+    "away": "DEN",
+    "kickoff": "2025-12-07T21:05:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "ARI",
+    "away": "LAR",
+    "kickoff": "2025-12-07T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "GB",
+    "away": "CHI",
+    "kickoff": "2025-12-07T21:25:00Z",
+    "status": "final",
+    "winner": "GB"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "KC",
+    "away": "HOU",
+    "kickoff": "2025-12-08T01:20:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 14,
+    "home": "LAC",
+    "away": "PHI",
+    "kickoff": "2025-12-09T01:15:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "TB",
+    "away": "ATL",
+    "kickoff": "2025-12-12T01:15:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "CHI",
+    "away": "CLE",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "CIN",
+    "away": "BAL",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "HOU",
+    "away": "ARI",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "JAX",
+    "away": "NYJ",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "KC",
+    "away": "LAC",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "NE",
+    "away": "BUF",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "NYG",
+    "away": "WSH",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "PHI",
+    "away": "LV",
+    "kickoff": "2025-12-14T18:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "DEN",
+    "away": "GB",
+    "kickoff": "2025-12-14T21:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "LAR",
+    "away": "DET",
+    "kickoff": "2025-12-14T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "NO",
+    "away": "CAR",
+    "kickoff": "2025-12-14T21:25:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "SEA",
+    "away": "IND",
+    "kickoff": "2025-12-14T21:25:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "SF",
+    "away": "TEN",
+    "kickoff": "2025-12-14T21:25:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "DAL",
+    "away": "MIN",
+    "kickoff": "2025-12-15T01:20:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 15,
+    "home": "PIT",
+    "away": "MIA",
+    "kickoff": "2025-12-16T01:15:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "SEA",
+    "away": "LAR",
+    "kickoff": "2025-12-19T01:15:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "WSH",
+    "away": "PHI",
+    "kickoff": "2025-12-20T22:00:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "CHI",
+    "away": "GB",
+    "kickoff": "2025-12-21T01:20:00Z",
+    "status": "final",
+    "winner": "CHI"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "CAR",
+    "away": "TB",
+    "kickoff": "2025-12-21T18:00:00Z",
+    "status": "final",
+    "winner": "CAR"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "CLE",
+    "away": "BUF",
+    "kickoff": "2025-12-21T18:00:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "DAL",
+    "away": "LAC",
+    "kickoff": "2025-12-21T18:00:00Z",
+    "status": "final",
+    "winner": "LAC"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "MIA",
+    "away": "CIN",
+    "kickoff": "2025-12-21T18:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "NO",
+    "away": "NYJ",
+    "kickoff": "2025-12-21T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "NYG",
+    "away": "MIN",
+    "kickoff": "2025-12-21T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "TEN",
+    "away": "KC",
+    "kickoff": "2025-12-21T18:00:00Z",
+    "status": "final",
+    "winner": "TEN"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "ARI",
+    "away": "ATL",
+    "kickoff": "2025-12-21T21:05:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "DEN",
+    "away": "JAX",
+    "kickoff": "2025-12-21T21:05:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "DET",
+    "away": "PIT",
+    "kickoff": "2025-12-21T21:25:00Z",
+    "status": "final",
+    "winner": "PIT"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "HOU",
+    "away": "LV",
+    "kickoff": "2025-12-21T21:25:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "BAL",
+    "away": "NE",
+    "kickoff": "2025-12-22T01:20:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 16,
+    "home": "IND",
+    "away": "SF",
+    "kickoff": "2025-12-23T01:15:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "WSH",
+    "away": "DAL",
+    "kickoff": "2025-12-25T18:00:00Z",
+    "status": "final",
+    "winner": "DAL"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "MIN",
+    "away": "DET",
+    "kickoff": "2025-12-25T21:30:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "KC",
+    "away": "DEN",
+    "kickoff": "2025-12-26T01:15:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "LAC",
+    "away": "HOU",
+    "kickoff": "2025-12-27T21:30:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "GB",
+    "away": "BAL",
+    "kickoff": "2025-12-28T01:00:00Z",
+    "status": "final",
+    "winner": "BAL"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "CAR",
+    "away": "SEA",
+    "kickoff": "2025-12-28T18:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "CIN",
+    "away": "ARI",
+    "kickoff": "2025-12-28T18:00:00Z",
+    "status": "final",
+    "winner": "CIN"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "CLE",
+    "away": "PIT",
+    "kickoff": "2025-12-28T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "IND",
+    "away": "JAX",
+    "kickoff": "2025-12-28T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "MIA",
+    "away": "TB",
+    "kickoff": "2025-12-28T18:00:00Z",
+    "status": "final",
+    "winner": "MIA"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "NYJ",
+    "away": "NE",
+    "kickoff": "2025-12-28T18:00:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "TEN",
+    "away": "NO",
+    "kickoff": "2025-12-28T18:00:00Z",
+    "status": "final",
+    "winner": "NO"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "LV",
+    "away": "NYG",
+    "kickoff": "2025-12-28T21:05:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "BUF",
+    "away": "PHI",
+    "kickoff": "2025-12-28T21:25:00Z",
+    "status": "final",
+    "winner": "PHI"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "SF",
+    "away": "CHI",
+    "kickoff": "2025-12-29T01:20:00Z",
+    "status": "final",
+    "winner": "SF"
+  },
+  {
+    "year": 2025,
+    "week": 17,
+    "home": "ATL",
+    "away": "LAR",
+    "kickoff": "2025-12-30T01:15:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "TB",
+    "away": "CAR",
+    "kickoff": "2026-01-03T21:30:00Z",
+    "status": "final",
+    "winner": "TB"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "SF",
+    "away": "SEA",
+    "kickoff": "2026-01-04T01:00:00Z",
+    "status": "final",
+    "winner": "SEA"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "ATL",
+    "away": "NO",
+    "kickoff": "2026-01-04T18:00:00Z",
+    "status": "final",
+    "winner": "ATL"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "CIN",
+    "away": "CLE",
+    "kickoff": "2026-01-04T18:00:00Z",
+    "status": "final",
+    "winner": "CLE"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "HOU",
+    "away": "IND",
+    "kickoff": "2026-01-04T18:00:00Z",
+    "status": "final",
+    "winner": "HOU"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "JAX",
+    "away": "TEN",
+    "kickoff": "2026-01-04T18:00:00Z",
+    "status": "final",
+    "winner": "JAX"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "MIN",
+    "away": "GB",
+    "kickoff": "2026-01-04T18:00:00Z",
+    "status": "final",
+    "winner": "MIN"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "NYG",
+    "away": "DAL",
+    "kickoff": "2026-01-04T18:00:00Z",
+    "status": "final",
+    "winner": "NYG"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "BUF",
+    "away": "NYJ",
+    "kickoff": "2026-01-04T21:25:00Z",
+    "status": "final",
+    "winner": "BUF"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "CHI",
+    "away": "DET",
+    "kickoff": "2026-01-04T21:25:00Z",
+    "status": "final",
+    "winner": "DET"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "DEN",
+    "away": "LAC",
+    "kickoff": "2026-01-04T21:25:00Z",
+    "status": "final",
+    "winner": "DEN"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "LAR",
+    "away": "ARI",
+    "kickoff": "2026-01-04T21:25:00Z",
+    "status": "final",
+    "winner": "LAR"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "LV",
+    "away": "KC",
+    "kickoff": "2026-01-04T21:25:00Z",
+    "status": "final",
+    "winner": "LV"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "NE",
+    "away": "MIA",
+    "kickoff": "2026-01-04T21:25:00Z",
+    "status": "final",
+    "winner": "NE"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "PHI",
+    "away": "WSH",
+    "kickoff": "2026-01-04T21:25:00Z",
+    "status": "final",
+    "winner": "WSH"
+  },
+  {
+    "year": 2025,
+    "week": 18,
+    "home": "PIT",
+    "away": "BAL",
+    "kickoff": "2026-01-05T01:20:00Z",
+    "status": "final",
+    "winner": "PIT"
+  }
+]

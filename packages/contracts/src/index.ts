@@ -4,3 +4,4 @@ export * from './auth';
 export * from './leagues';
 export * from './picks';
 export * from './queries';
+export * from './teams';

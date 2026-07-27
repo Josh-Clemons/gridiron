@@ -317,9 +317,14 @@ export const picks = pgTable(
  * Past champions, imported from the workbook's `Grid Iron Winners` sheet — the
  * regular-season pool from 2007 and the playoff pool from 2012.
  *
- * `memberId` is nullable because a 2009 champion may have no membership row, and
- * `totalPoints` is nullable to represent the 2018 playoff entry, which reads
- * "no game".
+ * `memberId` is nullable because a 2009 champion may have no membership row — most of
+ * the pre-2020 winners never appear in a workbook we can read — and `totalPoints` is
+ * nullable for years still being played.
+ *
+ * A year can have more than one champion: 2022 ended in a tie, with Kevin Fournier and
+ * Meaghan Olender both on 146, and the workbook records them as two rows. So the unique
+ * key covers the name as well as the year and pool, which still makes re-importing the
+ * same list idempotent without forcing a tie to lose a winner.
  */
 export const champions = pgTable(
   'champions',
@@ -339,7 +344,13 @@ export const champions = pgTable(
     createdAt: createdAt(),
   },
   (table) => [
-    uniqueIndex('champions_league_year_pool_key').on(table.leagueId, table.year, table.pool),
+    uniqueIndex('champions_league_year_pool_name_key').on(
+      table.leagueId,
+      table.year,
+      table.pool,
+      table.displayName,
+    ),
+    index('champions_league_year_idx').on(table.leagueId, table.year),
   ],
 );
 

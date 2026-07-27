@@ -18,9 +18,9 @@ packages/rules/     pure validation + scoring engine, zero I/O
 packages/schema/    Drizzle schema, migrations, seed data
 packages/contracts/ Zod request/response schemas shared by client and server
 apps/api/           Hono API on Node 24
+apps/web/           React 19 + Vite + MUI, the pick page
+apps/importer/      operator CLI that loads the commissioner's spreadsheet
 ```
-
-`apps/web` and `apps/importer` arrive in later phases.
 
 `packages/rules` is deliberately the first thing built and has no dependencies. Every
 game rule is a pure function over plain data, so the API can enforce it server-side and
@@ -32,9 +32,13 @@ There is exactly one place a rule is written.
 ```bash
 pnpm install
 pnpm check          # lint + typecheck + test
-pnpm dev            # API on http://127.0.0.1:8082
+pnpm dev            # API on :8082 and the web app on :5173, together
+pnpm dev:api        # just one of them
+pnpm dev:web
 pnpm test:unit      # rules + contracts, milliseconds
+pnpm test:web       # component tests, jsdom, also milliseconds
 pnpm test:api       # integration tests, needs Docker
+pnpm test:importer  # golden workbooks + rejection cases, needs Docker
 pnpm test:watch
 pnpm format
 ```
@@ -78,6 +82,7 @@ PUT    /leagues/:id/picks/:week/:slot { "teamId": "KC" }
 DELETE /leagues/:id/picks/:week/:slot
 GET    /leagues/:id/standings?week=N
 GET    /leagues/:id/usage             teams left in each of Win/Place/Show
+GET    /teams                         the 32 teams and their names, no session needed
 GET    /health
 ```
 
@@ -99,6 +104,33 @@ Phase 5 is one new class.
 
 Integration tests run against a real Postgres in a Testcontainer — migrations and seed
 included, because constraints like the season-reuse index only exist in the database.
+
+## Web app
+
+React 19 + Vite + TypeScript, TanStack Router and Query v5, MUI 7 with a real theme —
+the colours live in `apps/web/src/theme.ts` and nowhere else. Mobile-first, because
+picks get made on phones.
+
+The pick page is the centrepiece and it has **no save button**. Choosing a team fires a
+per-slot `PUT` with an optimistic cache update; there is no dirty state to lose. Illegal
+teams are listed but greyed out with the rule they break written underneath, and that
+check is `availableTeamsFor` from `packages/rules` — the same function the API runs
+before it writes, so what's unavailable in the browser is exactly what the server would
+refuse. The wording comes from `describeRejection`, so the tooltip and the API error are
+one sentence maintained in one place.
+
+Locks tick from `board.now`, the server's own clock, not the device's. Kickoffs are per
+game, so a Thursday pick freezes while the rest of the week stays open.
+
+One week at a time is load-bearing: 72 members × 18 weeks is ~3,900 picks, and the board
+response is a few kilobytes of games, your three picks and everyone's totals as
+integers. Standings are aggregated server-side; no member's picks are ever sent to
+another member's browser.
+
+The dev server proxies `/api` to the API with the prefix stripped, which is the same
+shape Caddy serves in production — so the session cookie is first-party in both, and
+`SameSite=Lax` means what it says. **Phase 5 note:** the Caddy handle needs
+`uri strip_prefix /api`, or the API sees `/api/auth/login` and 404s.
 
 ## NFL data
 
@@ -127,6 +159,53 @@ reported, never deleted, because deleting it would silently void everyone's pick
 
 Loaded so far: 2020 (17 weeks, 256 games, one tie), 2023, 2025, and the full 2026
 schedule.
+
+## Spreadsheet import
+
+Most picks still arrive on the commissioner's workbook, the same file copied forward
+since 2007. `apps/importer` loads it. It is an operator CLI, not a feature — players who
+want to pick in the app just pick in the app, and the import shrinks as they do.
+
+```bash
+pnpm importer --file "Grid Iron- 2026.xlsx" --league 1 --season 2026
+pnpm importer --file "Grid Iron- 2026.xlsx" --league 1 --season 2026 --apply
+pnpm importer --file "Grid Iron- 2025.xlsx" --league 1 --winners
+```
+
+**Dry run by default.** Every stage except the write runs either way, so the report is
+never a guess about what `--apply` would do. The weekly loop is: get the workbook, run
+it, read the report, run it again with `--apply`. It exits non-zero when anything was
+rejected or conflicted, so a scripted run that ends up partial is noticed.
+
+Four stages:
+
+- **Parse.** Sheets are found by name, never by index — the workbooks disagree on
+  ordering and 2020 has no `Grid Iron Winners` at all. The week count comes from the
+  header width (17 in 2020, 18 since), and the layout is asserted column by column, so a
+  2026 file that has drifted stops the run instead of importing picks a week out of
+  place. Reads `.xlsx` and legacy BIFF8 `.xls`.
+- **Validate.** Every pick goes through `packages/rules` — the same `validatePick` the
+  API calls. The importer is not a privileged back door. Its one documented exception is
+  the kickoff lock: the workbook _records_ picks collected before kickoff rather than
+  making new ones, so enforcing it would reject the current week on any run made after
+  Thursday night. Rejection is per pick; the slot is left empty, which scores 0, and the
+  player's other picks and everyone else import normally.
+- **Reconcile.** A slot already holding a pick the player made in the app, for a
+  different team, imports **neither** and is reported — a transcription should never
+  silently overwrite what someone entered themselves. The `Selection History` tab is
+  cross-checked as a genuine second opinion at ~99% agreement, and the sheet's own
+  arithmetic is compared against what the app computes from ESPN results.
+- **Apply.** Idempotent upsert stamped `source='import'`, in one transaction. Scores are
+  never written; the app recomputes them. Applying the same file twice leaves the
+  database byte-identical, including timestamps.
+
+Unknown names and unknown team tokens **abort the whole run** rather than being guessed
+at, because a silent mis-association files one player's picks under another's name.
+Adding a player is one deliberate line in `apps/importer/aliases/players.aliases.json`.
+
+The 2020, 2023 and 2025 workbooks are committed as golden fixtures with their expected
+findings pinned, alongside `games.json` — a dump of the real ESPN schedules for those
+seasons, so the tests need neither the network nor a local database.
 
 ## Toolchain
 
