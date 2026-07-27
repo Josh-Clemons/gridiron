@@ -100,6 +100,34 @@ Phase 5 is one new class.
 Integration tests run against a real Postgres in a Testcontainer — migrations and seed
 included, because constraints like the season-reuse index only exist in the database.
 
+## NFL data
+
+Schedules and results come from ESPN's public scoreboard endpoint, which is
+undocumented, unauthenticated and unversioned. Every field we read is named in one Zod
+schema in `apps/api/src/sync/espn.ts`, so a shape change is a parse error in one file
+with a message naming the field — not silently-zero scores in week 6. An empty week is
+an error, never "no games".
+
+```bash
+pnpm sync schedule                 # every week of the current season
+pnpm sync schedule --season 2020   # backfill a finished season, results included
+pnpm sync results                  # the live week and the one before it
+pnpm sync results --week 7
+```
+
+Cron runs exactly these commands — see `scripts/crontab.example` — so the automated
+path and the manual one can't diverge. Every run is idempotent: rows that already match
+are left alone, and re-running after a failure is always safe. Failures exit non-zero
+and alert (stderr by default, Matrix once Phase 5 supplies a token).
+
+Nothing incrementally mutates a score. Standings are derived from `games` and `picks` on
+read, so **writing a result _is_ the rescore**, and a result ESPN later corrects simply
+corrects. A game that disappears from the feed — a postponement — is counted and
+reported, never deleted, because deleting it would silently void everyone's picks on it.
+
+Loaded so far: 2020 (17 weeks, 256 games, one tie), 2023, 2025, and the full 2026
+schedule.
+
 ## Toolchain
 
 TypeScript 7, Vitest 4, oxlint (with `oxlint-tsgolint` for type-aware rules), Prettier,

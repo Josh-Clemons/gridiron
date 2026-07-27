@@ -1,0 +1,795 @@
+{
+  "season": {
+    "type": 2,
+    "year": 2020
+  },
+  "week": {
+    "number": 3
+  },
+  "events": [
+    {
+      "id": "401220201",
+      "date": "2020-09-25T00:20Z",
+      "name": "Miami Dolphins at Jacksonville Jaguars",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220201",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "13",
+              "team": {
+                "id": "30",
+                "abbreviation": "JAX",
+                "displayName": "Jacksonville Jaguars"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "31",
+              "team": {
+                "id": "15",
+                "abbreviation": "MIA",
+                "displayName": "Miami Dolphins"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220309",
+      "date": "2020-09-27T17:00Z",
+      "name": "Chicago Bears at Atlanta Falcons",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220309",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "26",
+              "team": {
+                "id": "1",
+                "abbreviation": "ATL",
+                "displayName": "Atlanta Falcons"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "30",
+              "team": {
+                "id": "3",
+                "abbreviation": "CHI",
+                "displayName": "Chicago Bears"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220119",
+      "date": "2020-09-27T17:00Z",
+      "name": "Los Angeles Rams at Buffalo Bills",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220119",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": true,
+              "score": "35",
+              "team": {
+                "id": "2",
+                "abbreviation": "BUF",
+                "displayName": "Buffalo Bills"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": false,
+              "score": "32",
+              "team": {
+                "id": "14",
+                "abbreviation": "LAR",
+                "displayName": "Los Angeles Rams"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220168",
+      "date": "2020-09-27T17:00Z",
+      "name": "Washington  at Cleveland Browns",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220168",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": true,
+              "score": "34",
+              "team": {
+                "id": "5",
+                "abbreviation": "CLE",
+                "displayName": "Cleveland Browns"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": false,
+              "score": "20",
+              "team": {
+                "id": "28",
+                "abbreviation": "WSH",
+                "displayName": "Washington"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220304",
+      "date": "2020-09-27T17:00Z",
+      "name": "Tennessee Titans at Minnesota Vikings",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220304",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "30",
+              "team": {
+                "id": "16",
+                "abbreviation": "MIN",
+                "displayName": "Minnesota Vikings"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "31",
+              "team": {
+                "id": "10",
+                "abbreviation": "TEN",
+                "displayName": "Tennessee Titans"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220134",
+      "date": "2020-09-27T17:00Z",
+      "name": "Las Vegas Raiders at New England Patriots",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220134",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": true,
+              "score": "36",
+              "team": {
+                "id": "17",
+                "abbreviation": "NE",
+                "displayName": "New England Patriots"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": false,
+              "score": "20",
+              "team": {
+                "id": "13",
+                "abbreviation": "LV",
+                "displayName": "Las Vegas Raiders"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220254",
+      "date": "2020-09-27T17:00Z",
+      "name": "San Francisco 49ers at New York Giants",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220254",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "9",
+              "team": {
+                "id": "19",
+                "abbreviation": "NYG",
+                "displayName": "New York Giants"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "36",
+              "team": {
+                "id": "25",
+                "abbreviation": "SF",
+                "displayName": "San Francisco 49ers"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220264",
+      "date": "2020-09-27T17:00Z",
+      "name": "Cincinnati Bengals at Philadelphia Eagles",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220264",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "23",
+              "team": {
+                "id": "21",
+                "abbreviation": "PHI",
+                "displayName": "Philadelphia Eagles"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": false,
+              "score": "23",
+              "team": {
+                "id": "4",
+                "abbreviation": "CIN",
+                "displayName": "Cincinnati Bengals"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220173",
+      "date": "2020-09-27T17:00Z",
+      "name": "Houston Texans at Pittsburgh Steelers",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220173",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": true,
+              "score": "28",
+              "team": {
+                "id": "23",
+                "abbreviation": "PIT",
+                "displayName": "Pittsburgh Steelers"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": false,
+              "score": "21",
+              "team": {
+                "id": "34",
+                "abbreviation": "HOU",
+                "displayName": "Houston Texans"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220193",
+      "date": "2020-09-27T20:05Z",
+      "name": "New York Jets at Indianapolis Colts",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220193",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": true,
+              "score": "36",
+              "team": {
+                "id": "11",
+                "abbreviation": "IND",
+                "displayName": "Indianapolis Colts"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": false,
+              "score": "7",
+              "team": {
+                "id": "20",
+                "abbreviation": "NYJ",
+                "displayName": "New York Jets"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220240",
+      "date": "2020-09-27T20:05Z",
+      "name": "Carolina Panthers at Los Angeles Chargers",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220240",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "16",
+              "team": {
+                "id": "24",
+                "abbreviation": "LAC",
+                "displayName": "Los Angeles Chargers"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "21",
+              "team": {
+                "id": "29",
+                "abbreviation": "CAR",
+                "displayName": "Carolina Panthers"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220216",
+      "date": "2020-09-27T20:25Z",
+      "name": "Tampa Bay Buccaneers at Denver Broncos",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220216",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "10",
+              "team": {
+                "id": "7",
+                "abbreviation": "DEN",
+                "displayName": "Denver Broncos"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "28",
+              "team": {
+                "id": "27",
+                "abbreviation": "TB",
+                "displayName": "Tampa Bay Buccaneers"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220343",
+      "date": "2020-09-27T20:25Z",
+      "name": "Detroit Lions at Arizona Cardinals",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220343",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "23",
+              "team": {
+                "id": "22",
+                "abbreviation": "ARI",
+                "displayName": "Arizona Cardinals"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "26",
+              "team": {
+                "id": "8",
+                "abbreviation": "DET",
+                "displayName": "Detroit Lions"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220363",
+      "date": "2020-09-27T20:25Z",
+      "name": "Dallas Cowboys at Seattle Seahawks",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220363",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": true,
+              "score": "38",
+              "team": {
+                "id": "26",
+                "abbreviation": "SEA",
+                "displayName": "Seattle Seahawks"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": false,
+              "score": "31",
+              "team": {
+                "id": "6",
+                "abbreviation": "DAL",
+                "displayName": "Dallas Cowboys"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220323",
+      "date": "2020-09-28T00:20Z",
+      "name": "Green Bay Packers at New Orleans Saints",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220323",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "30",
+              "team": {
+                "id": "18",
+                "abbreviation": "NO",
+                "displayName": "New Orleans Saints"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "37",
+              "team": {
+                "id": "9",
+                "abbreviation": "GB",
+                "displayName": "Green Bay Packers"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401220153",
+      "date": "2020-09-29T00:15Z",
+      "name": "Kansas City Chiefs at Baltimore Ravens",
+      "week": {
+        "number": 3
+      },
+      "season": {
+        "year": 2020,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "status": {
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final"
+        }
+      },
+      "competitions": [
+        {
+          "id": "401220153",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "winner": false,
+              "score": "20",
+              "team": {
+                "id": "33",
+                "abbreviation": "BAL",
+                "displayName": "Baltimore Ravens"
+              }
+            },
+            {
+              "homeAway": "away",
+              "winner": true,
+              "score": "34",
+              "team": {
+                "id": "12",
+                "abbreviation": "KC",
+                "displayName": "Kansas City Chiefs"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

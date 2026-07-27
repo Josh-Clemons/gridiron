@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { MatrixConfig } from './alerts/matrix-alerter';
 
 /**
  * Runtime configuration, parsed once at startup.
@@ -27,6 +28,15 @@ const configSchema = z.object({
    * one address in a second. The limiter's own test turns it back on explicitly.
    */
   RATE_LIMIT: z.enum(['on', 'off']).optional(),
+
+  /** Overridable so tests can point the sync at a stub instead of the real endpoint. */
+  ESPN_BASE_URL: z.url().optional(),
+  ESPN_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120_000).default(15_000),
+
+  /** All three or none. Without them, sync failures alert to stderr. */
+  MATRIX_HOMESERVER: z.url().optional(),
+  MATRIX_ACCESS_TOKEN: z.string().min(1).optional(),
+  MATRIX_ALERT_ROOM: z.string().min(1).optional(),
 });
 
 export interface Config {
@@ -39,6 +49,10 @@ export interface Config {
   readonly resetTokenTtlMs: number;
   readonly mailTransport: 'console' | 'memory';
   readonly rateLimitEnabled: boolean;
+  readonly espnBaseUrl: string | undefined;
+  readonly espnTimeoutMs: number;
+  /** Undefined unless the homeserver, token and room are all configured. */
+  readonly matrix: MatrixConfig | undefined;
   /**
    * `Secure` on the session cookie. Off in development because localhost is plain
    * HTTP; on everywhere else, where Caddy terminates TLS.
@@ -74,6 +88,18 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     mailTransport: value.MAIL_TRANSPORT,
     rateLimitEnabled:
       value.RATE_LIMIT === undefined ? value.NODE_ENV !== 'test' : value.RATE_LIMIT === 'on',
+    espnBaseUrl: value.ESPN_BASE_URL,
+    espnTimeoutMs: value.ESPN_TIMEOUT_MS,
+    matrix:
+      value.MATRIX_HOMESERVER !== undefined &&
+      value.MATRIX_ACCESS_TOKEN !== undefined &&
+      value.MATRIX_ALERT_ROOM !== undefined
+        ? {
+            homeserver: value.MATRIX_HOMESERVER,
+            accessToken: value.MATRIX_ACCESS_TOKEN,
+            roomId: value.MATRIX_ALERT_ROOM,
+          }
+        : undefined,
     cookieSecure: value.NODE_ENV === 'production',
   };
 }

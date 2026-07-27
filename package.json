@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "pnpm --filter @gridiron/api dev",
+    "sync": "pnpm --filter @gridiron/api sync",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:unit": "vitest run --project unit",

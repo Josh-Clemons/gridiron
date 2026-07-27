@@ -1,0 +1,34 @@
+# Gridiron sync schedule — install with `crontab -e`, or `crontab scripts/crontab.example`.
+#
+# Times are America/Chicago, matching the machine and the docker-compose TZ.
+# Every run is idempotent: re-running costs a few HTTP requests and changes nothing
+# unless ESPN's answer changed. A run that fails exits non-zero and alerts, so cron's
+# own mail plus the alerter both surface it.
+#
+# Phase 5 will move these into the container form
+# (`docker compose -f ~/Applications/gridiron/docker-compose.yml exec -T api pnpm sync ...`).
+# Until then they run against the checkout.
+
+GRIDIRON=/home/josh/Projects/gridiron
+
+# --- Schedule -----------------------------------------------------------------
+# Once a week, after the NFL week rolls over on Tuesday. Picks up flex-scheduled
+# kickoff changes for later weeks, which is the thing that actually moves.
+0 6 * * 2   cd $GRIDIRON && pnpm sync schedule >> /var/log/gridiron-sync.log 2>&1
+
+# --- Results ------------------------------------------------------------------
+# Every 15 minutes inside the windows games are actually being played, covering the
+# live week and the one before it. Outside these windows nothing changes, so polling
+# would only be noise against somebody else's undocumented endpoint.
+#
+# Thursday night, and into Friday for a game that ends after midnight.
+*/15 18-23 * * 4   cd $GRIDIRON && pnpm sync results >> /var/log/gridiron-sync.log 2>&1
+*/15 0-1   * * 5   cd $GRIDIRON && pnpm sync results >> /var/log/gridiron-sync.log 2>&1
+# Sunday, from the noon kickoffs through the end of the night game.
+*/15 11-23 * * 0   cd $GRIDIRON && pnpm sync results >> /var/log/gridiron-sync.log 2>&1
+# Monday night, plus the tail of Sunday night and of Monday night.
+*/15 0-1,18-23 * * 1   cd $GRIDIRON && pnpm sync results >> /var/log/gridiron-sync.log 2>&1
+*/15 0-1   * * 2   cd $GRIDIRON && pnpm sync results >> /var/log/gridiron-sync.log 2>&1
+
+# A daily backstop, for a score corrected days later or a window we missed.
+30 6 * * *   cd $GRIDIRON && pnpm sync results >> /var/log/gridiron-sync.log 2>&1
