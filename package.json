@@ -14,7 +14,14 @@
     "lint": "oxlint --type-aware",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm lint && pnpm typecheck && pnpm test"
+    "check": "pnpm lint && pnpm typecheck && pnpm test",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "db:generate": "pnpm --filter @gridiron/schema db:generate",
+    "db:migrate": "pnpm --filter @gridiron/schema db:migrate",
+    "db:seed": "pnpm --filter @gridiron/schema db:seed",
+    "db:studio": "pnpm --filter @gridiron/schema db:studio",
+    "db:reset": "docker compose down -v && pnpm db:up && pnpm db:migrate && pnpm db:seed"
   },
   "devDependencies": {
     "oxlint": "^1.75.0",

@@ -15,6 +15,7 @@ lives at `~/.claude/plans/rustling-floating-pike.md`.
 
 ```
 packages/rules/     pure validation + scoring engine, zero I/O
+packages/schema/    Drizzle schema, migrations, seed data
 ```
 
 `apps/api`, `apps/web` and `apps/importer` arrive in later phases.
@@ -32,6 +33,25 @@ pnpm check          # lint + typecheck + test
 pnpm test:watch
 pnpm format
 ```
+
+### Database
+
+```bash
+cp .env.example .env
+pnpm db:up          # start Postgres in Docker (port 5433)
+pnpm db:migrate
+pnpm db:seed        # teams, aliases, seasons — idempotent
+pnpm db:reset       # wipe and rebuild from nothing
+pnpm db:generate    # regenerate migrations after editing the schema
+```
+
+The dev database listens on **5433**, not 5432, because this machine already runs a
+host Postgres on the default port.
+
+Game rules are enforced in three places, deliberately: the UI greys out illegal picks,
+the API rejects them, and the database has the constraints to back it up. In
+particular, "a team may be used once per slot per season" is a unique index, so a bug
+in the write path still can't corrupt the data.
 
 ## Toolchain
 

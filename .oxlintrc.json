@@ -8,7 +8,8 @@
   },
   "rules": {
     "typescript/prefer-readonly-parameter-types": "off",
-    "eslint/max-lines-per-function": "off"
+    "eslint/max-lines-per-function": "off",
+    "eslint/max-lines": ["warn", { "max": 300, "skipComments": true, "skipBlankLines": true }]
   },
   "ignorePatterns": ["**/node_modules/**", "**/dist/**", "**/coverage/**"]
 }
