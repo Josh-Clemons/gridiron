@@ -1,0 +1,32 @@
+# Local development database only.
+#
+# The production compose file lives at ~/Applications/gridiron/ and is built in
+# Phase 5; this one exists so `pnpm db:migrate && pnpm db:seed` works from a clean
+# checkout.
+#
+# Port 5433, not 5432: this machine already runs a host Postgres 17 on 5432.
+# Bound to 127.0.0.1 per docs/firewall.md — anything on a non-localhost address is
+# reachable from every tailnet peer.
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: gridiron-dev-db
+    ports:
+      - '127.0.0.1:5433:5432'
+    environment:
+      POSTGRES_USER: gridiron
+      POSTGRES_PASSWORD: gridiron
+      POSTGRES_DB: gridiron
+      TZ: America/Chicago
+    volumes:
+      - gridiron-dev-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U gridiron -d gridiron']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  gridiron-dev-pgdata:
