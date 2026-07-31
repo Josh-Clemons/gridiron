@@ -13,6 +13,16 @@ import type { ResendConfig } from './mail/resend-mailer';
 const configSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().min(1).max(65535).default(8082),
+  /**
+   * The interface to bind. Defaults to loopback, because anything on a non-localhost
+   * address on the host is reachable from every tailnet peer.
+   *
+   * The container sets `0.0.0.0`, and that is not a loosening of the rule: a
+   * container's `127.0.0.1` is its own, so binding loopback there would publish a port
+   * nothing could reach. The isolation moves to Docker, which publishes to
+   * `127.0.0.1:8082` on the host — the same address, enforced one layer out.
+   */
+  HOST: z.string().min(1).default('127.0.0.1'),
   DATABASE_URL: z.string().min(1),
   /**
    * Where the browser reaches the app. Used to build password-reset links, and the
@@ -58,6 +68,8 @@ const configSchema = z.object({
 export interface Config {
   readonly nodeEnv: 'development' | 'test' | 'production';
   readonly port: number;
+  /** Bind address. Loopback everywhere except inside the container — see `HOST`. */
+  readonly host: string;
   readonly databaseUrl: string;
   readonly appUrl: string;
   readonly allowedOrigins: readonly string[];
@@ -127,6 +139,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   return {
     nodeEnv: value.NODE_ENV,
     port: value.PORT,
+    host: value.HOST,
     databaseUrl: value.DATABASE_URL,
     appUrl: value.APP_URL,
     allowedOrigins: [value.APP_URL, ...extra],

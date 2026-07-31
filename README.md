@@ -32,7 +32,7 @@ There is exactly one place a rule is written.
 ```bash
 pnpm install
 pnpm check          # lint + typecheck + test
-pnpm dev            # API on :8082 and the web app on :5173, together
+pnpm dev            # API on :8083 and the web app on :5173, together
 pnpm dev:api        # just one of them
 pnpm dev:web
 pnpm test:unit      # rules + contracts, milliseconds
@@ -55,7 +55,9 @@ pnpm db:generate    # regenerate migrations after editing the schema
 ```
 
 The dev database listens on **5433**, not 5432, because this machine already runs a
-host Postgres on the default port.
+host Postgres on the default port — and production is a third database on **5434**.
+The dev API is on **8083** for the same reason: 8082 belongs to the production
+container, which runs continuously.
 
 Game rules are enforced in three places, deliberately: the UI greys out illegal picks,
 the API rejects them, and the database has the constraints to back it up. In
@@ -98,9 +100,13 @@ Imported players are `league_members` rows with no `user_id`. Someone joining wi
 invite code can claim one and inherit its picks, which is how the 72-player spreadsheet
 league migrates to the site one person at a time.
 
-Password reset builds and sends a real message through a `Mailer` interface whose only
-implementations so far print to the log or collect in memory. Choosing a provider in
-Phase 5 is one new class.
+Password reset builds and sends a real message through a `Mailer` interface. Production
+sends through Resend's HTTP API — one `fetch`, no SMTP client — and development prints
+the link to the log. Production refuses to boot on any other transport, because the
+console one writes a working reset link into the journal and mails nobody. Build the
+mailer with `mailerFor(config)` rather than `createMailer` directly: passing a transport
+without its credentials type-checks and then throws only under `resend`, which is to say
+only in production.
 
 Integration tests run against a real Postgres in a Testcontainer — migrations and seed
 included, because constraints like the season-reuse index only exist in the database.
@@ -129,8 +135,9 @@ another member's browser.
 
 The dev server proxies `/api` to the API with the prefix stripped, which is the same
 shape Caddy serves in production — so the session cookie is first-party in both, and
-`SameSite=Lax` means what it says. **Phase 5 note:** the Caddy handle needs
-`uri strip_prefix /api`, or the API sees `/api/auth/login` and 404s.
+`SameSite=Lax` means what it says. Production does the stripping with Caddy's
+`handle_path /api/*`; with a plain `handle` the API would see `/api/auth/login` and 404
+on every call.
 
 ## NFL data
 
@@ -206,6 +213,44 @@ Adding a player is one deliberate line in `apps/importer/aliases/players.aliases
 The 2020, 2023 and 2025 workbooks are committed as golden fixtures with their expected
 findings pinned, alongside `games.json` — a dump of the real ESPN schedules for those
 seasons, so the tests need neither the network nor a local database.
+
+## Deployment
+
+Live at **https://gridironpicks.us**, self-hosted. The API and Postgres are containers;
+the frontend is built on the host and served as static files by Caddy, which also
+strips `/api` and proxies it to the container. Public traffic arrives over an existing
+Cloudflare tunnel — no inbound port is open.
+
+```bash
+# API — build and restart the stack
+docker compose -f ~/Applications/gridiron/docker-compose.yml up -d --build
+
+# Frontend — build, promote atomically, smoke test, auto-rollback on failure
+.pi/skills/deploy/scripts/deploy.sh
+.pi/skills/deploy/scripts/rollback.sh
+```
+
+`deploy/docker-compose.yml` is the source of truth and is symlinked to
+`~/Applications/gridiron/docker-compose.yml`, so editing it here is deploying it —
+the same convention `/etc/caddy/Caddyfile` follows. Secrets live in
+`~/.config/gridiron.env` at mode 0600 and are never in the repo. Migrations run as a
+one-shot container that must exit 0 before the API starts.
+
+Both compose files pin an explicit project name — `gridiron` for production,
+`gridiron-dev` here. Without them compose derives the name from the directory, and both
+directories are called `gridiron`; two same-named projects that each define a `db`
+service will adopt and recreate each other's containers.
+
+The importer runs against production through the same image, behind a compose profile
+so it never starts on its own:
+
+```bash
+docker compose -f ~/Applications/gridiron/docker-compose.yml \
+  run --rm importer --file /workbooks/"Grid Iron- 2026.xlsx" --league 1 --season 2026
+```
+
+Workbooks go in `~/gridiron-workbooks`, mounted read-only. Nightly `pg_dump` is step 3
+of `~/Projects/irc/scripts/backup.sh`; the league's picks exist nowhere else.
 
 ## Toolchain
 

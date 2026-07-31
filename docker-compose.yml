@@ -1,12 +1,19 @@
 # Local development database only.
 #
-# The production compose file lives at ~/Applications/gridiron/ and is built in
-# Phase 5; this one exists so `pnpm db:migrate && pnpm db:seed` works from a clean
-# checkout.
+# The production stack is deploy/docker-compose.yml, symlinked to
+# ~/Applications/gridiron/; this one exists so `pnpm db:migrate && pnpm db:seed`
+# works from a clean checkout.
 #
 # Port 5433, not 5432: this machine already runs a host Postgres 17 on 5432.
-# Bound to 127.0.0.1 per docs/firewall.md — anything on a non-localhost address is
-# reachable from every tailnet peer.
+# Production is 5434. Bound to 127.0.0.1 per docs/firewall.md — anything on a
+# non-localhost address is reachable from every tailnet peer.
+#
+# The explicit project name matters. Without it compose derives the name from the
+# directory, which is `gridiron` for this file AND for the production compose in
+# ~/Applications/gridiron. Both define a service called `db`, so the second one
+# started treats the first one's container as its own and recreates it — which is
+# exactly what happened the first time production came up.
+name: gridiron-dev
 
 services:
   db:
@@ -30,3 +37,8 @@ services:
 
 volumes:
   gridiron-dev-pgdata:
+    # Named explicitly, and deliberately keeping the `gridiron_` prefix compose
+    # generated back when this project was called `gridiron`. Renaming the project
+    # above would otherwise point at a fresh, empty volume and silently strand the
+    # real 2020/2023/2025 ESPN data this database holds.
+    name: gridiron_gridiron-dev-pgdata

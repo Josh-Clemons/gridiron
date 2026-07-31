@@ -16,7 +16,9 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8082',
+        // 8083, not 8082: the production container owns 8082 on this machine and
+        // runs all the time, so the dev server would have nowhere to bind.
+        target: 'http://127.0.0.1:8083',
         changeOrigin: false,
         rewrite: (path) => path.replace(/^\/api/u, ''),
       },

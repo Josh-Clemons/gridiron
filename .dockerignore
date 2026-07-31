@@ -1,0 +1,42 @@
+# Build context for apps/api/Dockerfile, which is the repo root.
+#
+# node_modules is the important line: the image installs its own with pnpm, and
+# shipping the host's would both bloat the context and carry linux-x64 binaries
+# built against a different libc than the one in the image.
+
+node_modules
+**/node_modules
+
+# Secrets. The container is configured entirely through compose's env_file, and
+# `pnpm start` passes --env-file-if-exists, so a copied .env would silently win.
+.env
+.env.*
+!.env.example
+
+# Build output and caches — nothing here is used by the image.
+**/dist
+**/build
+**/coverage
+**/test-results
+**/playwright-report
+**/blob-report
+**/.vite
+**/.cache
+**/*.tsbuildinfo
+**/.oxlintcache
+**/.prettiercache
+
+# The frontend is built on the host and deployed as static files, so none of it
+# belongs in the image — except its manifest. `pnpm install --frozen-lockfile`
+# compares the lockfile against every workspace manifest before it decides the
+# lockfile is current, so a missing apps/web/package.json fails the install even
+# though nothing in the image imports it.
+apps/web
+!apps/web/package.json
+
+# Repo furniture.
+.git
+.github
+.pi
+*.log
+README.md

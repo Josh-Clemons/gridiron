@@ -1,0 +1,135 @@
+# =============================================================================
+#  Gridiron — production stack (gridironpicks.us)
+#
+#  Source of truth (git-tracked): ~/Projects/gridiron/deploy/docker-compose.yml
+#  Live: ~/Applications/gridiron/docker-compose.yml is a SYMLINK to this file, so
+#  editing here IS deploying — the same convention as /etc/caddy/Caddyfile in the
+#  irc repo. Never `cp` over the symlink; that re-creates the drift it prevents.
+#
+#  Manage with:
+#      srv status|restart|logs gridiron
+#  or directly:
+#      docker compose -f ~/Applications/gridiron/docker-compose.yml up -d --build
+#
+#  Secrets come from ~/.config/gridiron.env (mode 0600). Nothing secret belongs
+#  in this file. That path is reached two ways, which is why there is a second
+#  symlink beside this one: `env_file:` below hands it to the containers, while
+#  ~/Applications/gridiron/.env -> ~/.config/gridiron.env is what compose reads
+#  for ${...} interpolation. Those are separate mechanisms — env_file values are
+#  NOT available to interpolation — and POSTGRES_PASSWORD needs both.
+#
+#  Every published port is bound to 127.0.0.1 — per docs/firewall.md in the irc
+#  repo, anything on a non-localhost address is reachable from every tailnet
+#  peer, and UFW does not stop tailnet traffic.
+#
+#  The explicit project name is load-bearing: compose otherwise derives it from
+#  the directory, and both this file and the repo's dev compose sit in a
+#  directory called `gridiron`. Two projects of the same name that both define a
+#  service called `db` will adopt and recreate each other's containers.
+# =============================================================================
+
+name: gridiron
+
+# One image serves all three Node services — the server, the migrator and the
+# importer differ only in what they run. Exactly one service declares the build:
+# when several do, compose builds them concurrently and they race to write the
+# same tag ("image already exists"). The other two say `pull_policy: never` so a
+# missing image is an error to fix rather than a registry lookup for a private
+# name that will never resolve.
+x-api-image: &api-image
+  image: gridiron-api:latest
+  pull_policy: never
+
+services:
+  # ---- Postgres ------------------------------------------------------------
+  db:
+    image: postgres:17-alpine
+    container_name: gridiron-db
+    # 5434 because 5432 is the host Postgres and 5433 is the dev container.
+    # Published at all so psql, pg_dump and drizzle-kit studio can reach
+    # production from the host — the path by which a season of history gets
+    # loaded and inspected.
+    ports:
+      - '127.0.0.1:5434:5432'
+    environment:
+      POSTGRES_USER: gridiron
+      POSTGRES_DB: gridiron
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in ~/.config/gridiron.env}
+      TZ: America/Chicago
+    volumes:
+      - gridiron-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U gridiron -d gridiron']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  # ---- Migrations ----------------------------------------------------------
+  # A one-shot that must finish before the API starts. Drizzle skips migrations
+  # already recorded, so this is a no-op on every boot that changes nothing.
+  # It runs as its own service rather than in the API's entrypoint so that a
+  # failed migration stops the deploy visibly instead of crash-looping the API.
+  migrate:
+    <<: *api-image
+    container_name: gridiron-migrate
+    working_dir: /app/packages/schema
+    command: ['pnpm', 'exec', 'tsx', 'src/migrate.ts']
+    env_file:
+      - /home/josh/.config/gridiron.env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: 'no'
+
+  # ---- API -----------------------------------------------------------------
+  api:
+    # The one service that owns the build; migrate and importer reuse its tag.
+    build:
+      context: /home/josh/Projects/gridiron
+      dockerfile: apps/api/Dockerfile
+    image: gridiron-api:latest
+    container_name: gridiron-api
+    ports:
+      - '127.0.0.1:8082:8082'
+    environment:
+      # 0.0.0.0 inside the container is not a loosening of the loopback rule —
+      # a container's own 127.0.0.1 is unreachable from the host, so the bind
+      # has to be the container's interface and the isolation moves up to the
+      # port publishing above. See HOST in apps/api/src/config.ts.
+      HOST: '0.0.0.0'
+    env_file:
+      - /home/josh/.config/gridiron.env
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  # ---- Importer (on demand) ------------------------------------------------
+  # Behind a profile, so `up` never starts it. Run a workbook through it with:
+  #   docker compose -f ~/Applications/gridiron/docker-compose.yml \
+  #     run --rm importer --file /workbooks/"Grid Iron- 2026.xlsx" \
+  #     --league 1 --season 2026
+  # Add --apply once the report reads clean. Drop workbooks in ~/gridiron-workbooks;
+  # it is mounted read-only so a bug here can never rewrite the commissioner's file.
+  importer:
+    <<: *api-image
+    container_name: gridiron-importer
+    profiles: ['tools']
+    working_dir: /app/apps/importer
+    entrypoint: ['pnpm', 'exec', 'tsx', 'src/cli.ts']
+    volumes:
+      - /home/josh/gridiron-workbooks:/workbooks:ro
+    env_file:
+      - /home/josh/.config/gridiron.env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: 'no'
+
+volumes:
+  gridiron-pgdata:
+    name: gridiron-pgdata

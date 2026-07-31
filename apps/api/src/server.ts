@@ -3,14 +3,16 @@ import { createDatabase } from '@gridiron/schema';
 import { createApp } from './app';
 import { loadConfig } from './config';
 import { createDeps } from './deps';
-import { createMailer } from './mail/mailer';
+import { mailerFor } from './mail/mailer';
 
 /**
  * Process entry point.
  *
- * Binds to 127.0.0.1 only. Anything on a non-localhost address here would be
- * reachable from every tailnet peer; public access comes from Caddy on the same box,
- * which is the rule the rest of the machine's services follow.
+ * Binds to 127.0.0.1 unless `HOST` says otherwise. Anything on a non-localhost
+ * address here would be reachable from every tailnet peer; public access comes from
+ * Caddy on the same box, which is the rule the rest of the machine's services follow.
+ * In production the process runs in a container, where the same rule is enforced by
+ * Docker publishing the port to `127.0.0.1` on the host — see `HOST` in `config.ts`.
  */
 const config = loadConfig();
 const { db, sql } = createDatabase(config.databaseUrl, { max: 10 });
@@ -28,14 +30,16 @@ if (config.clockOffsetMs !== 0) {
 const deps = createDeps({
   db,
   config,
-  mailer: createMailer(config.mailTransport, config.resend),
+  mailer: mailerFor(config),
   ...(config.clockOffsetMs === 0 ? {} : { now: clock }),
 });
 
 const server = serve(
-  { fetch: createApp(deps).fetch, port: config.port, hostname: '127.0.0.1' },
+  { fetch: createApp(deps).fetch, port: config.port, hostname: config.host },
   () => {
-    console.info(`gridiron api listening on 127.0.0.1:${String(config.port)} (${config.nodeEnv})`);
+    console.info(
+      `gridiron api listening on ${config.host}:${String(config.port)} (${config.nodeEnv})`,
+    );
   },
 );
 
