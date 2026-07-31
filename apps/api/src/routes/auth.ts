@@ -152,14 +152,12 @@ export function authRoutes(deps: Deps) {
 
         const token = randomBytes(32).toString('base64url');
         const expiresAt = new Date(deps.now().getTime() + deps.config.resetTokenTtlMs);
-        await deps.db
-          .insert(passwordResetTokens)
-          .values({
-            userId: user.id,
-            tokenHash: hashToken(token),
-            expiresAt,
-            createdAt: deps.now(),
-          });
+        await deps.db.insert(passwordResetTokens).values({
+          userId: user.id,
+          tokenHash: hashToken(token),
+          expiresAt,
+          createdAt: deps.now(),
+        });
 
         const link = `${deps.config.appUrl}/reset-password?token=${token}`;
         const minutes = Math.round(deps.config.resetTokenTtlMs / 60_000);

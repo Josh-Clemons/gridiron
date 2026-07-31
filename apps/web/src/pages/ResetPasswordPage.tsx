@@ -50,8 +50,8 @@ export function ResetPasswordPage() {
     >
       {reset.isSuccess ? (
         <Alert severity="success">
-          Your password is changed and every other session has been signed out. Taking you to
-          your leagues…
+          Your password is changed and every other session has been signed out. Taking you to your
+          leagues…
         </Alert>
       ) : (
         <form
