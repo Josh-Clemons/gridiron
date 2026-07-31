@@ -14,6 +14,7 @@ import { hashPassword, verifyPassword } from '../auth/password';
 import {
   clearSessionCookie,
   createSession,
+  purgeExpiredResetTokens,
   purgeExpiredSessions,
   revokeAllSessions,
   revokeSession,
@@ -147,11 +148,18 @@ export function authRoutes(deps: Deps) {
 
       const user = rows[0];
       if (user !== undefined) {
+        await purgeExpiredResetTokens(deps);
+
         const token = randomBytes(32).toString('base64url');
         const expiresAt = new Date(deps.now().getTime() + deps.config.resetTokenTtlMs);
         await deps.db
           .insert(passwordResetTokens)
-          .values({ userId: user.id, tokenHash: hashToken(token), expiresAt });
+          .values({
+            userId: user.id,
+            tokenHash: hashToken(token),
+            expiresAt,
+            createdAt: deps.now(),
+          });
 
         const link = `${deps.config.appUrl}/reset-password?token=${token}`;
         const minutes = Math.round(deps.config.resetTokenTtlMs / 60_000);
@@ -177,11 +185,17 @@ export function authRoutes(deps: Deps) {
   );
 
   /**
-   * Finish a password reset.
+   * Finish a password reset, and sign the user in.
    *
    * Redeeming a token is one-shot and takes every session with it: if the reset was
    * prompted by a compromise, the attacker's cookie stops working at the same instant
-   * the password changes.
+   * the password changes. The fresh session is minted *after* that sweep, so it is the
+   * only one left standing — reversed, this would revoke the session it just issued.
+   *
+   * Handing back a session rather than a redirect to the sign-in form costs nothing:
+   * whoever redeemed the token chose the new password and could simply type it. The
+   * mailbox is already the root of trust for the account, so requiring a login here
+   * would be friction in front of a door that is open either way.
    */
   app.post(
     '/auth/reset-password',
@@ -205,20 +219,30 @@ export function authRoutes(deps: Deps) {
       if (token === undefined) throw unauthorized('that reset link is invalid or expired');
 
       const passwordHash = await hashPassword(body.password);
-      await deps.db.transaction(async (tx) => {
-        await tx
+      const updated = await deps.db.transaction(async (tx) => {
+        const changed = await tx
           .update(users)
           .set({ passwordHash, updatedAt: deps.now() })
-          .where(eq(users.id, token.userId));
+          .where(eq(users.id, token.userId))
+          .returning();
         await tx
           .update(passwordResetTokens)
           .set({ usedAt: deps.now() })
           .where(eq(passwordResetTokens.id, token.id));
+        return changed[0];
       });
+      if (updated === undefined) throw new Error('password reset matched no user');
+
       await revokeAllSessions(deps, token.userId);
 
-      clearSessionCookie(c, deps.config);
-      return c.json({ status: 'reset' });
+      const session = await createSession(deps, token.userId);
+      setSessionCookie(c, deps.config, session.token);
+
+      const response: SessionResponse = {
+        user: toUser(updated),
+        expiresAt: session.expiresAt.toISOString(),
+      };
+      return c.json(response);
     },
   );
 

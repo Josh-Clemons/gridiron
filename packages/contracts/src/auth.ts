@@ -8,7 +8,13 @@ import { idSchema, instantSchema } from './common';
  */
 export const emailSchema = z.email().trim().toLowerCase().max(254);
 
-export const passwordSchema = z.string().min(10).max(200);
+/**
+ * Exported so the sign-up and reset forms can state the rule in their helper text
+ * without hard-coding a number that would silently drift from the one enforced here.
+ */
+export const MIN_PASSWORD_LENGTH = 8;
+
+export const passwordSchema = z.string().min(MIN_PASSWORD_LENGTH).max(200);
 
 export const displayNameSchema = z.string().trim().min(1).max(60);
 

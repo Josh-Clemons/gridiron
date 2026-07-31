@@ -1,22 +1,31 @@
+import { MIN_PASSWORD_LENGTH } from '@gridiron/contracts';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useMutation } from '@tanstack/react-query';
-import { Link, useSearch } from '@tanstack/react-router';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link, useNavigate, useSearch } from '@tanstack/react-router';
 import { useState } from 'react';
-import { resetPassword } from '../api/queries';
+import { resetPassword, sessionQuery } from '../api/queries';
 import { AuthLayout } from '../components/AuthLayout';
 
-const MIN_PASSWORD = 10;
-
 export function ResetPasswordPage() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { token } = useSearch({ from: '/reset-password' });
   const [password, setPassword] = useState('');
 
-  const reset = useMutation({ mutationFn: () => resetPassword(token ?? '', password) });
-  const tooShort = password.length > 0 && password.length < MIN_PASSWORD;
+  const reset = useMutation({
+    mutationFn: () => resetPassword(token ?? '', password),
+    // Redeeming the token already signed us in, so go straight to the app rather than
+    // bouncing through a sign-in form for the password chosen a second ago.
+    onSuccess: async (session) => {
+      queryClient.setQueryData(sessionQuery().queryKey, session.user);
+      await navigate({ to: '/leagues' });
+    },
+  });
+  const tooShort = password.length > 0 && password.length < MIN_PASSWORD_LENGTH;
 
   if (token === undefined || token === '') {
     return (
@@ -41,8 +50,8 @@ export function ResetPasswordPage() {
     >
       {reset.isSuccess ? (
         <Alert severity="success">
-          Your password is changed and every other session has been signed out.{' '}
-          <Link to="/login">Sign in</Link>.
+          Your password is changed and every other session has been signed out. Taking you to
+          your leagues…
         </Alert>
       ) : (
         <form
@@ -65,7 +74,7 @@ export function ResetPasswordPage() {
               required
               fullWidth
               error={tooShort}
-              helperText={`At least ${String(MIN_PASSWORD)} characters.`}
+              helperText={`At least ${String(MIN_PASSWORD_LENGTH)} characters.`}
             />
             <Button
               type="submit"

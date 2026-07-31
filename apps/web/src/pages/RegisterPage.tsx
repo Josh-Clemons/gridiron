@@ -1,3 +1,4 @@
+import { MIN_PASSWORD_LENGTH } from '@gridiron/contracts';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -7,8 +8,6 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import { register, sessionQuery } from '../api/queries';
 import { AuthLayout, fieldErrors } from '../components/AuthLayout';
-
-const MIN_PASSWORD = 10;
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ export function RegisterPage() {
   });
 
   const fields = fieldErrors(signUp.error);
-  const tooShort = password.length > 0 && password.length < MIN_PASSWORD;
+  const tooShort = password.length > 0 && password.length < MIN_PASSWORD_LENGTH;
 
   return (
     <AuthLayout
@@ -86,7 +85,7 @@ export function RegisterPage() {
             error={tooShort || fields.password !== undefined}
             // Length is the only rule the server enforces, so it's the only one stated
             // here. Character-class advice mostly produces `Password1!`.
-            helperText={fields.password ?? `At least ${String(MIN_PASSWORD)} characters.`}
+            helperText={fields.password ?? `At least ${String(MIN_PASSWORD_LENGTH)} characters.`}
           />
           <Button
             type="submit"

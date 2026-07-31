@@ -1,7 +1,11 @@
+import { passwordResetTokens } from '@gridiron/schema';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiClient, createHarness, type Harness, signUp } from './helpers';
 
 let harness: Harness;
+
+const countResetTokens = async (): Promise<number> =>
+  (await harness.db.select().from(passwordResetTokens)).length;
 
 beforeAll(async () => {
   harness = await createHarness();
@@ -137,13 +141,21 @@ describe('password reset', () => {
     const token = /token=([\w-]+)/u.exec(message?.text ?? '')?.[1];
     expect(token).toBeDefined();
 
-    const reset = await new ApiClient(harness.app).post('/auth/reset-password', {
+    const resetter = new ApiClient(harness.app);
+    const reset = await resetter.post<{ user: { email: string } }>('/auth/reset-password', {
       token,
       password: 'a whole new password',
     });
     expect(reset.status).toBe(200);
+    expect(reset.body.user.email).toBe('reset@example.com');
 
-    // The session that existed before the reset is dead.
+    // Redeeming the token signs you in — no trip through the login form.
+    const me = await resetter.get<{ user: { email: string } }>('/auth/me');
+    expect(me.status).toBe(200);
+    expect(me.body.user.email).toBe('reset@example.com');
+
+    // The session that existed before the reset is dead, and the sweep that killed it
+    // ran before the new one was minted rather than after.
     expect((await client.get('/auth/me')).status).toBe(401);
 
     const fresh = new ApiClient(harness.app);
@@ -213,6 +225,68 @@ describe('password reset', () => {
       password: 'too late for this',
     });
     expect(response.status).toBe(401);
+  });
+
+  /**
+   * Abandoned requests are swept when the next token is issued, so the table tracks
+   * outstanding resets rather than growing forever.
+   */
+  it('sweeps expired reset tokens that were never redeemed', async () => {
+    await signUp(harness.app, 'sweeper@example.com');
+    const client = new ApiClient(harness.app);
+
+    await client.post('/auth/forgot-password', { email: 'sweeper@example.com' });
+    expect(await countResetTokens()).toBe(1);
+
+    // Still inside its hour: a second request adds to the first rather than replacing it.
+    await client.post('/auth/forgot-password', { email: 'sweeper@example.com' });
+    expect(await countResetTokens()).toBe(2);
+
+    harness.setNow(new Date('2026-09-11T12:00:00Z'));
+    await client.post('/auth/forgot-password', { email: 'sweeper@example.com' });
+    expect(await countResetTokens()).toBe(1);
+  });
+
+  /**
+   * A redeemed token is the only durable record that a password changed and when, so
+   * the sweep leaves it alone even long after it expires.
+   */
+  it('keeps redeemed tokens as a record of the change', async () => {
+    await signUp(harness.app, 'history@example.com');
+    const client = new ApiClient(harness.app);
+
+    await client.post('/auth/forgot-password', { email: 'history@example.com' });
+    const token = /token=([\w-]+)/u.exec(
+      harness.mailer.lastTo('history@example.com')?.text ?? '',
+    )?.[1];
+    await client.post('/auth/reset-password', { token, password: 'a brand new one' });
+
+    // Well past its expiry, and past another sweep.
+    harness.setNow(new Date('2026-10-01T12:00:00Z'));
+    await client.post('/auth/forgot-password', { email: 'history@example.com' });
+
+    const redeemed = (await harness.db.select().from(passwordResetTokens)).filter(
+      (row) => row.usedAt !== null,
+    );
+    expect(redeemed).toHaveLength(1);
+    expect(redeemed[0]?.usedAt?.toISOString()).toBe('2026-09-10T12:00:00.000Z');
+  });
+
+  /**
+   * `created_at` defaults to Postgres' clock, which disagrees with the injected one by
+   * months under CLOCK_OVERRIDE — stamping rows that expire before they were created.
+   */
+  it('stamps created_at from the injected clock, not the database clock', async () => {
+    await signUp(harness.app, 'clock@example.com');
+    await new ApiClient(harness.app).post('/auth/forgot-password', {
+      email: 'clock@example.com',
+    });
+
+    const rows = await harness.db.select().from(passwordResetTokens);
+    const row = rows[0];
+    expect(row).toBeDefined();
+    expect(row?.createdAt.toISOString()).toBe('2026-09-10T12:00:00.000Z');
+    expect(row?.createdAt.getTime()).toBeLessThan(row?.expiresAt.getTime() ?? 0);
   });
 });
 

@@ -1,6 +1,6 @@
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
-import { sessions, users } from '@gridiron/schema';
-import { eq, lt } from 'drizzle-orm';
+import { passwordResetTokens, sessions, users } from '@gridiron/schema';
+import { and, eq, isNull, lt } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import type { Config } from '../config';
@@ -40,7 +40,13 @@ export async function createSession(
 ): Promise<{ token: string; expiresAt: Date }> {
   const token = randomBytes(32).toString('base64url');
   const expiresAt = new Date(deps.now().getTime() + deps.config.sessionTtlMs);
-  await deps.db.insert(sessions).values({ userId, tokenHash: hashToken(token), expiresAt });
+  // `createdAt` is passed rather than left to the column default: `defaultNow()` is
+  // Postgres' clock, and every other instant on this row comes from `deps.now()`. Under
+  // CLOCK_OVERRIDE the two disagree by months, which stamps rows that expire long before
+  // they were created.
+  await deps.db
+    .insert(sessions)
+    .values({ userId, tokenHash: hashToken(token), expiresAt, createdAt: deps.now() });
   return { token, expiresAt };
 }
 
@@ -93,6 +99,21 @@ export async function revokeAllSessions(deps: Deps, userId: number): Promise<voi
 /** Housekeeping for expired rows; cheap enough to run opportunistically at login. */
 export async function purgeExpiredSessions(deps: Deps): Promise<void> {
   await deps.db.delete(sessions).where(lt(sessions.expiresAt, deps.now()));
+}
+
+/**
+ * The same housekeeping for reset tokens, run when one is issued.
+ *
+ * Only *unredeemed* expired tokens go. A redeemed row is the one durable record that a
+ * password changed and when — `users.updated_at` holds just the latest change, and the
+ * account has no other audit trail — so it is kept deliberately rather than swept an
+ * hour after use. That leaves the abandoned requests, which are the bulk of the table,
+ * and keeps growth to a handful of rows per account per year.
+ */
+export async function purgeExpiredResetTokens(deps: Deps): Promise<void> {
+  await deps.db
+    .delete(passwordResetTokens)
+    .where(and(lt(passwordResetTokens.expiresAt, deps.now()), isNull(passwordResetTokens.usedAt)));
 }
 
 /**

@@ -173,8 +173,13 @@ export const logout = (): Promise<void> => requestVoid('/auth/logout', { method:
 export const forgotPassword = (email: string): Promise<void> =>
   requestVoid('/auth/forgot-password', { method: 'POST', body: { email } });
 
-export const resetPassword = (token: string, password: string): Promise<void> =>
-  requestVoid('/auth/reset-password', { method: 'POST', body: { token, password } });
+/** Redeeming a token signs you in, so this answers with a session like `login` does. */
+export const resetPassword = (token: string, password: string): Promise<SessionResponse> =>
+  request('/auth/reset-password', {
+    method: 'POST',
+    body: { token, password },
+    schema: sessionResponseSchema,
+  });
 
 export const createLeague = (body: CreateLeagueRequest): Promise<League> =>
   request('/leagues', { method: 'POST', body, schema: leagueSchema });
