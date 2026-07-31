@@ -11,7 +11,8 @@ BUILD_DIR="${DEPLOY_ROOT}/builds"
 CURRENT_LINK="${DEPLOY_ROOT}/current"
 PREVIOUS_LINK="${DEPLOY_ROOT}/previous"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
+# Four levels up, not three: scripts → deploy → skills → .pi → repo root.
+PROJECT_DIR="$(cd "${SCRIPT_DIR}/../../../.." && pwd)"
 
 cd "$PROJECT_DIR"
 
