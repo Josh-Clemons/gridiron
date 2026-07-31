@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { loadConfig } from '../src/config';
-import { ConsoleMailer, createMailer } from '../src/mail/mailer';
+import { ConsoleMailer, createMailer, mailerFor } from '../src/mail/mailer';
 import { MemoryMailer } from '../src/mail/memory-mailer';
 import { ResendMailer } from '../src/mail/resend-mailer';
 
@@ -78,6 +78,26 @@ describe('choosing a transport', () => {
 
   it('refuses resend without credentials rather than falling back to the console', () => {
     expect(() => createMailer('resend')).toThrow(/requires RESEND_API_KEY/u);
+  });
+
+  /**
+   * The regression this exists for: the sync CLI called `createMailer(transport)`
+   * and dropped the credentials. That type-checks, and under the development
+   * default (`console`) it works — so it failed for the first time in production,
+   * where it would have killed every scheduled ESPN sync at startup. `mailerFor`
+   * takes the whole config, which is the only argument shape that can't be got
+   * half-right.
+   */
+  it('builds a working resend mailer from a production config', () => {
+    const config = loadConfig({
+      ...BASE_ENV,
+      NODE_ENV: 'production',
+      MAIL_TRANSPORT: 'resend',
+      RESEND_API_KEY: RESEND.apiKey,
+      MAIL_FROM: RESEND.from,
+    });
+
+    expect(mailerFor(config)).toBeInstanceOf(ResendMailer);
   });
 });
 

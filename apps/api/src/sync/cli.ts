@@ -4,7 +4,7 @@ import { createAlerter } from '../alerts/alerter';
 import { loadConfig } from '../config';
 import { currentWeek, resolveSeason } from '../data/seasons';
 import { createDeps } from '../deps';
-import { createMailer } from '../mail/mailer';
+import { mailerFor } from '../mail/mailer';
 import { createEspnClient } from './espn';
 import { requireSeason, type SeasonSyncResult, syncSeason, syncWeeks } from './games';
 
@@ -54,7 +54,11 @@ async function main(): Promise<void> {
   const deps = createDeps({
     db,
     config,
-    mailer: createMailer(config.mailTransport),
+    // The sync sends no mail, but `createDeps` needs a mailer. Built from the whole
+    // config rather than a hand-picked transport: passing the transport alone
+    // type-checks and then throws under MAIL_TRANSPORT=resend, so every production
+    // run of this CLI used to die here before it reached ESPN.
+    mailer: mailerFor(config),
   });
   const alerter = createAlerter(config);
   const client = createEspnClient({

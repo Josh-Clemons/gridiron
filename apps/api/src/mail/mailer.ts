@@ -1,3 +1,4 @@
+import type { Config } from '../config';
 import { MemoryMailer } from './memory-mailer';
 import { ResendMailer, type ResendConfig } from './resend-mailer';
 
@@ -46,3 +47,15 @@ export function createMailer(transport: MailTransport, resend?: ResendConfig): M
   }
   return new ConsoleMailer();
 }
+
+/**
+ * The mailer a given configuration asks for.
+ *
+ * Every entry point should use this rather than calling {@link createMailer} with
+ * hand-picked arguments: passing the transport and forgetting the credentials
+ * type-checks, and then throws only under `MAIL_TRANSPORT=resend` — which is to say
+ * only in production. The sync CLI did exactly that, and every scheduled run would
+ * have died before reaching ESPN.
+ */
+export const mailerFor = (config: Config): Mailer =>
+  createMailer(config.mailTransport, config.resend);
