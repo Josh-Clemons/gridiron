@@ -17,7 +17,7 @@
 #   mkdir -p /home/josh/logs      # cron discards output silently if it can't write
 #   (log rotation is not configured — see docs/SERVICES.md)
 
-SYNC=docker compose -f /home/josh/Applications/gridiron/docker-compose.yml exec -T api pnpm exec tsx src/sync/cli.ts
+SYNC=docker compose -f /home/josh/Applications/gridiron/docker-compose.yml exec -T gridiron-api pnpm exec tsx src/sync/cli.ts
 LOG=/home/josh/logs/gridiron-sync.log
 
 # --- Schedule -----------------------------------------------------------------

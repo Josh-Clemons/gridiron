@@ -26,6 +26,12 @@
 #  the directory, and both this file and the repo's dev compose sit in a
 #  directory called `gridiron`. Two projects of the same name that both define a
 #  service called `db` will adopt and recreate each other's containers.
+#
+#  Service names match container names, which reads redundantly here but is the
+#  convention every other service on this box follows — and `srv` depends on it:
+#  it passes the registered container name to `docker compose ps`, which filters
+#  by SERVICE. A service called `api` behind a container called `gridiron-api`
+#  reports "not running or not found" while running perfectly.
 # =============================================================================
 
 name: gridiron
@@ -42,7 +48,7 @@ x-api-image: &api-image
 
 services:
   # ---- Postgres ------------------------------------------------------------
-  db:
+  gridiron-db:
     image: postgres:17-alpine
     container_name: gridiron-db
     # 5434 because 5432 is the host Postgres and 5433 is the dev container.
@@ -71,7 +77,7 @@ services:
   # already recorded, so this is a no-op on every boot that changes nothing.
   # It runs as its own service rather than in the API's entrypoint so that a
   # failed migration stops the deploy visibly instead of crash-looping the API.
-  migrate:
+  gridiron-migrate:
     <<: *api-image
     container_name: gridiron-migrate
     working_dir: /app/packages/schema
@@ -79,12 +85,12 @@ services:
     env_file:
       - /home/josh/.config/gridiron.env
     depends_on:
-      db:
+      gridiron-db:
         condition: service_healthy
     restart: 'no'
 
   # ---- API -----------------------------------------------------------------
-  api:
+  gridiron-api:
     # The one service that owns the build; migrate and importer reuse its tag.
     build:
       context: /home/josh/Projects/gridiron
@@ -102,20 +108,20 @@ services:
     env_file:
       - /home/josh/.config/gridiron.env
     depends_on:
-      db:
+      gridiron-db:
         condition: service_healthy
-      migrate:
+      gridiron-migrate:
         condition: service_completed_successfully
     restart: unless-stopped
 
   # ---- Importer (on demand) ------------------------------------------------
   # Behind a profile, so `up` never starts it. Run a workbook through it with:
   #   docker compose -f ~/Applications/gridiron/docker-compose.yml \
-  #     run --rm importer --file /workbooks/"Grid Iron- 2026.xlsx" \
+  #     run --rm gridiron-importer --file /workbooks/"Grid Iron- 2026.xlsx" \
   #     --league 1 --season 2026
   # Add --apply once the report reads clean. Drop workbooks in ~/gridiron-workbooks;
   # it is mounted read-only so a bug here can never rewrite the commissioner's file.
-  importer:
+  gridiron-importer:
     <<: *api-image
     container_name: gridiron-importer
     profiles: ['tools']
@@ -126,7 +132,7 @@ services:
     env_file:
       - /home/josh/.config/gridiron.env
     depends_on:
-      db:
+      gridiron-db:
         condition: service_healthy
     restart: 'no'
 

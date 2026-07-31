@@ -157,7 +157,8 @@ pnpm sync results --week 7
 Cron runs exactly these commands — see `scripts/crontab.example` — so the automated
 path and the manual one can't diverge. Every run is idempotent: rows that already match
 are left alone, and re-running after a failure is always safe. Failures exit non-zero
-and alert (stderr by default, Matrix once Phase 5 supplies a token).
+and alert. The alerter can post to Matrix, but no token is configured yet, so today a
+failure goes to stderr and cron mails it to the local user.
 
 Nothing incrementally mutates a score. Standings are derived from `games` and `picks` on
 read, so **writing a result _is_ the rescore**, and a result ESPN later corrects simply
@@ -246,7 +247,7 @@ so it never starts on its own:
 
 ```bash
 docker compose -f ~/Applications/gridiron/docker-compose.yml \
-  run --rm importer --file /workbooks/"Grid Iron- 2026.xlsx" --league 1 --season 2026
+  run --rm gridiron-importer --file /workbooks/"Grid Iron- 2026.xlsx" --league 1 --season 2026
 ```
 
 Workbooks go in `~/gridiron-workbooks`, mounted read-only. Nightly `pg_dump` is step 3
