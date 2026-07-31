@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiClient, createHarness, type Harness, signUp } from './helpers';
 
 let harness: Harness;
@@ -174,6 +174,29 @@ describe('password reset', () => {
 
     expect(response.status).toBe(202);
     expect(harness.mailer.sent).toHaveLength(0);
+  });
+
+  /**
+   * Only a real address reaches the send, so a provider outage that surfaced as a 500
+   * would answer differently for registered and unregistered emails — turning the one
+   * route that deliberately reveals nothing into an account oracle.
+   */
+  it('still says the same thing when the mail provider is down', async () => {
+    await signUp(harness.app, 'outage@example.com');
+    const failure = vi.spyOn(harness.mailer, 'send').mockRejectedValue(new Error('resend is down'));
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const known = await new ApiClient(harness.app).post('/auth/forgot-password', {
+      email: 'outage@example.com',
+    });
+    const unknown = await new ApiClient(harness.app).post('/auth/forgot-password', {
+      email: 'nobody@example.com',
+    });
+
+    expect(known.status).toBe(202);
+    expect(unknown.status).toBe(known.status);
+    expect(failure).toHaveBeenCalledTimes(1);
+    vi.restoreAllMocks();
   });
 
   it('refuses an expired link', async () => {

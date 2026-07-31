@@ -28,7 +28,7 @@ if (config.clockOffsetMs !== 0) {
 const deps = createDeps({
   db,
   config,
-  mailer: createMailer(config.mailTransport),
+  mailer: createMailer(config.mailTransport, config.resend),
   ...(config.clockOffsetMs === 0 ? {} : { now: clock }),
 });
 

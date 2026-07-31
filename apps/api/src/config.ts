@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import type { MatrixConfig } from './alerts/matrix-alerter';
+import type { MailTransport } from './mail/mailer';
+import type { ResendConfig } from './mail/resend-mailer';
 
 /**
  * Runtime configuration, parsed once at startup.
@@ -21,8 +23,11 @@ const configSchema = z.object({
   EXTRA_ORIGINS: z.string().default(''),
   SESSION_TTL_DAYS: z.coerce.number().int().min(1).max(365).default(30),
   RESET_TOKEN_TTL_MINUTES: z.coerce.number().int().min(5).max(1440).default(60),
-  /** `console` prints the link to stdout; a real provider lands in Phase 5. */
-  MAIL_TRANSPORT: z.enum(['console', 'memory']).default('console'),
+  /** `console` prints the link to stdout; `resend` is the production transport. */
+  MAIL_TRANSPORT: z.enum(['console', 'memory', 'resend']).default('console'),
+  RESEND_API_KEY: z.string().min(1).optional(),
+  /** RFC 5322 sender on a Resend-verified domain. Required by `resend`. */
+  MAIL_FROM: z.string().min(1).optional(),
   /**
    * Defaults on everywhere except tests, where dozens of accounts get registered from
    * one address in a second. The limiter's own test turns it back on explicitly.
@@ -58,7 +63,9 @@ export interface Config {
   readonly allowedOrigins: readonly string[];
   readonly sessionTtlMs: number;
   readonly resetTokenTtlMs: number;
-  readonly mailTransport: 'console' | 'memory';
+  readonly mailTransport: MailTransport;
+  /** Defined only when `mailTransport` is `resend`, where it is guaranteed. */
+  readonly resend: ResendConfig | undefined;
   readonly rateLimitEnabled: boolean;
   /**
    * Milliseconds to add to the real clock. Zero in every normal run; non-zero only
@@ -92,6 +99,24 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   if (value.CLOCK_OVERRIDE !== undefined && value.NODE_ENV === 'production') {
     throw new Error('invalid environment — CLOCK_OVERRIDE must never be set in production');
   }
+
+  if (
+    value.MAIL_TRANSPORT === 'resend' &&
+    (value.RESEND_API_KEY === undefined || value.MAIL_FROM === undefined)
+  ) {
+    throw new Error(
+      'invalid environment — MAIL_TRANSPORT=resend needs RESEND_API_KEY and MAIL_FROM',
+    );
+  }
+
+  /**
+   * The console transport prints reset links in full. In production that writes a
+   * working credential into the journal and sends nothing to the player, so it is a
+   * misconfiguration rather than a fallback.
+   */
+  if (value.NODE_ENV === 'production' && value.MAIL_TRANSPORT !== 'resend') {
+    throw new Error(`invalid environment — production needs MAIL_TRANSPORT=resend`);
+  }
   const clockOffsetMs =
     value.CLOCK_OVERRIDE === undefined ? 0 : Date.parse(value.CLOCK_OVERRIDE) - Date.now();
 
@@ -108,6 +133,10 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     sessionTtlMs: value.SESSION_TTL_DAYS * DAY_MS,
     resetTokenTtlMs: value.RESET_TOKEN_TTL_MINUTES * MINUTE_MS,
     mailTransport: value.MAIL_TRANSPORT,
+    resend:
+      value.RESEND_API_KEY !== undefined && value.MAIL_FROM !== undefined
+        ? { apiKey: value.RESEND_API_KEY, from: value.MAIL_FROM }
+        : undefined,
     rateLimitEnabled:
       value.RATE_LIMIT === undefined ? value.NODE_ENV !== 'test' : value.RATE_LIMIT === 'on',
     clockOffsetMs,

@@ -155,11 +155,21 @@ export function authRoutes(deps: Deps) {
 
         const link = `${deps.config.appUrl}/reset-password?token=${token}`;
         const minutes = Math.round(deps.config.resetTokenTtlMs / 60_000);
-        await deps.mailer.send({
-          to: user.email,
-          subject: 'Reset your Gridiron password',
-          text: `Open this link to choose a new password. It expires in ${String(minutes)} minutes.\n\n${link}\n\nIf you didn't ask for this, ignore it — nothing has changed.`,
-        });
+        try {
+          await deps.mailer.send({
+            to: user.email,
+            subject: 'Reset your Gridiron password',
+            text: `Open this link to choose a new password. It expires in ${String(minutes)} minutes.\n\n${link}\n\nIf you didn't ask for this, ignore it — nothing has changed.`,
+          });
+        } catch (error) {
+          /**
+           * A provider outage must not become an account oracle. Only a real address
+           * reaches this send, so letting the error escape would answer 500 for
+           * registered emails and 202 for everyone else — precisely the distinction
+           * this route exists to hide. The operator finds it in the log instead.
+           */
+          console.error('[mail] password reset could not be sent', error);
+        }
       }
 
       return c.json({ status: 'sent' }, 202);
