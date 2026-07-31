@@ -10,8 +10,10 @@ CURRENT_LINK="${DEPLOY_ROOT}/current"
 PREVIOUS_LINK="${DEPLOY_ROOT}/previous"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-CURRENT_BUILD=$(readlink -f "$CURRENT_LINK" 2>/dev/null || echo "")
-PREVIOUS_BUILD=$(readlink -f "$PREVIOUS_LINK" 2>/dev/null || echo "")
+# -L before -f: `readlink -f` resolves a missing path to itself rather than
+# failing, so an absent `previous` would otherwise read as a valid target.
+CURRENT_BUILD=$([ -L "$CURRENT_LINK" ] && readlink -f "$CURRENT_LINK" || echo "")
+PREVIOUS_BUILD=$([ -L "$PREVIOUS_LINK" ] && readlink -f "$PREVIOUS_LINK" || echo "")
 
 if [ -z "$PREVIOUS_BUILD" ] || [ ! -d "$PREVIOUS_BUILD" ]; then
     echo "ERROR: no previous build to roll back to."

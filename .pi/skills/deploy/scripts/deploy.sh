@@ -88,7 +88,15 @@ echo "✓ Build synced"
 
 # ── 6. Promote ──────────────────────────────────────────────────────────────
 
-OUTGOING=$(readlink -f "$CURRENT_LINK" 2>/dev/null || echo "")
+# The -L guard is what makes the first deploy work. `readlink -f` resolves a
+# path that does not exist yet to itself rather than failing, so without it
+# OUTGOING becomes ".../current" on a fresh server and `previous` is pointed at
+# the `current` symlink — a loop that silently breaks the first rollback.
+if [ -L "$CURRENT_LINK" ]; then
+    OUTGOING=$(readlink -f "$CURRENT_LINK")
+else
+    OUTGOING=""
+fi
 
 if [ "$OUTGOING" = "$BUILD_PATH" ]; then
     echo ""
@@ -109,8 +117,8 @@ echo "→ current → ${BUILD_NAME}"
 # ── 7. Prune old builds (keep 3, never current/previous) ────────────────────
 
 echo "→ Pruning old builds..."
-CURRENT_BUILD=$(readlink -f "$CURRENT_LINK" 2>/dev/null || echo "")
-PREVIOUS_BUILD=$(readlink -f "$PREVIOUS_LINK" 2>/dev/null || echo "")
+CURRENT_BUILD=$([ -L "$CURRENT_LINK" ] && readlink -f "$CURRENT_LINK" || echo "")
+PREVIOUS_BUILD=$([ -L "$PREVIOUS_LINK" ] && readlink -f "$PREVIOUS_LINK" || echo "")
 
 mapfile -t ALL_BUILDS < <(ls -dt "${BUILD_DIR}"/build-* 2>/dev/null || true)
 if [ "${#ALL_BUILDS[@]}" -gt 3 ]; then
