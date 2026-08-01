@@ -13,7 +13,10 @@ import { errorMessage } from '../components/AuthLayout';
 import { TabLink } from '../components/links';
 import { useToast } from '../components/Toast';
 
-/** The three views of a league, and the invite code that fills it. */
+/** Tab keys, in the order they appear. The index route — the pick page — is the default. */
+const TABS = ['usage', 'standings', 'history', 'champions'] as const;
+
+/** The five views of a league, and the invite code that fills it. */
 export function LeagueLayout() {
   const { leagueId } = useParams({ from: '/_authed/leagues/$leagueId' });
   const id = Number(leagueId);
@@ -21,11 +24,7 @@ export function LeagueLayout() {
   const location = useLocation();
   const toast = useToast();
 
-  const tab = location.pathname.endsWith('/usage')
-    ? 'usage'
-    : location.pathname.endsWith('/standings')
-      ? 'standings'
-      : 'picks';
+  const tab = TABS.find((name) => location.pathname.endsWith(`/${name}`)) ?? 'picks';
 
   if (league.isPending) {
     return (
@@ -74,7 +73,7 @@ export function LeagueLayout() {
         router resets the search to `{}`, which silently drops `?season=2023` back to
         the newest season — the same tab, a different year, and no way to tell.
       */}
-      <Tabs value={tab} variant="fullWidth">
+      <Tabs value={tab} variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile>
         <TabLink
           label="Picks"
           value="picks"
@@ -95,6 +94,21 @@ export function LeagueLayout() {
           to="/leagues/$leagueId/standings"
           params={{ leagueId }}
           search={(prev) => prev}
+        />
+        <TabLink
+          label="History"
+          value="history"
+          to="/leagues/$leagueId/history"
+          params={{ leagueId }}
+          search={(prev) => prev}
+        />
+        {/* The honours board spans every season, so it takes no search parameters. */}
+        <TabLink
+          label="Champions"
+          value="champions"
+          to="/leagues/$leagueId/champions"
+          params={{ leagueId }}
+          search={{}}
         />
       </Tabs>
 

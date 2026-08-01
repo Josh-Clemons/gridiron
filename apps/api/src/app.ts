@@ -6,6 +6,7 @@ import type { Deps } from './deps';
 import type { AppEnv } from './http/context';
 import { errorHandler, notFoundHandler } from './http/errors';
 import { originGuard } from './http/middleware';
+import { archiveRoutes } from './routes/archive';
 import { authRoutes } from './routes/auth';
 import { boardRoutes } from './routes/board';
 import { healthRoutes } from './routes/health';
@@ -45,6 +46,7 @@ export function createApp(deps: Deps) {
   app.route('/', authRoutes(deps));
   app.route('/', leagueRoutes(deps));
   app.route('/', boardRoutes(deps));
+  app.route('/', archiveRoutes(deps));
 
   return app;
 }

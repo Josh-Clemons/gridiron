@@ -2,7 +2,9 @@ import type { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, createRoute, Outlet, redirect } from '@tanstack/react-router';
 import { sessionQuery } from './api/queries';
 import { AppShell } from './components/AppShell';
+import { ChampionsPage } from './pages/ChampionsPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { HistoryPage } from './pages/HistoryPage';
 import { JoinPage } from './pages/JoinPage';
 import { LeagueLayout } from './pages/LeagueLayout';
 import { LeaguesPage } from './pages/LeaguesPage';
@@ -167,6 +169,20 @@ const standingsRoute = createRoute({
   component: StandingsPage,
 });
 
+const historyRoute = createRoute({
+  getParentRoute: () => leagueRoute,
+  path: '/history',
+  validateSearch: seasonSearch,
+  component: HistoryPage,
+});
+
+/** No search parameters: the honours board spans every season at once. */
+const championsRoute = createRoute({
+  getParentRoute: () => leagueRoute,
+  path: '/champions',
+  component: ChampionsPage,
+});
+
 export const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -176,6 +192,6 @@ export const routeTree = rootRoute.addChildren([
   authedRoute.addChildren([
     leaguesRoute,
     joinRoute,
-    leagueRoute.addChildren([pickRoute, usageRoute, standingsRoute]),
+    leagueRoute.addChildren([pickRoute, usageRoute, standingsRoute, historyRoute, championsRoute]),
   ]),
 ]);

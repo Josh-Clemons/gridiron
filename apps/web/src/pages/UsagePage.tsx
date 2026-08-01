@@ -8,9 +8,10 @@ import Typography from '@mui/material/Typography';
 import type { Slot as WireSlot, TeamUsage } from '@gridiron/contracts';
 import { SLOT_LABELS, SLOT_POINTS } from '@gridiron/rules';
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useSearch } from '@tanstack/react-router';
-import { teamsQuery, usageQuery } from '../api/queries';
+import { useNavigate, useParams, useSearch } from '@tanstack/react-router';
+import { seasonsQuery, teamsQuery, usageQuery } from '../api/queries';
 import { errorMessage } from '../components/AuthLayout';
+import { SeasonNav } from '../components/SeasonNav';
 
 /**
  * What you have left.
@@ -24,8 +25,10 @@ import { errorMessage } from '../components/AuthLayout';
 export function UsagePage() {
   const { leagueId } = useParams({ from: '/_authed/leagues/$leagueId' });
   const search = useSearch({ from: '/_authed/leagues/$leagueId/usage' });
+  const navigate = useNavigate();
   const usage = useQuery(usageQuery(Number(leagueId), search.season));
   const teams = useQuery(teamsQuery());
+  const seasons = useQuery(seasonsQuery(Number(leagueId)));
 
   if (usage.isPending) {
     return (
@@ -43,10 +46,30 @@ export function UsagePage() {
 
   return (
     <Stack spacing={2}>
-      <Typography variant="body2" color="text.secondary">
-        Each team can be used once in each slot — three times a season at most, and never twice in
-        the same slot.
-      </Typography>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={1}
+        flexWrap="wrap"
+        useFlexGap
+      >
+        <Typography variant="body2" color="text.secondary">
+          Each team can be used once in each slot — three times a season at most, and never twice in
+          the same slot.
+        </Typography>
+        <SeasonNav
+          season={usage.data.season.year}
+          seasons={seasons.data ?? []}
+          onChange={(year) => {
+            void navigate({
+              to: '/leagues/$leagueId/usage',
+              params: { leagueId },
+              search: { season: year },
+            });
+          }}
+        />
+      </Stack>
 
       <Box
         display="grid"

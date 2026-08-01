@@ -44,12 +44,18 @@ export default defineConfig({
    * register limiter allows 10 accounts an hour from one address, and a two-project
    * run burns four. The limiter keeps its own dedicated test in the API suite, so
    * turning it off here costs no coverage.
+   *
+   * 8083, matching `.env` and the Vite proxy. It was 8082 until the production
+   * container took that port on this machine: with `reuseExistingServer`, a health
+   * check against 8082 is answered by production, so Playwright would decide the API
+   * was already up, never start the dev one, and leave every request proxied to a
+   * port with nothing on it.
    */
   webServer: [
     {
       command: 'pnpm --filter @gridiron/api start',
       cwd: repoRoot,
-      url: 'http://127.0.0.1:8082/health',
+      url: 'http://127.0.0.1:8083/health',
       reuseExistingServer: process.env.CI === undefined,
       timeout: 60_000,
       env: { RATE_LIMIT: 'off' },

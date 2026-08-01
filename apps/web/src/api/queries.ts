@@ -1,6 +1,8 @@
 import {
   type Board,
   boardSchema,
+  type Champions,
+  championsSchema,
   type CreateLeagueRequest,
   type JoinLeagueRequest,
   type JoinPreview,
@@ -11,6 +13,10 @@ import {
   leagueSchema,
   type LoginRequest,
   type RegisterRequest,
+  type SeasonHistory,
+  seasonHistorySchema,
+  type Seasons,
+  seasonsSchema,
   type SessionResponse,
   sessionResponseSchema,
   type Standings,
@@ -158,6 +164,47 @@ export const standingsQuery = (leagueId: number, season: SeasonArg, week: number
       ),
   });
 
+/**
+ * Which seasons this league can show.
+ *
+ * Rarely changes — a year appears when its schedule is synced or a workbook is
+ * imported — so it is cached for the session and shared by every season picker.
+ */
+export const seasonsQuery = (leagueId: number) =>
+  queryOptions({
+    queryKey: ['seasons', leagueId] as const,
+    queryFn: ({ signal }) =>
+      request(`/leagues/${String(leagueId)}/seasons`, { schema: seasonsSchema, signal }).then(
+        (data) => data.seasons,
+      ),
+    staleTime: 5 * 60_000,
+  });
+
+/** A whole season as a member × week grid — the one view that isn't week-at-a-time. */
+export const historyQuery = (leagueId: number, season: SeasonArg) =>
+  queryOptions({
+    queryKey: ['history', leagueId, seasonKey(season)] as const,
+    queryFn: ({ signal }) =>
+      request(`/leagues/${String(leagueId)}/history${query(seasonQuery(season))}`, {
+        schema: seasonHistorySchema,
+        signal,
+      }),
+  });
+
+/**
+ * The honours board, back to 2007.
+ *
+ * Only the importer writes it, and only when the commissioner loads a workbook, so it
+ * is treated as reference data rather than something to refetch on every visit.
+ */
+export const championsQuery = (leagueId: number) =>
+  queryOptions({
+    queryKey: ['champions', leagueId] as const,
+    queryFn: ({ signal }) =>
+      request(`/leagues/${String(leagueId)}/champions`, { schema: championsSchema, signal }),
+    staleTime: 5 * 60_000,
+  });
+
 export const login = (body: LoginRequest): Promise<SessionResponse> =>
   request('/auth/login', { method: 'POST', body, schema: sessionResponseSchema });
 
@@ -190,4 +237,15 @@ export const joinLeague = (body: JoinLeagueRequest): Promise<League> =>
 export const leaveLeague = (leagueId: number): Promise<void> =>
   requestVoid(`/leagues/${String(leagueId)}/leave`, { method: 'POST' });
 
-export type { Board, JoinPreview, League, LeagueMember, Standings, Team, TeamUsage };
+export type {
+  Board,
+  Champions,
+  JoinPreview,
+  League,
+  LeagueMember,
+  SeasonHistory,
+  Seasons,
+  Standings,
+  Team,
+  TeamUsage,
+};

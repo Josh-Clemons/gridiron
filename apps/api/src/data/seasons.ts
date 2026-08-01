@@ -1,5 +1,5 @@
-import { games, seasons } from '@gridiron/schema';
-import { and, desc, eq, min, ne } from 'drizzle-orm';
+import { games, leagueMembers, picks, seasons } from '@gridiron/schema';
+import { and, desc, eq, inArray, isNull, min, ne } from 'drizzle-orm';
 import type { Deps } from '../deps';
 import { notFound } from '../http/errors';
 
@@ -7,6 +7,55 @@ export interface SeasonRow {
   readonly id: number;
   readonly year: number;
   readonly weekCount: number;
+}
+
+export interface SeasonSummaryRow extends SeasonRow {
+  readonly hasGames: boolean;
+  readonly hasPicks: boolean;
+}
+
+/**
+ * The seasons worth offering this league, newest first.
+ *
+ * Seeded years with neither a schedule nor a pick are dropped: `seasons` is reference
+ * data seeded ahead of time, and a season picker that lists a year with nothing behind
+ * it just hands out dead links.
+ *
+ * Three narrow queries rather than one with correlated subqueries. Each answers a
+ * question about a handful of distinct season ids, and combining them in JS keeps the
+ * result readable and the SQL free of the partial-select joins that TypeScript 7 and
+ * Drizzle disagree about.
+ */
+export async function listSeasons(deps: Deps, leagueId: number): Promise<SeasonSummaryRow[]> {
+  const memberIds = deps.db
+    .select({ id: leagueMembers.id })
+    .from(leagueMembers)
+    .where(eq(leagueMembers.leagueId, leagueId));
+
+  const [all, scheduled, played] = await Promise.all([
+    deps.db
+      .select({ id: seasons.id, year: seasons.year, weekCount: seasons.weekCount })
+      .from(seasons)
+      .orderBy(desc(seasons.year)),
+    deps.db.selectDistinct({ seasonId: games.seasonId }).from(games),
+    deps.db
+      .selectDistinct({ seasonId: picks.seasonId })
+      .from(picks)
+      .where(and(inArray(picks.leagueMemberId, memberIds), isNull(picks.deletedAt))),
+  ]);
+
+  const hasGames = new Set(scheduled.map((row) => row.seasonId));
+  const hasPicks = new Set(played.map((row) => row.seasonId));
+
+  return all
+    .filter((season) => hasGames.has(season.id) || hasPicks.has(season.id))
+    .map((season) => ({
+      id: season.id,
+      year: season.year,
+      weekCount: season.weekCount,
+      hasGames: hasGames.has(season.id),
+      hasPicks: hasPicks.has(season.id),
+    }));
 }
 
 /**

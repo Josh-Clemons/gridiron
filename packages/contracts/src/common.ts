@@ -40,9 +40,13 @@ export const pickSourceSchema = z.enum(['app', 'import']);
 
 export const memberRoleSchema = z.enum(['owner', 'member']);
 
+/** The regular-season pool, and the separate playoff pool that has run since 2012. */
+export const poolSchema = z.enum(['regular', 'playoff']);
+
 export type Id = z.infer<typeof idSchema>;
 export type Slot = z.infer<typeof slotSchema>;
 export type TeamCode = z.infer<typeof teamCodeSchema>;
 export type GameStatus = z.infer<typeof gameStatusSchema>;
 export type PickSource = z.infer<typeof pickSourceSchema>;
 export type MemberRole = z.infer<typeof memberRoleSchema>;
+export type Pool = z.infer<typeof poolSchema>;

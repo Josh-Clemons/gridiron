@@ -130,6 +130,30 @@ test('register, create a league, admit a second player, and make a week of picks
 });
 
 /**
+ * The archive tabs, against the real API.
+ *
+ * A brand-new league is the honest starting state for both: the grid has one player and
+ * an unplayed season, and the honours board has nothing in it until the commissioner
+ * imports a workbook. Getting there at all is what this proves — the tabs, the routes,
+ * and two endpoints whose responses the client parses with the shared schemas.
+ */
+test('the history grid and the honours board are reachable from the tabs', async ({ page }) => {
+  const user = await registerThroughUi(page, 'archive');
+  const leagueId = await createLeagueThroughUi(page, `E2E Archive ${String(Date.now())}`);
+
+  await page.getByRole('tab', { name: 'History' }).click();
+  await expect(page).toHaveURL(new RegExp(`/leagues/${String(leagueId)}/history`, 'u'));
+
+  // One row, the creator's, with a cell for every week of the season.
+  await expect(page.getByRole('cell', { name: user.displayName })).toBeVisible();
+  await expect(page.getByText(/of \d+ weeks played/u)).toBeVisible();
+
+  await page.getByRole('tab', { name: 'Champions' }).click();
+  await expect(page).toHaveURL(new RegExp(`/leagues/${String(leagueId)}/champions`, 'u'));
+  await expect(page.getByText(/No champions have been imported yet/u)).toBeVisible();
+});
+
+/**
  * The phase's actual finish line: "illegal options are visibly unavailable rather than
  * rejected after the fact."
  *
