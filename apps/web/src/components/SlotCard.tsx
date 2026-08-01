@@ -6,9 +6,11 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { alpha } from '@mui/material/styles';
 import type { Pick as WirePick, Team } from '@gridiron/contracts';
 import { type Game, type Slot, SLOT_LABELS, SLOT_POINTS } from '@gridiron/rules';
 import { formatCountdown, formatKickoff } from '../lib/format';
+import { teamLogoUrl } from '../lib/logos';
 
 export interface SlotCardProps {
   readonly slot: Slot;
@@ -36,7 +38,7 @@ export function SlotCard({ slot, pick, game, team, now, canPick, onOpen }: SlotC
 
   const body = (
     <Stack direction="row" alignItems="center" spacing={1.5} sx={{ p: 2 }}>
-      <SlotBadge slot={slot} />
+      {pick === undefined ? <SlotBadge slot={slot} /> : <LogoBadge slot={slot} team={team} />}
 
       <Box flexGrow={1} minWidth={0}>
         {pick === undefined ? (
@@ -92,6 +94,63 @@ function SlotBadge({ slot }: { slot: Slot }) {
         {SLOT_POINTS[slot]} {SLOT_POINTS[slot] === 1 ? 'pt' : 'pts'}
       </Typography>
     </Stack>
+  );
+}
+
+/**
+ * The badge for a filled slot: the team logo on a tinted square, with points as a
+ * quiet number in the corner.
+ *
+ * The slot *colour* still encodes win/place/show — that's the hierarchy a glance reads
+ * — so the WIN/PLACE/SHOW words step aside for the logo. Empty slots keep the labeled
+ * `SlotBadge`, since there's no team to show and the word still says what the slot is.
+ */
+function LogoBadge({ slot, team }: { slot: Slot; team: Team | undefined }) {
+  return (
+    <Box
+      sx={{
+        position: 'relative',
+        width: 56,
+        height: 56,
+        flexShrink: 0,
+        borderRadius: 2,
+        bgcolor: (theme) => alpha(theme.palette.slot[slot].main, 0.12),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Box
+        component="img"
+        src={team === undefined ? '' : teamLogoUrl(team.code)}
+        alt={team === undefined ? '' : team.name}
+        sx={{ width: 40, height: 40, objectFit: 'contain' }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          right: -4,
+          bottom: -4,
+          minWidth: 20,
+          height: 20,
+          px: 0.5,
+          borderRadius: 10,
+          bgcolor: `slot.${slot}.main`,
+          color: `slot.${slot}.contrastText`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontWeight: 700,
+          fontSize: 11,
+          lineHeight: 1,
+          // Match the card surface so the pill reads as a notch on the tile, not a
+          // separate element floating over it.
+          border: (theme) => `2px solid ${theme.palette.background.paper}`,
+        }}
+      >
+        {SLOT_POINTS[slot]}
+      </Box>
+    </Box>
   );
 }
 
