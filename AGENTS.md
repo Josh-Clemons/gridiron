@@ -8,13 +8,13 @@
 
 ## Identity
 
-| Field | Value |
-|---|---|
-| Project | `gridiron` |
-| Agent account | `@gridiron-agent:jdclemons.dev` |
-| Agent room | `#gridiron:jdclemons.dev` (in Development space) |
-| Role | Builds and maintains the Gridiron NFL pick'em app — rules engine, Hono API, React web app, ESPN sync, spreadsheet importer, and self-hosted deployment. |
-| Created | 2026-08-12 |
+| Field         | Value                                                                                                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Project       | `gridiron`                                                                                                                                              |
+| Agent account | `@gridiron-agent:jdclemons.dev`                                                                                                                         |
+| Agent room    | `#gridiron:jdclemons.dev` (in Development space)                                                                                                        |
+| Role          | Builds and maintains the Gridiron NFL pick'em app — rules engine, Hono API, React web app, ESPN sync, spreadsheet importer, and self-hosted deployment. |
+| Created       | 2026-08-12                                                                                                                                              |
 
 ---
 
@@ -69,9 +69,9 @@ deploy/             docker-compose.yml (source of truth), symlinked into ~/Appli
 
 Other agents this project interacts with:
 
-| Agent | Room | Relationship |
-|---|---|---|
-| irc | #irc:jdclemons.dev | Owns server infra (Caddy, Cloudflare tunnel, backups — including the nightly `pg_dump` of the production DB). Use `/skill:mn4x4-ops` for ops tasks. |
+| Agent | Room               | Relationship                                                                                                                                        |
+| ----- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| irc   | #irc:jdclemons.dev | Owns server infra (Caddy, Cloudflare tunnel, backups — including the nightly `pg_dump` of the production DB). Use `/skill:mn4x4-ops` for ops tasks. |
 
 > To collaborate: invite the other agent to this project's room temporarily,
 > or create `#gridiron-<other>:jdclemons.dev` for an ongoing relationship.
@@ -89,16 +89,16 @@ Other agents this project interacts with:
 
 Send these commands directly in `#gridiron:jdclemons.dev`:
 
-| Command | Description |
-|---|---|
-| `?model [list\|<name>]` | List or switch the active model |
-| `?thinking <level>` | `off` / `low` / `medium` / `high` |
-| `?status` | Model, context %, message count, session age |
-| `?reset` | Force a session rotation now |
-| `?abort` | Cancel the current task |
-| `?backend [pi\|claude]` | Switch this agent's backend (pi = token-based, claude = subscription) |
-| `?backend-all [pi\|claude]` | Switch all agents' backend at once |
-| `?help` | Full command list |
+| Command                     | Description                                                           |
+| --------------------------- | --------------------------------------------------------------------- |
+| `?model [list\|<name>]`     | List or switch the active model                                       |
+| `?thinking <level>`         | `off` / `low` / `medium` / `high`                                     |
+| `?status`                   | Model, context %, message count, session age                          |
+| `?reset`                    | Force a session rotation now                                          |
+| `?abort`                    | Cancel the current task                                               |
+| `?backend [pi\|claude]`     | Switch this agent's backend (pi = token-based, claude = subscription) |
+| `?backend-all [pi\|claude]` | Switch all agents' backend at once                                    |
+| `?help`                     | Full command list                                                     |
 
 ---
 

@@ -1,4 +1,4 @@
 {
-    "model": "opencode-go/deepseek-v4-pro",
-    "appendSystemPrompt": "You are @gridiron-agent:jdclemons.dev, the gridiron project agent. Always introduce yourself by name when starting a new conversation."
+  "model": "opencode-go/deepseek-v4-pro",
+  "appendSystemPrompt": "You are @gridiron-agent:jdclemons.dev, the gridiron project agent. Always introduce yourself by name when starting a new conversation."
 }
