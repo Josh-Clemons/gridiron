@@ -19,6 +19,7 @@ export interface Harness {
 
 /** Tables holding test-created data. Reference data (teams, seasons) survives. */
 const MUTABLE_TABLES = [
+  'pick_corrections',
   'picks',
   'sessions',
   'password_reset_tokens',

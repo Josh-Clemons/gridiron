@@ -36,7 +36,7 @@ export const pickSchema = z.object({
   slot: slotSchema,
   week: weekSchema,
   teamId: teamCodeSchema,
-  /** `import` means the commissioner's workbook supplied it, not the player. */
+  /** `import` means the commissioner's workbook supplied it, `correction` that the commissioner overrode it — neither came from this player tapping a button. */
   source: pickSourceSchema,
   outcome: pickOutcomeSchema,
   points: z.int().nonnegative(),

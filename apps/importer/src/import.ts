@@ -28,7 +28,7 @@ export interface Rejection {
   readonly reasons: readonly string[];
 }
 
-/** The slot already holds a pick the player entered themselves, for a different team. */
+/** The slot already holds a pick a human entered deliberately — the player in the app, or the commissioner by correction — for a different team. */
 export interface Conflict {
   readonly playerName: string;
   readonly week: number;
@@ -379,11 +379,16 @@ function slotKey(memberId: number, week: number, slot: Slot): string {
 }
 
 /**
- * Drop picks whose slot the player already filled in the app with a different team.
+ * Drop picks whose slot already holds a pick a human entered deliberately, for a
+ * different team.
  *
- * Neither side is imported and the app pick is left exactly as it was. A commissioner
- * transcribing from paper should never silently overwrite what a player entered
- * themselves — the two disagreeing is a question for a human, not for a merge rule.
+ * A human-entered pick is one the player made in the app, or one the commissioner
+ * wrote by correction. Neither side is imported and the stored pick is left exactly
+ * as it was. A commissioner transcribing from paper should never silently overwrite
+ * what was entered on purpose — the two disagreeing is a question for a human, not
+ * for a merge rule. That a correction also refuses to be overwritten is the same
+ * principle one step later: the sheet repeating its original mistake must not undo
+ * the fix.
  */
 function findConflicts(
   accepted: readonly Candidate[],
@@ -408,7 +413,7 @@ function findConflicts(
     const existing = storedBySlot.get(slotKey(member.id, candidate.week, candidate.slot));
     if (
       existing !== undefined &&
-      existing.source === 'app' &&
+      existing.source !== 'import' &&
       existing.teamId !== candidate.teamCode
     ) {
       conflicts.push({
@@ -421,9 +426,10 @@ function findConflicts(
       continue;
     }
 
-    // An app pick for the *same* team is left alone rather than restamped as imported:
-    // the player did enter it, and the provenance is worth keeping accurate.
-    if (existing !== undefined && existing.source === 'app') continue;
+    // A human-entered pick for the *same* team — the player's own, or a correction —
+    // is left alone rather than restamped as imported: the provenance is worth
+    // keeping accurate.
+    if (existing !== undefined && existing.source !== 'import') continue;
 
     importable.push(candidate);
   }

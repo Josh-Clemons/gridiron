@@ -310,6 +310,63 @@ export const picks = pgTable(
 );
 
 // ---------------------------------------------------------------------------
+// Commissioner actions
+// -------------------------------------------------------------------------
+
+/**
+ * One commissioner's correction, one row per act.
+ *
+ * Rule 10 — a postponed game may be substituted — plus every importer rejection or
+ * conflict eventually lands here: the pick is changed and this row is why it was
+ * allowed to be. Written once, never updated; it is a log, not state, so there is no
+ * editing path and no `updatedAt` column.
+ *
+ * `fromTeamId`/`toTeamId` are nullable at the edges: a correction can fill an empty
+ * slot (from is null) or clear one (to is null) — clearing is how a rejected pick that
+ * should score 0 is made explicit rather than merely absent.
+ */
+export const pickCorrections = pgTable(
+  'pick_corrections',
+  {
+    id: id(),
+    leagueId: bigint('league_id', { mode: 'number' })
+      .notNull()
+      .references(() => leagues.id, { onDelete: 'cascade' }),
+    /** The member who made the correction — the commissioner on duty. */
+    actorMemberId: bigint('actor_member_id', { mode: 'number' })
+      .notNull()
+      .references(() => leagueMembers.id),
+    /** The member whose pick was corrected. */
+    targetMemberId: bigint('target_member_id', { mode: 'number' })
+      .notNull()
+      .references(() => leagueMembers.id),
+    seasonId: bigint('season_id', { mode: 'number' })
+      .notNull()
+      .references(() => seasons.id, { onDelete: 'cascade' }),
+    week: integer().notNull(),
+    slot: slotEnum().notNull(),
+    fromTeamId: bigint('from_team_id', { mode: 'number' }).references(() => teams.id),
+    toTeamId: bigint('to_team_id', { mode: 'number' }).references(() => teams.id),
+    /** What the commissioner said when asked why. Required, not edited after. */
+    reason: text().notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    index('pick_corrections_league_season_idx').on(table.leagueId, table.seasonId),
+    check('pick_corrections_week_positive', sql`${table.week} >= 1`),
+    // A no-op correction is a mistake, not an act: writing the same team the slot
+    // already held means the commissioner confirmed something, which the log doesn't
+    // need a row for.
+    check(
+      'pick_corrections_from_to_differ',
+      sql`${table.fromTeamId} is null
+          or ${table.toTeamId} is null
+          or ${table.fromTeamId} <> ${table.toTeamId}`,
+    ),
+  ],
+);
+
+// ---------------------------------------------------------------------------
 // History
 // ---------------------------------------------------------------------------
 
@@ -396,6 +453,7 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 export const leaguesRelations = relations(leagues, ({ many }) => ({
   members: many(leagueMembers),
   champions: many(champions),
+  corrections: many(pickCorrections),
 }));
 
 export const leagueMembersRelations = relations(leagueMembers, ({ one, many }) => ({
@@ -411,6 +469,21 @@ export const picksRelations = relations(picks, ({ one }) => ({
   }),
   season: one(seasons, { fields: [picks.seasonId], references: [seasons.id] }),
   team: one(teams, { fields: [picks.teamId], references: [teams.id] }),
+}));
+
+export const pickCorrectionsRelations = relations(pickCorrections, ({ one }) => ({
+  league: one(leagues, { fields: [pickCorrections.leagueId], references: [leagues.id] }),
+  actor: one(leagueMembers, {
+    fields: [pickCorrections.actorMemberId],
+    references: [leagueMembers.id],
+  }),
+  target: one(leagueMembers, {
+    fields: [pickCorrections.targetMemberId],
+    references: [leagueMembers.id],
+  }),
+  season: one(seasons, { fields: [pickCorrections.seasonId], references: [seasons.id] }),
+  fromTeam: one(teams, { fields: [pickCorrections.fromTeamId], references: [teams.id] }),
+  toTeam: one(teams, { fields: [pickCorrections.toTeamId], references: [teams.id] }),
 }));
 
 export const championsRelations = relations(champions, ({ one }) => ({

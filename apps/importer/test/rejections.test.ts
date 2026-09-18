@@ -65,7 +65,7 @@ describe('rejections, conflicts and applying', () => {
     readonly week: number;
     readonly slot: 'win' | 'place' | 'show';
     readonly teamId: number;
-    readonly source: 'app' | 'import';
+    readonly source: 'app' | 'import' | 'correction';
     readonly createdAt: Date;
     readonly updatedAt: Date;
     readonly deletedAt: Date | null;
@@ -269,6 +269,54 @@ describe('rejections, conflicts and applying', () => {
         .from(picks)
         .where(and(eq(picks.leagueMemberId, member.id), eq(picks.week, 1), eq(picks.slot, 'win')));
       expect(stored?.source).toBe('app');
+    });
+
+    it('leaves a commissioner correction alone when the sheet disagrees', async () => {
+      const [season] = await harness.db
+        .select({ id: seasons.id })
+        .from(seasons)
+        .where(eq(seasons.year, YEAR))
+        .limit(1);
+      const [member] = await harness.db
+        .insert(leagueMembers)
+        .values({ leagueId, displayName: 'Ben Hoy', role: 'member' })
+        .returning({ id: leagueMembers.id });
+      const [dallas] = await harness.db
+        .select({ id: teams.id })
+        .from(teams)
+        .where(eq(teams.code, 'DAL'))
+        .limit(1);
+      if (season === undefined || member === undefined || dallas === undefined) {
+        throw new Error('fixture setup failed');
+      }
+
+      await harness.db.insert(picks).values({
+        leagueMemberId: member.id,
+        seasonId: season.id,
+        week: 1,
+        slot: 'win',
+        teamId: dallas.id,
+        source: 'correction',
+      });
+
+      const result = await apply(
+        sheet({ name: 'Ben Hoy', weeks: [{ win: 'PHI', place: 'LAC', show: 'CIN' }] }),
+      );
+
+      expect(result.conflicts).toEqual([
+        expect.objectContaining({
+          playerName: 'Ben Hoy',
+          week: 1,
+          slot: 'win',
+          sheetTeam: 'PHI',
+          appTeam: 'DAL',
+        }),
+      ]);
+      const [stored] = await harness.db
+        .select({ source: picks.source, teamId: picks.teamId })
+        .from(picks)
+        .where(and(eq(picks.leagueMemberId, member.id), eq(picks.week, 1), eq(picks.slot, 'win')));
+      expect(stored).toEqual({ source: 'correction', teamId: dallas.id });
     });
   });
 

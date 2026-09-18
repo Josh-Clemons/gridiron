@@ -20,6 +20,8 @@ function generateInviteCode(): string {
 export interface Membership {
   readonly leagueId: number;
   readonly memberId: number;
+  /** The member's roster label — what the correction log records as "who acted". */
+  readonly displayName: string;
   readonly role: 'owner' | 'member';
   readonly leagueName: string;
   readonly inviteCode: string;
@@ -44,6 +46,7 @@ export async function requireMembership(
     .select({
       leagueId: leagues.id,
       memberId: leagueMembers.id,
+      displayName: leagueMembers.displayName,
       role: leagueMembers.role,
       leagueName: leagues.name,
       inviteCode: leagues.inviteCode,
@@ -74,11 +77,66 @@ export async function countMembers(deps: Deps, leagueId: number): Promise<number
   return rows[0]?.total ?? 0;
 }
 
+/**
+ * The caller must own the league.
+ *
+ * The Phase 7 commissioner tools all sit behind this. It takes the membership that
+ * `requireMembership` already resolved, so an admin route is two gates: a non-member
+ * is told nothing exists at the first, and a plain member is turned away at the
+ * second — by then the league's existence is no secret to them.
+ */
+export function requireOwner(membership: Membership): Membership {
+  if (membership.role !== 'owner') throw forbidden('only the owner can do that');
+  return membership;
+}
+
+export interface MemberRow {
+  readonly id: number;
+  readonly displayName: string;
+  readonly role: 'owner' | 'member';
+  readonly userId: number | null;
+}
+
+/**
+ * A specific member of a league, or a 404.
+ *
+ * The target of a correction: it must be a real, current member of the same league.
+ * Like `requireMembership`, the not-found wording deliberately does not say which
+ * half of the ask was wrong.
+ */
+export async function requireMember(
+  deps: Deps,
+  leagueId: number,
+  memberId: number,
+): Promise<MemberRow> {
+  const rows = await deps.db
+    .select({
+      id: leagueMembers.id,
+      displayName: leagueMembers.displayName,
+      role: leagueMembers.role,
+      userId: leagueMembers.userId,
+    })
+    .from(leagueMembers)
+    .where(
+      and(
+        eq(leagueMembers.id, memberId),
+        eq(leagueMembers.leagueId, leagueId),
+        isNull(leagueMembers.removedAt),
+      ),
+    )
+    .limit(1);
+
+  const row = rows[0];
+  if (row === undefined) throw notFound('member not found');
+  return row;
+}
+
 export function listMemberships(deps: Deps, userId: number): Promise<Membership[]> {
   return deps.db
     .select({
       leagueId: leagues.id,
       memberId: leagueMembers.id,
+      displayName: leagueMembers.displayName,
       role: leagueMembers.role,
       leagueName: leagues.name,
       inviteCode: leagues.inviteCode,
@@ -123,6 +181,7 @@ export async function createLeague(
         return {
           leagueId: league.id,
           memberId: member.id,
+          displayName: member.displayName,
           role: 'owner' as const,
           leagueName: league.name,
           inviteCode: league.inviteCode,
@@ -226,7 +285,11 @@ export async function joinLeague(
   if (league === undefined) throw notFound('invalid invite code');
 
   const existing = await deps.db
-    .select({ id: leagueMembers.id, role: leagueMembers.role })
+    .select({
+      id: leagueMembers.id,
+      displayName: leagueMembers.displayName,
+      role: leagueMembers.role,
+    })
     .from(leagueMembers)
     .where(
       and(
@@ -237,9 +300,14 @@ export async function joinLeague(
     )
     .limit(1);
 
-  const asMembership = (memberId: number, role: 'owner' | 'member'): Membership => ({
+  const asMembership = (
+    memberId: number,
+    role: 'owner' | 'member',
+    displayName: string,
+  ): Membership => ({
     leagueId: league.id,
     memberId,
+    displayName,
     role,
     leagueName: league.name,
     inviteCode: league.inviteCode,
@@ -248,7 +316,7 @@ export async function joinLeague(
   });
 
   const already = existing[0];
-  if (already !== undefined) return asMembership(already.id, already.role);
+  if (already !== undefined) return asMembership(already.id, already.role, already.displayName);
 
   if (input.claimMemberId !== undefined) {
     const claimed = await deps.db
@@ -262,11 +330,15 @@ export async function joinLeague(
           isNull(leagueMembers.removedAt),
         ),
       )
-      .returning({ id: leagueMembers.id, role: leagueMembers.role });
+      .returning({
+        id: leagueMembers.id,
+        displayName: leagueMembers.displayName,
+        role: leagueMembers.role,
+      });
 
     const row = claimed[0];
     if (row === undefined) throw conflict('that roster slot is not available');
-    return asMembership(row.id, row.role);
+    return asMembership(row.id, row.role, row.displayName);
   }
 
   const inserted = await deps.db
@@ -277,11 +349,15 @@ export async function joinLeague(
       displayName: input.displayName ?? accountName,
       role: 'member',
     })
-    .returning({ id: leagueMembers.id, role: leagueMembers.role });
+    .returning({
+      id: leagueMembers.id,
+      displayName: leagueMembers.displayName,
+      role: leagueMembers.role,
+    });
 
   const row = inserted[0];
   if (row === undefined) throw new Error('member insert returned nothing');
-  return asMembership(row.id, row.role);
+  return asMembership(row.id, row.role, row.displayName);
 }
 
 /**

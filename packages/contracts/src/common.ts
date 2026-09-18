@@ -36,7 +36,7 @@ export const instantSchema = z.iso.datetime();
 
 export const gameStatusSchema = z.enum(['scheduled', 'final']);
 
-export const pickSourceSchema = z.enum(['app', 'import']);
+export const pickSourceSchema = z.enum(['app', 'import', 'correction']);
 
 export const memberRoleSchema = z.enum(['owner', 'member']);
 

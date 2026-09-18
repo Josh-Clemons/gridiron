@@ -1,5 +1,6 @@
 export * from './common';
 export * from './errors';
+export * from './admin';
 export * from './auth';
 export * from './champions';
 export * from './history';

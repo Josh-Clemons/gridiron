@@ -69,14 +69,19 @@ export async function putPick(
     }
   }
 
-  const saved = await upsertPick(deps, catalog, {
-    memberId: membership.memberId,
-    seasonId: season.id,
-    week,
-    slot,
-    teamCode: team.code,
-    source: 'app',
-  });
+  const saved = await upsertPick(
+    deps.db,
+    catalog,
+    {
+      memberId: membership.memberId,
+      seasonId: season.id,
+      week,
+      slot,
+      teamCode: team.code,
+      source: 'app',
+    },
+    deps.now(),
+  );
 
   const updated = [
     ...seasonPicks.filter((pick) => !(pick.week === week && pick.slot === slot)),
@@ -113,7 +118,7 @@ export async function clearPick(
     ]);
   }
 
-  await softDeletePick(deps, membership.memberId, season.id, week, slot);
+  await softDeletePick(deps.db, membership.memberId, season.id, week, slot, deps.now());
 
   const remaining = seasonPicks.filter((pick) => !(pick.week === week && pick.slot === slot));
   return { weekScore: toWireWeekScore(week, remaining, weekGames) };

@@ -1,13 +1,16 @@
 import type { Game, Pick, Slot } from '@gridiron/rules';
 import { games, leagueMembers, picks } from '@gridiron/schema';
 import { and, eq, isNull } from 'drizzle-orm';
-import type { Deps } from '../deps';
+import type { Db, Deps } from '../deps';
 import type { TeamCatalog } from './teams';
+
+/** A database handle that may be the pool or an open transaction. */
+export type DbOrTx = Db | Parameters<Parameters<Db['transaction']>[0]>[0];
 
 /** A stored pick, with the team already translated to its canonical code. */
 export interface PickRow extends Pick {
   readonly memberId: number;
-  readonly source: 'app' | 'import';
+  readonly source: 'app' | 'import' | 'correction';
   readonly updatedAt: Date;
 }
 
@@ -140,11 +143,15 @@ export interface UpsertPickInput {
   readonly week: number;
   readonly slot: Slot;
   readonly teamCode: string;
-  readonly source: 'app' | 'import';
+  readonly source: 'app' | 'import' | 'correction';
 }
 
 /**
  * Write one slot.
+ *
+ * Takes a `DbOrTx` rather than `Deps` so a correction can write its pick and its
+ * audit row in one transaction — the log is the point of that feature, and a pick
+ * changed with no record of why is worse than either half alone.
  *
  * Keyed on `(member, season, week, slot)` — the same natural key the unique index
  * uses — so a repeated write is an update, never a duplicate row. The caller has
@@ -152,15 +159,15 @@ export interface UpsertPickInput {
  * team)` is the backstop if it ever forgets.
  */
 export async function upsertPick(
-  deps: Deps,
+  db: DbOrTx,
   catalog: TeamCatalog,
   input: UpsertPickInput,
+  now: Date,
 ): Promise<PickRow> {
   const team = catalog.resolve(input.teamCode);
   if (team === undefined) throw new Error(`unknown team ${input.teamCode}`);
 
-  const now = deps.now();
-  const rows = await deps.db
+  const rows = await db
     .insert(picks)
     .values({
       leagueMemberId: input.memberId,
@@ -195,17 +202,18 @@ export async function upsertPick(
  *
  * Soft-deleted: the row stays for provenance and for the importer's "this pick
  * vanished from the sheet" reconciliation, while the partial unique indexes ignore it
- * so the slot and the team both become available again immediately.
+ * so the slot and the team both become available again immediately. `DbOrTx` for the
+ * same transactional reason as `upsertPick`.
  */
 export async function softDeletePick(
-  deps: Deps,
+  db: DbOrTx,
   memberId: number,
   seasonId: number,
   week: number,
   slot: Slot,
+  now: Date,
 ): Promise<boolean> {
-  const now = deps.now();
-  const rows = await deps.db
+  const rows = await db
     .update(picks)
     .set({ deletedAt: now, updatedAt: now })
     .where(

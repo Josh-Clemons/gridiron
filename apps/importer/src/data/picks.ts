@@ -7,7 +7,7 @@ import type { TeamCatalog } from './teams';
 /** A stored pick, with the team already translated to its canonical code. */
 export interface StoredPick extends Pick {
   readonly memberId: number;
-  readonly source: 'app' | 'import';
+  readonly source: 'app' | 'import' | 'correction';
 }
 
 /**

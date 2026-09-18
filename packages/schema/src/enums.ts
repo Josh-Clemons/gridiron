@@ -8,10 +8,12 @@ export const gameStatusEnum = pgEnum('game_status', ['scheduled', 'final']);
 /**
  * Where a pick came from.
  *
- * Both paths run the same validation; this exists for provenance and so the importer
- * can detect that a slot already holds a pick the player entered themselves.
+ * All three paths run the same validation; this exists for provenance and so the
+ * importer can detect that a slot already holds a pick a human entered deliberately —
+ * `app` by the player, `correction` by the commissioner on their behalf — rather than
+ * one transcribed from the workbook.
  */
-export const pickSourceEnum = pgEnum('pick_source', ['app', 'import']);
+export const pickSourceEnum = pgEnum('pick_source', ['app', 'import', 'correction']);
 
 export const memberRoleEnum = pgEnum('member_role', ['owner', 'member']);
 
