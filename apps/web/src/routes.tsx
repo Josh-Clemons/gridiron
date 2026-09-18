@@ -3,6 +3,7 @@ import { createRootRouteWithContext, createRoute, Outlet, redirect } from '@tans
 import { sessionQuery } from './api/queries';
 import { AppShell } from './components/AppShell';
 import { ChampionsPage } from './pages/ChampionsPage';
+import { CommissionerPage } from './pages/CommissionerPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { JoinPage } from './pages/JoinPage';
@@ -183,6 +184,12 @@ const championsRoute = createRoute({
   component: ChampionsPage,
 });
 
+const commissionerRoute = createRoute({
+  getParentRoute: () => leagueRoute,
+  path: '/admin',
+  component: CommissionerPage,
+});
+
 export const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -192,6 +199,13 @@ export const routeTree = rootRoute.addChildren([
   authedRoute.addChildren([
     leaguesRoute,
     joinRoute,
-    leagueRoute.addChildren([pickRoute, usageRoute, standingsRoute, historyRoute, championsRoute]),
+    leagueRoute.addChildren([
+      pickRoute,
+      usageRoute,
+      standingsRoute,
+      historyRoute,
+      championsRoute,
+      commissionerRoute,
+    ]),
   ]),
 ]);

@@ -47,7 +47,7 @@ export const isUnauthorized = (error: unknown): boolean =>
   isApiError(error) && error.code === 'unauthorized';
 
 interface SendOptions {
-  readonly method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  readonly method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   readonly body?: unknown;
   readonly signal?: AbortSignal;
 }

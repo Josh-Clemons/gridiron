@@ -1,8 +1,13 @@
 import {
+  type AdminMember,
+  type AdminMembersResponse,
+  adminMembersResponseSchema,
   type Board,
   boardSchema,
   type Champions,
   championsSchema,
+  correctionsResponseSchema,
+  type CorrectionsResponse,
   type CreateLeagueRequest,
   type JoinLeagueRequest,
   type JoinPreview,
@@ -112,6 +117,26 @@ export const membersQuery = (leagueId: number) =>
         schema: membersResponseSchema,
         signal,
       }).then((data) => data.members),
+  });
+
+export const adminMembersQuery = (leagueId: number) =>
+  queryOptions({
+    queryKey: ['admin-members', leagueId] as const,
+    queryFn: ({ signal }) =>
+      request(`/leagues/${String(leagueId)}/admin/members`, {
+        schema: adminMembersResponseSchema,
+        signal,
+      }).then((data) => data.members),
+  });
+
+export const correctionsQuery = (leagueId: number, season: SeasonArg) =>
+  queryOptions({
+    queryKey: ['corrections', leagueId, seasonKey(season)] as const,
+    queryFn: ({ signal }) =>
+      request(`/leagues/${String(leagueId)}/admin/corrections${query(seasonQuery(season))}`, {
+        schema: correctionsResponseSchema,
+        signal,
+      }),
   });
 
 export const joinPreviewQuery = (code: string) =>
@@ -238,8 +263,11 @@ export const leaveLeague = (leagueId: number): Promise<void> =>
   requestVoid(`/leagues/${String(leagueId)}/leave`, { method: 'POST' });
 
 export type {
+  AdminMember,
+  AdminMembersResponse,
   Board,
   Champions,
+  CorrectionsResponse,
   JoinPreview,
   League,
   LeagueMember,

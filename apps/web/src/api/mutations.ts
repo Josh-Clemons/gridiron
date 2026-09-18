@@ -1,5 +1,8 @@
 import {
+  type AdminMemberResponse,
+  adminMemberResponseSchema,
   type Board,
+  correctPickResponseSchema,
   deletePickResponseSchema,
   type PutPickResponse,
   putPickResponseSchema,
@@ -10,6 +13,61 @@ import { useToast } from '../components/Toast';
 import { reasonForWire } from '../lib/rejections';
 import { ApiError, request } from './client';
 import { boardQuery, type SeasonArg } from './queries';
+
+const adminMemberPath = (leagueId: number, memberId: number): string =>
+  `/leagues/${String(leagueId)}/admin/members/${String(memberId)}`;
+
+export const renameMember = (
+  leagueId: number,
+  memberId: number,
+  displayName: string,
+): Promise<AdminMemberResponse> =>
+  request(adminMemberPath(leagueId, memberId), {
+    method: 'PATCH',
+    body: { displayName },
+    schema: adminMemberResponseSchema,
+  });
+
+export const removeMember = (leagueId: number, memberId: number): Promise<AdminMemberResponse> =>
+  request(adminMemberPath(leagueId, memberId), {
+    method: 'DELETE',
+    schema: adminMemberResponseSchema,
+  });
+
+export const restoreMember = (leagueId: number, memberId: number): Promise<AdminMemberResponse> =>
+  request(`${adminMemberPath(leagueId, memberId)}/restore`, {
+    method: 'POST',
+    schema: adminMemberResponseSchema,
+  });
+
+export const transferOwnership = (
+  leagueId: number,
+  memberId: number,
+): Promise<AdminMemberResponse> =>
+  request(`${adminMemberPath(leagueId, memberId)}/transfer-ownership`, {
+    method: 'POST',
+    schema: adminMemberResponseSchema,
+  });
+
+export const correctMemberPick = (
+  leagueId: number,
+  memberId: number,
+  season: SeasonArg,
+  week: number,
+  slot: Slot,
+  teamId: string | null,
+  reason: string,
+) =>
+  request(
+    `${adminMemberPath(leagueId, memberId)}/picks/${String(week)}/${slot}${
+      season === undefined ? '' : `?season=${String(season)}`
+    }`,
+    {
+      method: 'PUT',
+      body: { teamId, reason },
+      schema: correctPickResponseSchema,
+    },
+  );
 
 interface PickTarget {
   readonly slot: Slot;
