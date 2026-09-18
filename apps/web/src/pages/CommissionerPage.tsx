@@ -31,6 +31,7 @@ import {
 } from '../components/CommissionerRoster';
 import { CommissionerCorrection } from '../components/CommissionerCorrection';
 import { CommissionerSettings } from '../components/CommissionerSettings';
+import { CommissionerWorkbooks } from '../components/CommissionerWorkbooks';
 import { useToast } from '../components/Toast';
 
 /** The owner’s control room: roster management, corrections, and their audit trail. */
@@ -183,6 +184,8 @@ export function CommissionerPage() {
           toast.show('Pick corrected and recorded in the audit log', 'success');
         }}
       />
+
+      <CommissionerWorkbooks leagueId={id} />
 
       <RenameMemberDialog
         target={renameTarget}

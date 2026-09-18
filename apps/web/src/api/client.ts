@@ -123,3 +123,37 @@ export async function request<T>(path: string, options: RequestOptions<T>): Prom
 export async function requestVoid(path: string, options: SendOptions = {}): Promise<void> {
   await send(path, options);
 }
+
+/** A multipart POST — the content-type and boundary are left to `fetch`. */
+export async function requestForm<T>(
+  path: string,
+  form: FormData,
+  schema: z.ZodType<T>,
+): Promise<T> {
+  const response = await fetch(`${BASE_URL}${path}`, {
+    method: 'POST',
+    credentials: 'include',
+    body: form,
+  });
+  if (!response.ok) throw await toApiError(response);
+
+  const payload: unknown = await response.json();
+  const parsed = schema.safeParse(payload);
+  if (!parsed.success) {
+    throw new ApiError(response.status, 'internal', `unexpected response from ${path}`, {
+      fields: { _: parsed.error.issues[0]?.message ?? 'shape mismatch' },
+    });
+  }
+  return parsed.data;
+}
+
+/** A download: the response is a file, not JSON. Returns the bytes and the filename. */
+export async function download(path: string): Promise<{ blob: Blob; filename: string }> {
+  const response = await fetch(`${BASE_URL}${path}`, { credentials: 'include' });
+  if (!response.ok) throw await toApiError(response);
+
+  const blob = await response.blob();
+  const disposition = response.headers.get('content-disposition');
+  const filename = disposition === null ? null : /filename="([^"]*)"/u.exec(disposition)?.[1];
+  return { blob, filename: filename ?? 'download' };
+}

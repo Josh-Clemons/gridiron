@@ -10,11 +10,13 @@ import {
   putPickResponseSchema,
   regenerateInviteResponseSchema,
   type Slot,
+  type Workbook,
+  workbookSchema,
 } from '@gridiron/contracts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../components/Toast';
 import { reasonForWire } from '../lib/rejections';
-import { ApiError, request } from './client';
+import { ApiError, request, requestForm } from './client';
 import { boardQuery, type SeasonArg } from './queries';
 
 const adminMemberPath = (leagueId: number, memberId: number): string =>
@@ -41,6 +43,19 @@ export const archiveLeague = (leagueId: number): Promise<League> =>
 
 export const unarchiveLeague = (leagueId: number): Promise<League> =>
   request(adminPath(leagueId, '/unarchive'), { method: 'POST', schema: leagueSchema });
+
+export const uploadWorkbook = (leagueId: number, file: File, season: number): Promise<Workbook> => {
+  const form = new FormData();
+  form.append('file', file);
+  form.append('season', String(season));
+  return requestForm(adminPath(leagueId, '/workbooks'), form, workbookSchema);
+};
+
+export const applyWorkbook = (leagueId: number, workbookId: number): Promise<Workbook> =>
+  request(adminPath(leagueId, `/workbooks/${String(workbookId)}/apply`), {
+    method: 'POST',
+    schema: workbookSchema,
+  });
 
 export const renameMember = (
   leagueId: number,

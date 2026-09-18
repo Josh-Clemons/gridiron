@@ -30,6 +30,9 @@ import {
   type TeamUsage,
   teamUsageSchema,
   teamsResponseSchema,
+  type Workbook,
+  type WorkbooksResponse,
+  workbooksResponseSchema,
   userSchema,
 } from '@gridiron/contracts';
 import { queryOptions } from '@tanstack/react-query';
@@ -137,6 +140,16 @@ export const correctionsQuery = (leagueId: number, season: SeasonArg) =>
         schema: correctionsResponseSchema,
         signal,
       }),
+  });
+
+export const adminWorkbooksQuery = (leagueId: number) =>
+  queryOptions({
+    queryKey: ['admin-workbooks', leagueId] as const,
+    queryFn: ({ signal }) =>
+      request(`/leagues/${String(leagueId)}/admin/workbooks`, {
+        schema: workbooksResponseSchema,
+        signal,
+      }).then((data) => data.workbooks),
   });
 
 export const joinPreviewQuery = (code: string) =>
@@ -276,4 +289,6 @@ export type {
   Standings,
   Team,
   TeamUsage,
+  Workbook,
+  WorkbooksResponse,
 };
