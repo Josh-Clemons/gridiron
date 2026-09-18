@@ -46,6 +46,94 @@ beforeEach(async () => {
   await harness.reset();
 });
 
+describe('commissioner member management', () => {
+  it('renames, removes, restores and preserves a roster slot', async () => {
+    const { owner, guest, leagueId, guestMemberId } = await setup();
+
+    const renamed = await owner.patch<{
+      member: { displayName: string; claimed: boolean; removedAt: string | null };
+    }>(`/leagues/${String(leagueId)}/admin/members/${String(guestMemberId)}`, {
+      displayName: 'Renamed Player',
+    });
+    expect(renamed.status).toBe(200);
+    expect(renamed.body.member).toEqual(
+      expect.objectContaining({ displayName: 'Renamed Player', claimed: true, removedAt: null }),
+    );
+
+    await owner.put(
+      `/leagues/${String(leagueId)}/admin/members/${String(guestMemberId)}/picks/1/win`,
+      { teamId: 'KC', reason: 'Preserve this pick while managing the roster.' },
+    );
+    const removed = await owner.delete<{
+      member: { displayName: string; claimed: boolean; removedAt: string | null };
+    }>(`/leagues/${String(leagueId)}/admin/members/${String(guestMemberId)}`);
+    expect(removed.status).toBe(200);
+    expect(removed.body.member).toEqual(
+      expect.objectContaining({ displayName: 'Renamed Player', claimed: false }),
+    );
+    expect(removed.body.member.removedAt).not.toBeNull();
+    expect((await guest.get(`/leagues/${String(leagueId)}`)).status).toBe(404);
+
+    const restored = await owner.post<{
+      member: { displayName: string; claimed: boolean; removedAt: string | null };
+    }>(`/leagues/${String(leagueId)}/admin/members/${String(guestMemberId)}/restore`);
+    expect(restored.status).toBe(200);
+    expect(restored.body.member).toEqual(
+      expect.objectContaining({ displayName: 'Renamed Player', claimed: false, removedAt: null }),
+    );
+
+    const joined = await guest.post<{ memberId: number }>('/leagues/join', {
+      inviteCode: (await owner.get<{ inviteCode: string }>(`/leagues/${String(leagueId)}`)).body
+        .inviteCode,
+      claimMemberId: guestMemberId,
+    });
+    expect(joined.status).toBe(200);
+    expect(joined.body.memberId).toBe(guestMemberId);
+  });
+
+  it('transfers ownership only to a claimed active member', async () => {
+    const { owner, guest, leagueId, guestMemberId } = await setup();
+
+    const transferred = await owner.post<{ member: { role: string; isSelf: boolean } }>(
+      `/leagues/${String(leagueId)}/admin/members/${String(guestMemberId)}/transfer-ownership`,
+    );
+    expect(transferred.status).toBe(200);
+    expect(transferred.body.member).toEqual(
+      expect.objectContaining({ role: 'owner', isSelf: false }),
+    );
+    expect((await owner.get(`/leagues/${String(leagueId)}/admin/members`)).status).toBe(403);
+
+    const members = await guest.get<{
+      members: { displayName: string; role: string; isSelf: boolean }[];
+    }>(`/leagues/${String(leagueId)}/admin/members`);
+    expect(members.status).toBe(200);
+    expect(members.body.members).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ displayName: 'Player', role: 'owner', isSelf: true }),
+        expect.objectContaining({ displayName: 'Commissioner', role: 'member', isSelf: false }),
+      ]),
+    );
+  });
+
+  it('lists removed members for the owner and blocks member management for regular members', async () => {
+    const { owner, guest, leagueId, guestMemberId } = await setup();
+    const listed = await owner.get<{ members: { id: number; removedAt: string | null }[] }>(
+      `/leagues/${String(leagueId)}/admin/members`,
+    );
+    expect(listed.status).toBe(200);
+    expect(listed.body.members).toHaveLength(2);
+    expect(listed.body.members.find((member) => member.id === guestMemberId)?.removedAt).toBeNull();
+
+    const forbidden = await guest.get(`/leagues/${String(leagueId)}/admin/members`);
+    expect(forbidden.status).toBe(403);
+
+    const ownerCannotBeRemoved = await owner.delete(
+      `/leagues/${String(leagueId)}/admin/members/${String((await owner.get<{ memberId: number }>(`/leagues/${String(leagueId)}`)).body.memberId)}`,
+    );
+    expect(ownerCannotBeRemoved.status).toBe(403);
+  });
+});
+
 describe('commissioner pick corrections', () => {
   it('writes a correction after kickoff and exposes the audit log', async () => {
     const { owner, leagueId, guestMemberId } = await setup();

@@ -79,6 +79,13 @@ GET    /leagues/preview?code=XXXXXXXX what an invite code shows before joining
 POST   /leagues/join                  join, optionally claiming an imported roster slot
 GET    /leagues/:id/members
 POST   /leagues/:id/leave
+GET    /leagues/:id/admin/members    owner roster management, including removed slots
+PATCH  /leagues/:id/admin/members/:memberId
+DELETE /leagues/:id/admin/members/:memberId
+POST   /leagues/:id/admin/members/:memberId/restore
+POST   /leagues/:id/admin/members/:memberId/transfer-ownership
+PUT    /leagues/:id/admin/members/:memberId/picks/:week/:slot
+GET    /leagues/:id/admin/corrections
 GET    /leagues/:id/board?week=N      one week: games, your picks, everyone's totals
 PUT    /leagues/:id/picks/:week/:slot { "teamId": "KC" }
 DELETE /leagues/:id/picks/:week/:slot

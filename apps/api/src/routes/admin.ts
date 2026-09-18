@@ -1,15 +1,24 @@
 import {
   correctPickRequestSchema,
   idSchema,
+  renameMemberRequestSchema,
   pickPathSchema,
   seasonQuerySchema,
 } from '@gridiron/contracts';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { requireMember, requireMembership, requireOwner } from '../data/leagues';
+import { requireManagedMember } from '../data/members';
 import { assertWeekInSeason, resolveSeason } from '../data/seasons';
 import type { Deps } from '../deps';
 import { correctPick, listCorrectionLog } from '../domain/corrections';
+import {
+  listMemberManagement,
+  removeMember,
+  renameMember,
+  restoreMember,
+  transferMemberOwnership,
+} from '../domain/members';
 import type { AppEnv } from '../http/context';
 import { requireAuth } from '../http/middleware';
 import { readJson, readParams, readQuery } from '../http/validate';
@@ -18,6 +27,7 @@ import { leagueParamSchema } from './leagues';
 const memberPickParamsSchema = leagueParamSchema
   .extend({ memberId: z.coerce.number().pipe(idSchema) })
   .extend(pickPathSchema.shape);
+const memberParamsSchema = leagueParamSchema.extend({ memberId: z.coerce.number().pipe(idSchema) });
 
 /**
  * The commissioner's tools — Phase 7.
@@ -30,6 +40,46 @@ const memberPickParamsSchema = leagueParamSchema
 export function adminRoutes(deps: Deps) {
   const app = new Hono<AppEnv>();
   app.use('/leagues/*', requireAuth(deps));
+
+  /** The complete roster, including removed slots available for restoration. */
+  app.get('/leagues/:leagueId/admin/members', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    return c.json(await listMemberManagement(deps, membership));
+  });
+
+  /** Rename a league-local roster label. */
+  app.patch('/leagues/:leagueId/admin/members/:memberId', async (c) => {
+    const { leagueId, memberId } = readParams(c, memberParamsSchema);
+    const body = await readJson(c, renameMemberRequestSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const target = await requireManagedMember(deps, leagueId, memberId);
+    return c.json(await renameMember(deps, membership, target, body.displayName));
+  });
+
+  /** Remove a member without deleting their roster slot or picks. */
+  app.delete('/leagues/:leagueId/admin/members/:memberId', async (c) => {
+    const { leagueId, memberId } = readParams(c, memberParamsSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const target = await requireManagedMember(deps, leagueId, memberId);
+    return c.json(await removeMember(deps, membership, target));
+  });
+
+  /** Restore a previously removed roster slot as an unclaimed member. */
+  app.post('/leagues/:leagueId/admin/members/:memberId/restore', async (c) => {
+    const { leagueId, memberId } = readParams(c, memberParamsSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const target = await requireManagedMember(deps, leagueId, memberId);
+    return c.json(await restoreMember(deps, membership, target));
+  });
+
+  /** Transfer ownership to another claimed active member. */
+  app.post('/leagues/:leagueId/admin/members/:memberId/transfer-ownership', async (c) => {
+    const { leagueId, memberId } = readParams(c, memberParamsSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const target = await requireManagedMember(deps, leagueId, memberId);
+    return c.json(await transferMemberOwnership(deps, membership, target));
+  });
 
   /**
    * Correct one slot of any member's week.
@@ -48,16 +98,7 @@ export function adminRoutes(deps: Deps) {
     assertWeekInSeason(season, week);
 
     return c.json(
-      await correctPick(
-        deps,
-        membership,
-        target,
-        season,
-        week,
-        slot,
-        body.teamId,
-        body.reason,
-      ),
+      await correctPick(deps, membership, target, season, week, slot, body.teamId, body.reason),
     );
   });
 

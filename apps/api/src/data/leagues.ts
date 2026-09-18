@@ -98,7 +98,7 @@ export interface MemberRow {
 }
 
 /**
- * A specific member of a league, or a 404.
+ * A specific active member of a league, or a 404.
  *
  * The target of a correction: it must be a real, current member of the same league.
  * Like `requireMembership`, the not-found wording deliberately does not say which

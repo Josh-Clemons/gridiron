@@ -5,6 +5,7 @@ import {
   instantSchema,
   seasonYearSchema,
   slotSchema,
+  memberRoleSchema,
   teamCodeSchema,
   weekSchema,
 } from './common';
@@ -61,7 +62,37 @@ export const correctionsResponseSchema = z.object({
   corrections: z.array(correctionSchema),
 });
 
+/** The owner-facing view of one active or removed roster slot. */
+export const adminMemberSchema = z.object({
+  id: idSchema,
+  displayName: displayNameSchema,
+  role: memberRoleSchema,
+  claimed: z.boolean(),
+  isSelf: z.boolean(),
+  joinedAt: instantSchema,
+  removedAt: instantSchema.nullable(),
+});
+
+/** All roster slots, including removed slots that can be restored. */
+export const adminMembersResponseSchema = z.object({
+  members: z.array(adminMemberSchema),
+});
+
+/** Rename a league-local roster label. */
+export const renameMemberRequestSchema = z.object({
+  displayName: displayNameSchema,
+});
+
+/** The result of a member-management action. */
+export const adminMemberResponseSchema = z.object({
+  member: adminMemberSchema,
+});
+
 export type CorrectPickRequest = z.infer<typeof correctPickRequestSchema>;
 export type Correction = z.infer<typeof correctionSchema>;
 export type CorrectPickResponse = z.infer<typeof correctPickResponseSchema>;
 export type CorrectionsResponse = z.infer<typeof correctionsResponseSchema>;
+export type AdminMember = z.infer<typeof adminMemberSchema>;
+export type AdminMembersResponse = z.infer<typeof adminMembersResponseSchema>;
+export type RenameMemberRequest = z.infer<typeof renameMemberRequestSchema>;
+export type AdminMemberResponse = z.infer<typeof adminMemberResponseSchema>;

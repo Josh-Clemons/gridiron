@@ -110,6 +110,10 @@ export class ApiClient {
     return this.send<T>('PUT', path, body);
   }
 
+  patch<T>(path: string, body?: unknown): Promise<ResponseOf<T>> {
+    return this.send<T>('PATCH', path, body);
+  }
+
   delete<T>(path: string): Promise<ResponseOf<T>> {
     return this.send<T>('DELETE', path);
   }
