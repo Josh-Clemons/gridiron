@@ -134,6 +134,78 @@ describe('commissioner member management', () => {
   });
 });
 
+describe('league settings', () => {
+  it('renames the league', async () => {
+    const { owner, leagueId } = await setup();
+
+    const renamed = await owner.patch<{ name: string }>(
+      `/leagues/${String(leagueId)}/admin/settings`,
+      { name: 'Grid Iron Classic' },
+    );
+
+    expect(renamed.status).toBe(200);
+    expect(renamed.body.name).toBe('Grid Iron Classic');
+    expect((await owner.get<{ name: string }>(`/leagues/${String(leagueId)}`)).body.name).toBe(
+      'Grid Iron Classic',
+    );
+  });
+
+  it('regenerates the invite code and invalidates the old one', async () => {
+    const { owner, leagueId } = await setup();
+    const before = (await owner.get<{ inviteCode: string }>(`/leagues/${String(leagueId)}`)).body
+      .inviteCode;
+
+    const regenerated = await owner.post<{ inviteCode: string }>(
+      `/leagues/${String(leagueId)}/admin/invite`,
+    );
+    expect(regenerated.status).toBe(200);
+    expect(regenerated.body.inviteCode).not.toBe(before);
+
+    // The old code is dead; the new one lets a fresh account in.
+    const stranger = await signUp(harness.app, 'third@example.com', 'Third');
+    expect((await stranger.post('/leagues/join', { inviteCode: before })).status).toBe(404);
+    expect(
+      (await stranger.post('/leagues/join', { inviteCode: regenerated.body.inviteCode })).status,
+    ).toBe(200);
+  });
+
+  it('archives and unarchives the league, freezing picks while archived', async () => {
+    const { owner, guest, leagueId } = await setup();
+
+    const archived = await owner.post<{ archivedAt: string | null }>(
+      `/leagues/${String(leagueId)}/admin/archive`,
+    );
+    expect(archived.status).toBe(200);
+    expect(archived.body.archivedAt).not.toBeNull();
+
+    // A player's own picks are refused while the league is archived.
+    expect(
+      (await guest.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'KC' })).status,
+    ).toBe(403);
+
+    const unarchived = await owner.post<{ archivedAt: string | null }>(
+      `/leagues/${String(leagueId)}/admin/unarchive`,
+    );
+    expect(unarchived.status).toBe(200);
+    expect(unarchived.body.archivedAt).toBeNull();
+
+    expect(
+      (await guest.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'KC' })).status,
+    ).toBe(200);
+  });
+
+  it('turns a regular member away from every settings route', async () => {
+    const { guest, leagueId } = await setup();
+
+    expect(
+      (await guest.patch(`/leagues/${String(leagueId)}/admin/settings`, { name: 'x' })).status,
+    ).toBe(403);
+    expect((await guest.post(`/leagues/${String(leagueId)}/admin/invite`)).status).toBe(403);
+    expect((await guest.post(`/leagues/${String(leagueId)}/admin/archive`)).status).toBe(403);
+    expect((await guest.post(`/leagues/${String(leagueId)}/admin/unarchive`)).status).toBe(403);
+  });
+});
+
 describe('commissioner pick corrections', () => {
   it('writes a correction after kickoff and exposes the audit log', async () => {
     const { owner, leagueId, guestMemberId } = await setup();

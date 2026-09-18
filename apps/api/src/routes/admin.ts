@@ -4,6 +4,7 @@ import {
   renameMemberRequestSchema,
   pickPathSchema,
   seasonQuerySchema,
+  updateLeagueSettingsRequestSchema,
 } from '@gridiron/contracts';
 import { Hono } from 'hono';
 import { z } from 'zod';
@@ -12,6 +13,12 @@ import { requireManagedMember } from '../data/members';
 import { assertWeekInSeason, resolveSeason } from '../data/seasons';
 import type { Deps } from '../deps';
 import { correctPick, listCorrectionLog } from '../domain/corrections';
+import {
+  archiveLeague,
+  regenerateLeagueInvite,
+  renameLeague,
+  unarchiveLeague,
+} from '../domain/league-admin';
 import {
   listMemberManagement,
   removeMember,
@@ -40,6 +47,35 @@ const memberParamsSchema = leagueParamSchema.extend({ memberId: z.coerce.number(
 export function adminRoutes(deps: Deps) {
   const app = new Hono<AppEnv>();
   app.use('/leagues/*', requireAuth(deps));
+
+  /** Rename the league. */
+  app.patch('/leagues/:leagueId/admin/settings', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const body = await readJson(c, updateLeagueSettingsRequestSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    return c.json(await renameLeague(deps, membership, body.name));
+  });
+
+  /** Regenerate the invite code; the old one stops working immediately. */
+  app.post('/leagues/:leagueId/admin/invite', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    return c.json(await regenerateLeagueInvite(deps, membership));
+  });
+
+  /** Archive the league — picks freeze. */
+  app.post('/leagues/:leagueId/admin/archive', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    return c.json(await archiveLeague(deps, membership));
+  });
+
+  /** Unarchive — roll the league into the next season. */
+  app.post('/leagues/:leagueId/admin/unarchive', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    return c.json(await unarchiveLeague(deps, membership));
+  });
 
   /** The complete roster, including removed slots available for restoration. */
   app.get('/leagues/:leagueId/admin/members', async (c) => {

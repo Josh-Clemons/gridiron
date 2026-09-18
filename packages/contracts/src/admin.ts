@@ -10,6 +10,7 @@ import {
   weekSchema,
 } from './common';
 import { pickSchema, seasonSchema, weekScoreSchema } from './picks';
+import { inviteCodeSchema, leagueNameSchema } from './leagues';
 
 /**
  * Commissioner tools — Phase 7.
@@ -88,6 +89,16 @@ export const adminMemberResponseSchema = z.object({
   member: adminMemberSchema,
 });
 
+/** Rename the league — the "settings" surface for now, grown as needed. */
+export const updateLeagueSettingsRequestSchema = z.object({
+  name: leagueNameSchema,
+});
+
+/** A freshly allocated invite code; the old one stops working immediately. */
+export const regenerateInviteResponseSchema = z.object({
+  inviteCode: inviteCodeSchema,
+});
+
 export type CorrectPickRequest = z.infer<typeof correctPickRequestSchema>;
 export type Correction = z.infer<typeof correctionSchema>;
 export type CorrectPickResponse = z.infer<typeof correctPickResponseSchema>;
@@ -96,3 +107,5 @@ export type AdminMember = z.infer<typeof adminMemberSchema>;
 export type AdminMembersResponse = z.infer<typeof adminMembersResponseSchema>;
 export type RenameMemberRequest = z.infer<typeof renameMemberRequestSchema>;
 export type AdminMemberResponse = z.infer<typeof adminMemberResponseSchema>;
+export type UpdateLeagueSettingsRequest = z.infer<typeof updateLeagueSettingsRequestSchema>;
+export type RegenerateInviteResponse = z.infer<typeof regenerateInviteResponseSchema>;

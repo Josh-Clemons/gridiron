@@ -79,6 +79,10 @@ GET    /leagues/preview?code=XXXXXXXX what an invite code shows before joining
 POST   /leagues/join                  join, optionally claiming an imported roster slot
 GET    /leagues/:id/members
 POST   /leagues/:id/leave
+PATCH  /leagues/:id/admin/settings { "name": "..." }
+POST   /leagues/:id/admin/invite   regenerate the invite code
+POST   /leagues/:id/admin/archive  freeze picks at season end
+POST   /leagues/:id/admin/unarchive
 GET    /leagues/:id/admin/members    owner roster management, including removed slots
 PATCH  /leagues/:id/admin/members/:memberId
 DELETE /leagues/:id/admin/members/:memberId

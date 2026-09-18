@@ -30,6 +30,7 @@ import {
   type MemberAction,
 } from '../components/CommissionerRoster';
 import { CommissionerCorrection } from '../components/CommissionerCorrection';
+import { CommissionerSettings } from '../components/CommissionerSettings';
 import { useToast } from '../components/Toast';
 
 /** The owner’s control room: roster management, corrections, and their audit trail. */
@@ -139,6 +140,8 @@ export function CommissionerPage() {
           </Typography>
         </Box>
       </Stack>
+
+      <CommissionerSettings league={league.data} />
 
       <CommissionerRoster
         members={members.data}

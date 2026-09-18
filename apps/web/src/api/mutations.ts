@@ -4,8 +4,11 @@ import {
   type Board,
   correctPickResponseSchema,
   deletePickResponseSchema,
+  type League,
+  leagueSchema,
   type PutPickResponse,
   putPickResponseSchema,
+  regenerateInviteResponseSchema,
   type Slot,
 } from '@gridiron/contracts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -16,6 +19,28 @@ import { boardQuery, type SeasonArg } from './queries';
 
 const adminMemberPath = (leagueId: number, memberId: number): string =>
   `/leagues/${String(leagueId)}/admin/members/${String(memberId)}`;
+
+const adminPath = (leagueId: number, suffix: string): string =>
+  `/leagues/${String(leagueId)}/admin${suffix}`;
+
+export const renameLeague = (leagueId: number, name: string): Promise<League> =>
+  request(adminPath(leagueId, '/settings'), {
+    method: 'PATCH',
+    body: { name },
+    schema: leagueSchema,
+  });
+
+export const regenerateInvite = (leagueId: number): Promise<{ inviteCode: string }> =>
+  request(adminPath(leagueId, '/invite'), {
+    method: 'POST',
+    schema: regenerateInviteResponseSchema,
+  });
+
+export const archiveLeague = (leagueId: number): Promise<League> =>
+  request(adminPath(leagueId, '/archive'), { method: 'POST', schema: leagueSchema });
+
+export const unarchiveLeague = (leagueId: number): Promise<League> =>
+  request(adminPath(leagueId, '/unarchive'), { method: 'POST', schema: leagueSchema });
 
 export const renameMember = (
   leagueId: number,

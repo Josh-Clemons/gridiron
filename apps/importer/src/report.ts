@@ -27,6 +27,9 @@ export function renderReport(result: ImportResult): string {
       );
       for (const reason of rejection.reasons) line(`      ${reason}`);
     }
+    line(
+      '  Correct these in the sheet and re-import — each slot stays empty and scores 0 until then.',
+    );
     line();
   }
 
