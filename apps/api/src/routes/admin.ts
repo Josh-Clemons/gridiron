@@ -14,6 +14,7 @@ import { requireManagedMember } from '../data/members';
 import { assertWeekInSeason, resolveSeason } from '../data/seasons';
 import type { Deps } from '../deps';
 import { correctPick, listCorrectionLog } from '../domain/corrections';
+import { exportLeagueWorkbook } from '../domain/export';
 import {
   archiveLeague,
   regenerateLeagueInvite,
@@ -129,6 +130,22 @@ export function adminRoutes(deps: Deps) {
       status: 200,
       headers: {
         'content-type': 'application/octet-stream',
+        'content-disposition': `attachment; filename="${safeName}"`,
+      },
+    });
+  });
+
+  /** Recreate the commissioner's workbook from the database. */
+  app.get('/leagues/:leagueId/admin/export', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const query = readQuery(c, seasonQuerySchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const { name, bytes } = await exportLeagueWorkbook(deps, membership, query.season);
+    const safeName = name.replace(/["\r\n\\]/g, '_');
+    return new Response(bytes, {
+      status: 200,
+      headers: {
+        'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'content-disposition': `attachment; filename="${safeName}"`,
       },
     });

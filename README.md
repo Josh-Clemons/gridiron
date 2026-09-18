@@ -94,6 +94,7 @@ POST   /leagues/:id/admin/workbooks           upload + validate a workbook (mult
 GET    /leagues/:id/admin/workbooks           list uploads, newest first
 POST   /leagues/:id/admin/workbooks/:wid/apply
 GET    /leagues/:id/admin/workbooks/:wid/download
+GET    /leagues/:id/admin/export?season=YYYY  recreate the workbook from the database
 GET    /leagues/:id/board?week=N      one week: games, your picks, everyone's totals
 PUT    /leagues/:id/picks/:week/:slot { "teamId": "KC" }
 DELETE /leagues/:id/picks/:week/:slot
