@@ -52,6 +52,7 @@ export function CommissionerCorrection({
   const [clear, setClear] = useState(false);
   const [reason, setReason] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const weekCount = seasons.find((entry) => entry.year === season)?.weekCount ?? 18;
   const targetId = memberId === '' ? members[0]?.id : memberId;
 
@@ -60,6 +61,7 @@ export function CommissionerCorrection({
     if (targetId === undefined || reason.trim().length < 3) return;
     if (!clear && teamId === '') return;
     setSubmitting(true);
+    setError(null);
     try {
       await onCorrect(
         targetId,
@@ -69,8 +71,9 @@ export function CommissionerCorrection({
         reason.trim(),
       );
       setReason('');
-    } catch {
-      // The parent reports the API error; keep the form values so the owner can retry.
+    } catch (submitError) {
+      // The form keeps its values so the owner can adjust and retry.
+      setError(errorMessage(submitError));
     } finally {
       setSubmitting(false);
     }
@@ -202,6 +205,7 @@ export function CommissionerCorrection({
               slotProps={{ htmlInput: { maxLength: 500 } }}
               helperText="Required for the audit trail."
             />
+            {error !== null && <Alert severity="error">{error}</Alert>}
             <Button
               type="submit"
               variant="contained"
