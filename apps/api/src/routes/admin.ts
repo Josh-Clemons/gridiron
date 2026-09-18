@@ -4,6 +4,7 @@ import {
   renameMemberRequestSchema,
   pickPathSchema,
   seasonQuerySchema,
+  seasonYearSchema,
   updateLeagueSettingsRequestSchema,
 } from '@gridiron/contracts';
 import { Hono } from 'hono';
@@ -20,6 +21,12 @@ import {
   unarchiveLeague,
 } from '../domain/league-admin';
 import {
+  applyWorkbook,
+  downloadWorkbook,
+  listWorkbookUploads,
+  uploadWorkbook,
+} from '../domain/workbooks';
+import {
   listMemberManagement,
   removeMember,
   renameMember,
@@ -27,14 +34,18 @@ import {
   transferMemberOwnership,
 } from '../domain/members';
 import type { AppEnv } from '../http/context';
+import { badRequest } from '../http/errors';
 import { requireAuth } from '../http/middleware';
-import { readJson, readParams, readQuery } from '../http/validate';
+import { readJson, readParams, readQuery, readUploadedFile } from '../http/validate';
 import { leagueParamSchema } from './leagues';
 
 const memberPickParamsSchema = leagueParamSchema
   .extend({ memberId: z.coerce.number().pipe(idSchema) })
   .extend(pickPathSchema.shape);
 const memberParamsSchema = leagueParamSchema.extend({ memberId: z.coerce.number().pipe(idSchema) });
+const workbookParamsSchema = leagueParamSchema.extend({
+  workbookId: z.coerce.number().pipe(idSchema),
+});
 
 /**
  * The commissioner's tools — Phase 7.
@@ -75,6 +86,52 @@ export function adminRoutes(deps: Deps) {
     const { leagueId } = readParams(c, leagueParamSchema);
     const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
     return c.json(await unarchiveLeague(deps, membership));
+  });
+
+  /** Upload a workbook; it is stored and validated, but nothing is imported yet. */
+  app.post('/leagues/:leagueId/admin/workbooks', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const form = await c.req.formData();
+    const uploaded = await readUploadedFile(form.get('file'));
+    const season = seasonYearSchema.safeParse(Number(form.get('season')));
+    if (!season.success) throw badRequest('season is required');
+    return c.json(
+      await uploadWorkbook(deps, membership, {
+        originalName: uploaded.name,
+        bytes: uploaded.bytes,
+        seasonYear: season.data,
+      }),
+    );
+  });
+
+  /** Every uploaded workbook, newest first. */
+  app.get('/leagues/:leagueId/admin/workbooks', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    return c.json(await listWorkbookUploads(deps, membership));
+  });
+
+  /** The confirmed second half: apply a validated workbook. */
+  app.post('/leagues/:leagueId/admin/workbooks/:workbookId/apply', async (c) => {
+    const { leagueId, workbookId } = readParams(c, workbookParamsSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    return c.json(await applyWorkbook(deps, membership, workbookId));
+  });
+
+  /** Stream the stored workbook back, for the operator or a re-check. */
+  app.get('/leagues/:leagueId/admin/workbooks/:workbookId/download', async (c) => {
+    const { leagueId, workbookId } = readParams(c, workbookParamsSchema);
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const { name, bytes } = await downloadWorkbook(deps, membership, workbookId);
+    const safeName = name.replace(/["\r\n\\]/g, '_');
+    return new Response(bytes, {
+      status: 200,
+      headers: {
+        'content-type': 'application/octet-stream',
+        'content-disposition': `attachment; filename="${safeName}"`,
+      },
+    });
   });
 
   /** The complete roster, including removed slots available for restoration. */

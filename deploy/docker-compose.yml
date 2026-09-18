@@ -105,8 +105,14 @@ services:
       # has to be the container's interface and the isolation moves up to the
       # port publishing above. See HOST in apps/api/src/config.ts.
       HOST: '0.0.0.0'
+      # Uploaded workbooks land here; the subprocess importer reads them back.
+      # The host dir is owned by uid 1000 (= the container's `node` user), so the
+      # bind mount is writable without a root chown step.
+      WORKBOOKS_DIR: /var/lib/gridiron/workbooks
     env_file:
       - /home/josh/.config/gridiron.env
+    volumes:
+      - /home/josh/gridiron-uploads:/var/lib/gridiron/workbooks
     depends_on:
       gridiron-db:
         condition: service_healthy

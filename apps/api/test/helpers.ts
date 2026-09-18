@@ -35,6 +35,8 @@ export interface HarnessOptions {
   readonly now?: Date;
   /** Environment overrides, e.g. `{ RATE_LIMIT: 'on' }`. */
   readonly env?: Record<string, string>;
+  /** Override the importer subprocess; tests fake it rather than spawn the CLI. */
+  readonly runImporter?: import('../src/deps').Deps['runImporter'];
 }
 
 export async function createHarness(options: HarnessOptions = {}): Promise<Harness> {
@@ -52,7 +54,13 @@ export async function createHarness(options: HarnessOptions = {}): Promise<Harne
     ...options.env,
   });
 
-  const deps = createDeps({ db, config, mailer, now: () => clock });
+  const deps = createDeps({
+    db,
+    config,
+    mailer,
+    now: () => clock,
+    ...(options.runImporter === undefined ? {} : { runImporter: options.runImporter }),
+  });
   const app = createApp(deps);
 
   const harness: Harness = {
@@ -116,6 +124,50 @@ export class ApiClient {
 
   delete<T>(path: string): Promise<ResponseOf<T>> {
     return this.send<T>('DELETE', path);
+  }
+
+  /** Multipart POST; the caller builds the FormData and supplies the file part. */
+  postForm<T>(path: string, form: FormData): Promise<ResponseOf<T>> {
+    return this.sendForm<T>('POST', path, form);
+  }
+
+  /** A GET whose body is raw bytes, not JSON — the download route. */
+  async getRaw(
+    path: string,
+  ): Promise<{ status: number; body: Uint8Array; contentType: string | null }> {
+    const headers: Record<string, string> = {};
+    if (this.cookies.size > 0) {
+      headers['cookie'] = [...this.cookies].map(([name, value]) => `${name}=${value}`).join('; ');
+    }
+    const response = await this.app.request(`http://localhost${path}`, { method: 'GET', headers });
+    this.absorbCookies(response);
+    const body = new Uint8Array(await response.arrayBuffer());
+    return { status: response.status, body, contentType: response.headers.get('content-type') };
+  }
+
+  private async sendForm<T>(method: string, path: string, form: FormData): Promise<ResponseOf<T>> {
+    const headers: Record<string, string> = {};
+    if (this.cookies.size > 0) {
+      headers['cookie'] = [...this.cookies].map(([name, value]) => `${name}=${value}`).join('; ');
+    }
+
+    // Content-type is left to fetch: it must set the multipart boundary itself.
+    const response = await this.app.request(`http://localhost${path}`, {
+      method,
+      headers,
+      body: form,
+    });
+    this.absorbCookies(response);
+
+    const text = await response.text();
+    const parsed: unknown = text === '' ? undefined : JSON.parse(text);
+    return {
+      status: response.status,
+      /* eslint-disable-next-line typescript/no-unsafe-type-assertion --
+       * Same reasoning as `send`: the test names the shape it expects. */
+      body: parsed as T,
+      headers: response.headers,
+    };
   }
 
   private async send<T>(method: string, path: string, body?: unknown): Promise<ResponseOf<T>> {

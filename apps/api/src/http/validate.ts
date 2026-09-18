@@ -43,3 +43,22 @@ export function readQuery<T>(c: Context, schema: z.ZodType<T>): T {
 export function readParams<T>(c: Context, schema: z.ZodType<T>): T {
   return parseOrThrow(schema, c.req.param(), 'path');
 }
+
+/** A file from a multipart upload, already read into memory. */
+export interface UploadedFile {
+  readonly name: string;
+  readonly bytes: Uint8Array;
+}
+
+/**
+ * Validate a multipart file part and read it into memory.
+ *
+ * The size cap lives in the domain layer, where the workbook-specific limit belongs;
+ * this only proves the part is actually a file with a name.
+ */
+export async function readUploadedFile(value: unknown): Promise<UploadedFile> {
+  if (!(value instanceof File)) throw badRequest('file is required');
+  if (value.name === '') throw badRequest('file name missing');
+  const buffer = await value.arrayBuffer();
+  return { name: value.name, bytes: new Uint8Array(buffer) };
+}

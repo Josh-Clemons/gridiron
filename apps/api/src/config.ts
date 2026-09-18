@@ -63,6 +63,9 @@ const configSchema = z.object({
   MATRIX_HOMESERVER: z.url().optional(),
   MATRIX_ACCESS_TOKEN: z.string().min(1).optional(),
   MATRIX_ALERT_ROOM: z.string().min(1).optional(),
+
+  /** Writable root where uploaded workbooks are stored, one subdir per league. */
+  WORKBOOKS_DIR: z.string().min(1).default('/tmp/gridiron-workbooks'),
 });
 
 export interface Config {
@@ -88,6 +91,8 @@ export interface Config {
   readonly espnTimeoutMs: number;
   /** Undefined unless the homeserver, token and room are all configured. */
   readonly matrix: MatrixConfig | undefined;
+  /** Writable root where uploaded workbooks live, one subdir per league. */
+  readonly workbooksDir: string;
   /**
    * `Secure` on the session cookie. Off in development because localhost is plain
    * HTTP; on everywhere else, where Caddy terminates TLS.
@@ -165,6 +170,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
             roomId: value.MATRIX_ALERT_ROOM,
           }
         : undefined,
+    workbooksDir: value.WORKBOOKS_DIR,
     cookieSecure: value.NODE_ENV === 'production',
   };
 }

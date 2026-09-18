@@ -5,6 +5,7 @@ import {
   check,
   index,
   integer,
+  jsonb,
   pgTable,
   text,
   timestamp,
@@ -364,6 +365,43 @@ export const pickCorrections = pgTable(
           or ${table.fromTeamId} <> ${table.toTeamId}`,
     ),
   ],
+);
+
+// ---------------------------------------------------------------------------
+// Workbook uploads
+// ---------------------------------------------------------------------------
+
+/**
+ * A workbook the commissioner uploaded through the app.
+ *
+ * The bytes live on the filesystem under the configured workbooks root, never in the
+ * database — `storedName` is the server-generated filename, and the original name is
+ * kept only for display. `report` is the JSON the importer produced on the last run
+ * (validate or apply), so the confirmation screen can be re-read without re-running.
+ */
+export const workbooks = pgTable(
+  'workbooks',
+  {
+    id: id(),
+    leagueId: bigint('league_id', { mode: 'number' })
+      .notNull()
+      .references(() => leagues.id, { onDelete: 'cascade' }),
+    memberId: bigint('member_id', { mode: 'number' })
+      .notNull()
+      .references(() => leagueMembers.id),
+    seasonId: bigint('season_id', { mode: 'number' })
+      .notNull()
+      .references(() => seasons.id, { onDelete: 'cascade' }),
+    /** The client's filename, kept for display only — never used as a path. */
+    originalName: text('original_name').notNull(),
+    /** Server-generated filename under the workbooks root, e.g. `<uuid>.xlsx`. */
+    storedName: text('stored_name').notNull(),
+    /** The last validation/apply report, as JSON. */
+    report: jsonb('report'),
+    appliedAt: timestamp('applied_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (table) => [index('workbooks_league_idx').on(table.leagueId)],
 );
 
 // ---------------------------------------------------------------------------

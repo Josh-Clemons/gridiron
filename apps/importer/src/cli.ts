@@ -21,7 +21,7 @@ import { renderReport } from './report';
  *   pnpm importer --file "Grid Iron- 2026.xlsx" --league 1 --season 2026 --apply
  *   pnpm importer --file "Grid Iron- 2025.xlsx" --league 1 --winners
  */
-const USAGE = `usage: importer --file <workbook> --league <id> [--season YYYY] [--apply] [--winners]
+const USAGE = `usage: importer --file <workbook> --league <id> [--season YYYY] [--apply] [--winners] [--json]
 
   --file     the commissioner's workbook, .xlsx or legacy .xls
   --league   the league id to import into
@@ -29,6 +29,8 @@ const USAGE = `usage: importer --file <workbook> --league <id> [--season YYYY] [
   --apply    write the surviving picks. Without it nothing is written.
   --winners  one-shot: load the "${WINNERS_SHEET}" sheet instead of picks.
              Run it against the newest workbook — later files correct earlier ones.
+  --json     print the ImportResult as JSON instead of the human report. A run
+             with findings still exits 0, because the findings are the answer.
 
 Exits non-zero when anything was rejected or conflicted, so a scripted run that ends
 up partial is noticed rather than passing quietly.`;
@@ -41,6 +43,7 @@ async function main(): Promise<void> {
       season: { type: 'string' },
       apply: { type: 'boolean', default: false },
       winners: { type: 'boolean', default: false },
+      json: { type: 'boolean', default: false },
       help: { type: 'boolean', short: 'h', default: false },
     },
   });
@@ -68,12 +71,18 @@ async function main(): Promise<void> {
       apply: values.apply,
     });
 
-    console.log(renderReport(result));
+    if (values.json) {
+      // The report is the product; a run that found rejections or conflicts is a
+      // successful run, so it exits 0 and lets the caller judge the findings.
+      console.log(JSON.stringify(result));
+    } else {
+      console.log(renderReport(result));
 
-    // Non-zero on anything a human still has to deal with. A rejected pick means a
-    // player is scoring 0 for a slot they meant to fill, and a conflict means two
-    // sources disagree — neither should slip past a cron job unnoticed.
-    if (result.rejections.length > 0 || result.conflicts.length > 0) process.exitCode = 1;
+      // Non-zero on anything a human still has to deal with. A rejected pick means a
+      // player is scoring 0 for a slot they meant to fill, and a conflict means two
+      // sources disagree — neither should slip past a cron job unnoticed.
+      if (result.rejections.length > 0 || result.conflicts.length > 0) process.exitCode = 1;
+    }
   } finally {
     await sql.end();
   }

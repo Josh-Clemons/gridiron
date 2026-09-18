@@ -90,6 +90,10 @@ POST   /leagues/:id/admin/members/:memberId/restore
 POST   /leagues/:id/admin/members/:memberId/transfer-ownership
 PUT    /leagues/:id/admin/members/:memberId/picks/:week/:slot
 GET    /leagues/:id/admin/corrections
+POST   /leagues/:id/admin/workbooks           upload + validate a workbook (multipart)
+GET    /leagues/:id/admin/workbooks           list uploads, newest first
+POST   /leagues/:id/admin/workbooks/:wid/apply
+GET    /leagues/:id/admin/workbooks/:wid/download
 GET    /leagues/:id/board?week=N      one week: games, your picks, everyone's totals
 PUT    /leagues/:id/picks/:week/:slot { "teamId": "KC" }
 DELETE /leagues/:id/picks/:week/:slot
