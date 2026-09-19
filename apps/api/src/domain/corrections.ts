@@ -1,8 +1,4 @@
-import type {
-  CorrectPickResponse,
-  Correction,
-  CorrectionsResponse,
-} from '@gridiron/contracts';
+import type { CorrectPickResponse, Correction, CorrectionsResponse } from '@gridiron/contracts';
 import { toWireRejection } from '@gridiron/contracts';
 import { validatePick, type Slot } from '@gridiron/rules';
 import { listCorrections, recordCorrection, type CorrectionRow } from '../data/corrections';
@@ -57,7 +53,7 @@ export async function correctPick(
 
   const existing = seasonPicks.find((pick) => pick.week === week && pick.slot === slot);
   const fromCode = existing?.teamId ?? null;
-  const fromId = existing === undefined ? null : catalog.resolve(existing.teamId)?.id ?? null;
+  const fromId = existing === undefined ? null : (catalog.resolve(existing.teamId)?.id ?? null);
   const now = deps.now();
 
   let toCode: string | null = null;
