@@ -17,8 +17,9 @@ beforeEach(async () => {
   await harness.reset();
 });
 
-/** Week 1 of 2026. The harness clock starts at noon; kickoff is 10 minutes later. */
-const KICKOFF = new Date('2026-09-10T12:10:00Z');
+/** Week 1 of 2026. Sunday noon Central = 17:00 UTC; 11:45 Central = 16:45 UTC. */
+const SUNDAY_NOON = new Date('2026-09-13T17:00:00Z');
+const ELEVEN_FORTY_FIVE = new Date('2026-09-13T16:45:00Z');
 
 async function leagueWithTwoAccounts(): Promise<{
   owner: ApiClient;
@@ -33,9 +34,9 @@ async function leagueWithTwoAccounts(): Promise<{
   await guest.post('/leagues/join', { inviteCode: created.body.inviteCode });
 
   await insertGames(harness.db, 2026, 1, [
-    { home: 'KC', away: 'DEN', kickoff: KICKOFF },
-    { home: 'BUF', away: 'NYJ', kickoff: KICKOFF },
-    { home: 'SF', away: 'SEA', kickoff: KICKOFF },
+    { home: 'KC', away: 'DEN', kickoff: SUNDAY_NOON },
+    { home: 'BUF', away: 'NYJ', kickoff: SUNDAY_NOON },
+    { home: 'SF', away: 'SEA', kickoff: SUNDAY_NOON },
   ]);
 
   return { owner, guest, leagueId: created.body.id };
@@ -52,6 +53,7 @@ describe('pick reminders', () => {
   it('reminds members behind on picks and skips those who finished', async () => {
     const { guest, leagueId } = await leagueWithTwoAccounts();
     await finishPicks(guest, leagueId);
+    harness.setNow(ELEVEN_FORTY_FIVE);
 
     const result = await runReminders(harness.deps);
 
@@ -60,9 +62,26 @@ describe('pick reminders', () => {
     expect(harness.mailer.lastTo('guest@example.com')).toBeUndefined();
   });
 
-  it('sends nothing more than 15 minutes before kickoff', async () => {
+  it('sends nothing more than 15 minutes before the Sunday kickoff', async () => {
     await leagueWithTwoAccounts();
-    harness.setNow(new Date('2026-09-10T11:30:00Z'));
+    // 11:00 Central, an hour out.
+    harness.setNow(new Date('2026-09-13T16:00:00Z'));
+
+    const result = await runReminders(harness.deps);
+
+    expect(result.notYet).toBe(true);
+    expect(result.sent).toBe(0);
+    expect(harness.mailer.sent).toHaveLength(0);
+  });
+
+  it('ignores a Thursday-night game and waits for Sunday', async () => {
+    await leagueWithTwoAccounts();
+    await insertGames(harness.db, 2026, 1, [
+      { home: 'DAL', away: 'PHI', kickoff: new Date('2026-09-10T23:30:00Z') },
+    ]);
+    // Ten minutes before the Thursday kickoff — the old "next kickoff" rule would
+    // fire here. The league picks against Sunday, so it must not.
+    harness.setNow(new Date('2026-09-10T23:20:00Z'));
 
     const result = await runReminders(harness.deps);
 
@@ -73,6 +92,7 @@ describe('pick reminders', () => {
 
   it('sends one reminder per member per week, no matter how often it runs', async () => {
     await leagueWithTwoAccounts();
+    harness.setNow(ELEVEN_FORTY_FIVE);
 
     const first = await runReminders(harness.deps);
     const second = await runReminders(harness.deps);
@@ -89,6 +109,7 @@ describe('pick reminders', () => {
     await harness.db
       .insert(leagueMembers)
       .values({ leagueId, displayName: 'No Account', userId: null });
+    harness.setNow(ELEVEN_FORTY_FIVE);
 
     const result = await runReminders(harness.deps);
 

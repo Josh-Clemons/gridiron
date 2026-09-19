@@ -7,6 +7,21 @@ import { groupGamesByWeek } from './standings';
 /** Remind this far ahead of a kickoff — "15 minutes before the noon game". */
 const REMINDER_LEAD_MS = 15 * 60_000;
 
+/**
+ * Weekday in the league's timezone (America/Chicago), host-TZ independent.
+ *
+ * Kickoffs are UTC instants; "Sunday" has to mean Sunday in Chicago, not Sunday on
+ * whatever machine happens to run the job. `Intl` asks the calendar rather than the
+ * process clock, so the answer is the same in the container, in a test, and on a
+ * laptop set to some other zone.
+ */
+const chicagoWeekday = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/Chicago',
+  weekday: 'short',
+});
+
+const isSundayInChicago = (instant: Date): boolean => chicagoWeekday.format(instant) === 'Sun';
+
 export interface ReminderResult {
   /** Emails actually sent this run. */
   readonly sent: number;
@@ -15,12 +30,13 @@ export interface ReminderResult {
 }
 
 /**
- * Remind members who haven't finished their picks, 15 minutes before the next kickoff.
+ * Remind members who haven't finished their picks, 15 minutes before the Sunday games.
  *
- * The window opens when the live week's earliest still-upcoming kickoff is within
- * {@link REMINDER_LEAD_MS}. On a normal week that kickoff is the Sunday noon game, so
- * this fires around 11:45 — but a Thursday-night game makes it fire before Thursday
- * instead, which is exactly when a Thursday pick first locks (rule 9).
+ * The league makes its picks against the Sunday slate, when the majority of games
+ * play, so Thursday-night and Monday-night games are deliberately not a trigger: the
+ * window opens when the live week's earliest still-upcoming *Sunday* kickoff is within
+ * {@link REMINDER_LEAD_MS}. In a normal week that kickoff is the noon game, and the
+ * reminder fires around 11:45 Central.
  *
  * One email per member per week, enforced by the `pick_reminders` unique index rather
  * than by trusting the schedule to run the job once. Safe to run every quarter hour.
@@ -33,17 +49,22 @@ export async function runReminders(deps: Deps): Promise<ReminderResult> {
   const games = await loadGames(deps, season.id);
   const weekGames = groupGamesByWeek(games).get(week) ?? [];
 
-  const nextKickoff = weekGames
-    .filter((game) => game.status !== 'final' && game.kickoff.getTime() > now.getTime())
+  const nextSundayKickoff = weekGames
+    .filter(
+      (game) =>
+        game.status !== 'final' &&
+        isSundayInChicago(game.kickoff) &&
+        game.kickoff.getTime() > now.getTime(),
+    )
     .map((game) => game.kickoff.getTime())
     .toSorted((a, b) => a - b)[0];
 
-  if (nextKickoff === undefined || nextKickoff - now.getTime() > REMINDER_LEAD_MS) {
+  if (nextSundayKickoff === undefined || nextSundayKickoff - now.getTime() > REMINDER_LEAD_MS) {
     return { sent: 0, notYet: true };
   }
 
   const targets = await membersNeedingReminder(deps, season.id, week);
-  const minutes = Math.max(1, Math.round((nextKickoff - now.getTime()) / 60_000));
+  const minutes = Math.max(1, Math.round((nextSundayKickoff - now.getTime()) / 60_000));
 
   await Promise.all(
     targets.map(async (target) => {

@@ -193,13 +193,14 @@ are left alone, and re-running after a failure is always safe. Failures exit non
 and alert. The alerter can post to Matrix, but no token is configured yet, so today a
 failure goes to stderr and cron mails it to the local user.
 
-The reminder is the same shape as the sync: a job cron fires every quarter hour through
-the game-day windows, and running it by hand is always safe. Fifteen minutes before the
-live week's next kickoff — the Sunday noon game in a normal week — it emails every
-claimed member who hasn't finished their three picks. One email per member per week is
-a database invariant (`pick_reminders`), so a member is never nagged twice no matter
-how often the job runs. Spreadsheet players with no account yet have no address to
-reach and are simply skipped.
+The reminder is the same shape as the sync: a job cron fires every quarter hour on
+Sunday, and running it by hand is always safe. Fifteen minutes before the live week's
+earliest Sunday kickoff — the noon game in a normal week — it emails every claimed
+member who hasn't finished their three picks. Thursday and Monday games are deliberately
+not a trigger: the league picks against the Sunday slate, when the majority of games
+play. One email per member per week is a database invariant (`pick_reminders`), so a
+member is never nagged twice no matter how often the job runs. Spreadsheet players
+with no account yet have no address to reach and are simply skipped.
 
 Nothing incrementally mutates a score. Standings are derived from `games` and `picks` on
 read, so **writing a result _is_ the rescore**, and a result ESPN later corrects simply

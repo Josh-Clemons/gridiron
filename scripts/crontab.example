@@ -49,10 +49,10 @@ LOG=/home/josh/logs/gridiron-sync.log
 30 6 * * *   $SYNC results >> $LOG 2>&1
 
 # --- Reminders -----------------------------------------------------------------
-# 15 minutes before the next kickoff, to members who haven't finished their three
-# picks. Idempotent and deduplicated: outside the window it sends nothing, and a
-# member reminded once this week never gets a second email no matter how often this
-# runs. Mirrors the results windows, so the Sunday noon games remind around 11:45.
+# 15 minutes before the Sunday games, to members who haven't finished their three
+# picks — the league picks against the Sunday slate, so Thursday and Monday games
+# are deliberately not a trigger. Idempotent and deduplicated: outside the window
+# it sends nothing, and a member reminded once this week never gets a second email
+# no matter how often this runs. In a normal week this fires around 11:45, before
+# the noon kickoffs.
 */15 11-23 * * 0   $REMINDER >> $LOG 2>&1
-*/15 18-23 * * 4   $REMINDER >> $LOG 2>&1
-*/15 18-23 * * 1   $REMINDER >> $LOG 2>&1
