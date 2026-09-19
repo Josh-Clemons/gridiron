@@ -10,6 +10,8 @@ import {
   correctionsResponseSchema,
   type CorrectionsResponse,
   type CreateLeagueRequest,
+  type HeadToHead,
+  headToHeadSchema,
   type JoinLeagueRequest,
   type JoinPreview,
   joinPreviewSchema,
@@ -232,6 +234,18 @@ export const historyQuery = (leagueId: number, season: SeasonArg) =>
       }),
   });
 
+/** Two members compared week by week. Totals only — no member's picks travel. */
+export const headToHeadQuery = (leagueId: number, season: SeasonArg, a: number, b: number) =>
+  queryOptions({
+    queryKey: ['head-to-head', leagueId, seasonKey(season), a, b] as const,
+    queryFn: ({ signal }) =>
+      request(
+        `/leagues/${String(leagueId)}/head-to-head${query(seasonQuery(season), `a=${String(a)}`, `b=${String(b)}`)}`,
+        { schema: headToHeadSchema, signal },
+      ),
+    enabled: a !== b,
+  });
+
 /**
  * The honours board, back to 2007.
  *
@@ -313,6 +327,7 @@ export type {
   Board,
   Champions,
   CorrectionsResponse,
+  HeadToHead,
   JoinPreview,
   League,
   LeagueMember,

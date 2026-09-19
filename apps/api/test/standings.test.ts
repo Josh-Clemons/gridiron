@@ -200,6 +200,65 @@ describe('standings CSV', () => {
   });
 });
 
+describe('head-to-head', () => {
+  it('compares two members week by week and scores a win/loss record', async () => {
+    const { owner, guest, leagueId } = await twoPlayerLeague();
+
+    // Week 1: owner's KC wins (5); guest's DEN loses.
+    await owner.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'KC' });
+    await guest.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'DEN' });
+    await finish(2026, 1, { KC: 'KC', BUF: 'BUF', DAL: 'DAL', SF: 'SF' });
+
+    const members = await owner.get<{ members: { id: number; isSelf: boolean }[] }>(
+      `/leagues/${String(leagueId)}/members`,
+    );
+    const ownerId = members.body.members.find((member) => member.isSelf)?.id;
+    const guestId = members.body.members.find((member) => !member.isSelf)?.id;
+
+    const h2h = await owner.get<{
+      a: { displayName: string; seasonPoints: number };
+      b: { displayName: string; seasonPoints: number };
+      record: { aWins: number; bWins: number; ties: number };
+    }>(
+      `/leagues/${String(leagueId)}/head-to-head?a=${String(ownerId)}&b=${String(guestId)}&season=2026`,
+    );
+
+    expect(h2h.status).toBe(200);
+    expect(h2h.body.a.displayName).toBe('Owner');
+    expect(h2h.body.a.seasonPoints).toBe(5);
+    expect(h2h.body.b.displayName).toBe('Guest');
+    expect(h2h.body.b.seasonPoints).toBe(0);
+    expect(h2h.body.record).toEqual({ aWins: 1, bWins: 0, ties: 0 });
+  });
+
+  it('rejects comparing a member with themselves', async () => {
+    const { owner, leagueId } = await twoPlayerLeague();
+    const members = await owner.get<{ members: { id: number; isSelf: boolean }[] }>(
+      `/leagues/${String(leagueId)}/members`,
+    );
+    const ownerId = members.body.members.find((member) => member.isSelf)?.id;
+
+    const response = await owner.get(
+      `/leagues/${String(leagueId)}/head-to-head?a=${String(ownerId)}&b=${String(ownerId)}`,
+    );
+    expect(response.status).toBe(400);
+  });
+
+  it('tells a stranger nothing exists', async () => {
+    const { owner, leagueId } = await twoPlayerLeague();
+    const members = await owner.get<{ members: { id: number }[] }>(
+      `/leagues/${String(leagueId)}/members`,
+    );
+    const ownerId = members.body.members[0]?.id;
+
+    // A member id that does not exist in this league.
+    const response = await owner.get(
+      `/leagues/${String(leagueId)}/head-to-head?a=${String(ownerId)}&b=999999`,
+    );
+    expect(response.status).toBe(404);
+  });
+});
+
 describe('a full-size league', () => {
   it("serves a 72-member board well under 30 KB and without anyone else's picks", async () => {
     const owner = await signUp(harness.app, 'commish@example.com', 'Commish');

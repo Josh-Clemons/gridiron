@@ -11,6 +11,7 @@ import { AppShell } from './components/AppShell';
 import { ChampionsPage } from './pages/ChampionsPage';
 import { CommissionerPage } from './pages/CommissionerPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { HeadToHeadPage } from './pages/HeadToHeadPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { JoinPage } from './pages/JoinPage';
 import { LeagueLayout } from './pages/LeagueLayout';
@@ -64,6 +65,23 @@ const weekSearch = (search: Record<string, unknown>): WeekSearch => {
 const seasonSearch = (search: Record<string, unknown>): SeasonSearch => {
   const season = boundedInt(search.season, 2007, 2100);
   return season === undefined ? {} : { season };
+};
+
+/** Member ids are database row ids; any positive integer is plausible. */
+const headToHeadSearch = (
+  search: Record<string, unknown>,
+): SeasonSearch & {
+  a?: number;
+  b?: number;
+} => {
+  const base = seasonSearch(search);
+  const a = boundedInt(search.a, 1, 2_147_483_647);
+  const b = boundedInt(search.b, 1, 2_147_483_647);
+  return {
+    ...base,
+    ...(a === undefined ? {} : { a }),
+    ...(b === undefined ? {} : { b }),
+  };
 };
 
 const rootRoute = createRootRouteWithContext<RouterContext>()({
@@ -193,6 +211,13 @@ const historyRoute = createRoute({
   component: HistoryPage,
 });
 
+const headToHeadRoute = createRoute({
+  getParentRoute: () => leagueRoute,
+  path: '/head-to-head',
+  validateSearch: headToHeadSearch,
+  component: HeadToHeadPage,
+});
+
 /** No search parameters: the honours board spans every season at once. */
 const championsRoute = createRoute({
   getParentRoute: () => leagueRoute,
@@ -221,6 +246,7 @@ export const routeTree = rootRoute.addChildren([
       usageRoute,
       standingsRoute,
       historyRoute,
+      headToHeadRoute,
       championsRoute,
       commissionerRoute,
     ]),

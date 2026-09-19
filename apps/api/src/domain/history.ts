@@ -55,7 +55,7 @@ export async function buildSeasonHistory(
  * A week with no games at all is not settled: an unplayed week and a week everybody
  * scored zero in are both rows of zeros, and only this flag tells them apart.
  */
-function settledByWeek(
+export function settledByWeek(
   games: readonly Game[],
   weekCount: number,
 ): { week: number; settled: boolean }[] {

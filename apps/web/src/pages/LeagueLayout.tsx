@@ -14,7 +14,7 @@ import { TabLink } from '../components/links';
 import { useToast } from '../components/Toast';
 
 /** Tab keys, in the order they appear. The index route — the pick page — is the default. */
-const TABS = ['usage', 'standings', 'history', 'champions', 'admin'] as const;
+const TABS = ['usage', 'standings', 'history', 'head-to-head', 'champions', 'admin'] as const;
 
 /** The views of a league, and the invite code that fills it. */
 export function LeagueLayout() {
@@ -99,6 +99,13 @@ export function LeagueLayout() {
           label="History"
           value="history"
           to="/leagues/$leagueId/history"
+          params={{ leagueId }}
+          search={(prev) => prev}
+        />
+        <TabLink
+          label="Head to head"
+          value="head-to-head"
+          to="/leagues/$leagueId/head-to-head"
           params={{ leagueId }}
           search={(prev) => prev}
         />

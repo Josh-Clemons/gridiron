@@ -1,4 +1,5 @@
 import {
+  headToHeadQuerySchema,
   pickPathSchema,
   putPickRequestSchema,
   seasonQuerySchema,
@@ -12,6 +13,7 @@ import { assertWeekInSeason, currentWeek, resolveSeason, type SeasonRow } from '
 import type { Deps } from '../deps';
 import { buildBoard } from '../domain/board';
 import { standingsCsv } from '../domain/csv';
+import { buildHeadToHead } from '../domain/head-to-head';
 import { buildUsage, clearPick, putPick } from '../domain/picks';
 import { computeStandings, rankMembers, scoreMembers } from '../domain/standings';
 import type { AppEnv } from '../http/context';
@@ -142,6 +144,17 @@ export function boardRoutes(deps: Deps) {
         'content-disposition': `attachment; filename="standings-${String(season.year)}.csv"`,
       },
     });
+  });
+
+  /** Two members compared week by week — totals only, never a pick. */
+  app.get('/leagues/:leagueId/head-to-head', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const query = readQuery(c, headToHeadQuerySchema);
+
+    const membership = await requireMembership(deps, leagueId, c.get('user').id);
+    const season = await resolveSeason(deps, query.season);
+
+    return c.json(await buildHeadToHead(deps, membership, season, query.a, query.b));
   });
 
   return app;
