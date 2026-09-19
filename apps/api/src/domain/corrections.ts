@@ -1,4 +1,9 @@
-import type { CorrectPickResponse, Correction, CorrectionsResponse } from '@gridiron/contracts';
+import type {
+  CorrectPickResponse,
+  Correction,
+  CorrectionsResponse,
+  MemberPicks,
+} from '@gridiron/contracts';
 import { toWireRejection } from '@gridiron/contracts';
 import { validatePick, type Slot } from '@gridiron/rules';
 import { listCorrections, recordCorrection, type CorrectionRow } from '../data/corrections';
@@ -145,6 +150,36 @@ export async function correctPick(
     ...(wirePick === undefined ? {} : { pick: wirePick }),
     weekScore: toWireWeekScore(week, outcome.updated, weekGames),
     correction,
+  };
+}
+
+/**
+ * A member's current picks for one week, in the shape the correction form needs to
+ * prefill its team picker.
+ *
+ * Owner-only and read-only. The route has already established ownership, and this
+ * returns picks — never writes — so the form can show what a slot holds before a
+ * correction replaces or clears it.
+ */
+export async function getMemberPicks(
+  deps: Deps,
+  actor: Membership,
+  target: MemberRow,
+  season: SeasonRow,
+  week: number,
+): Promise<MemberPicks> {
+  if (actor.role !== 'owner') throw forbidden('only the owner can do that');
+
+  const now = deps.now();
+  const [weekGames, seasonPicks] = await Promise.all([
+    loadGames(deps, season.id, week),
+    loadMemberPicks(deps, target.id, season.id),
+  ]);
+
+  return {
+    season: { id: season.id, year: season.year, weekCount: season.weekCount },
+    week,
+    picks: toWirePicks(week, seasonPicks, weekGames, now),
   };
 }
 

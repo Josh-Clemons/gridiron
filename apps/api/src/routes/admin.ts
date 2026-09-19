@@ -6,6 +6,7 @@ import {
   seasonQuerySchema,
   seasonYearSchema,
   updateLeagueSettingsRequestSchema,
+  weekSchema,
 } from '@gridiron/contracts';
 import { Hono } from 'hono';
 import { z } from 'zod';
@@ -13,7 +14,7 @@ import { requireMember, requireMembership, requireOwner } from '../data/leagues'
 import { requireManagedMember } from '../data/members';
 import { assertWeekInSeason, resolveSeason } from '../data/seasons';
 import type { Deps } from '../deps';
-import { correctPick, listCorrectionLog } from '../domain/corrections';
+import { correctPick, getMemberPicks, listCorrectionLog } from '../domain/corrections';
 import { exportLeagueWorkbook } from '../domain/export';
 import {
   archiveLeague,
@@ -43,6 +44,10 @@ import { leagueParamSchema } from './leagues';
 const memberPickParamsSchema = leagueParamSchema
   .extend({ memberId: z.coerce.number().pipe(idSchema) })
   .extend(pickPathSchema.shape);
+const memberWeekParamsSchema = leagueParamSchema.extend({
+  memberId: z.coerce.number().pipe(idSchema),
+  week: z.coerce.number().pipe(weekSchema),
+});
 const memberParamsSchema = leagueParamSchema.extend({ memberId: z.coerce.number().pipe(idSchema) });
 const workbookParamsSchema = leagueParamSchema.extend({
   workbookId: z.coerce.number().pipe(idSchema),
@@ -189,6 +194,24 @@ export function adminRoutes(deps: Deps) {
     const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
     const target = await requireManagedMember(deps, leagueId, memberId);
     return c.json(await transferMemberOwnership(deps, membership, target));
+  });
+
+  /**
+   * Read a member's current picks for a week.
+   *
+   * This is the owner's way to see a slot before correcting it: the correction form
+   * prefills its team picker from here. Regular members cannot reach it.
+   */
+  app.get('/leagues/:leagueId/admin/members/:memberId/picks/:week', async (c) => {
+    const { leagueId, memberId, week } = readParams(c, memberWeekParamsSchema);
+    const query = readQuery(c, seasonQuerySchema);
+
+    const membership = requireOwner(await requireMembership(deps, leagueId, c.get('user').id));
+    const target = await requireMember(deps, leagueId, memberId);
+    const season = await resolveSeason(deps, query.season);
+    assertWeekInSeason(season, week);
+
+    return c.json(await getMemberPicks(deps, membership, target, season, week));
   });
 
   /**

@@ -13,12 +13,15 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import type { AdminMember, Correction } from '@gridiron/contracts';
 import { SLOT_LABELS, type Slot } from '@gridiron/rules';
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
+import { memberPicksQuery } from '../api/queries';
 import { errorMessage } from './AuthLayout';
 
 const SLOTS: readonly Slot[] = ['win', 'place', 'show'];
 
 export function CommissionerCorrection({
+  leagueId,
   members,
   teams,
   seasons,
@@ -29,6 +32,7 @@ export function CommissionerCorrection({
   onSeasonChange,
   onCorrect,
 }: {
+  readonly leagueId: number;
   readonly members: readonly AdminMember[];
   readonly teams: readonly { code: string; name: string }[];
   readonly seasons: readonly { year: number; weekCount: number }[];
@@ -56,6 +60,37 @@ export function CommissionerCorrection({
   const weekCount = seasons.find((entry) => entry.year === season)?.weekCount ?? 18;
   const targetId = memberId === '' ? members[0]?.id : memberId;
 
+  const memberPicks = useQuery({
+    ...memberPicksQuery(leagueId, season, targetId ?? 0, Math.min(week, weekCount)),
+    enabled: targetId !== undefined && season !== undefined,
+  });
+
+  /**
+   * Mirror the selected member's current pick for the chosen slot into the team field.
+   *
+   * `populatedFor` marks which target the field was last filled from. It is cleared
+   * when the target changes (so the field resets and refills) and just before a
+   * correction is saved (so the post-write refetch can show the new state). It is *not*
+   * cleared on a plain refetch, so a background window-focus refresh can never clobber
+   * an edit the owner is typing right now.
+   */
+  const populatedFor = useRef<string | null>(null);
+  const selection = `${targetId ?? ''}:${Math.min(week, weekCount)}:${slot}:${season ?? ''}`;
+
+  useEffect(() => {
+    populatedFor.current = null;
+    setTeamId('');
+    setClear(false);
+  }, [selection]);
+
+  useEffect(() => {
+    if (memberPicks.data === undefined || populatedFor.current === selection) return;
+    populatedFor.current = selection;
+    const existing = memberPicks.data.picks.find((pick) => pick.slot === slot);
+    setTeamId(existing?.teamId ?? '');
+    setClear(false);
+  }, [memberPicks.data, selection]);
+
   const submit = async (event: { preventDefault: () => void }): Promise<void> => {
     event.preventDefault();
     if (targetId === undefined || reason.trim().length < 3) return;
@@ -63,6 +98,8 @@ export function CommissionerCorrection({
     setSubmitting(true);
     setError(null);
     try {
+      // Allow the post-write refetch to mirror the new state back into the form.
+      populatedFor.current = null;
       await onCorrect(
         targetId,
         Math.min(week, weekCount),

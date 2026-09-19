@@ -144,6 +144,34 @@ export function CommissionerPage() {
 
       <CommissionerSettings league={league.data} />
 
+      {teams.isError && <Alert severity="error">{errorMessage(teams.error)}</Alert>}
+      <CommissionerCorrection
+        leagueId={id}
+        members={activeMembers}
+        teams={teams.data ?? []}
+        seasons={seasons.data ?? []}
+        season={season}
+        corrections={corrections.data?.corrections ?? []}
+        correctionsLoading={corrections.isPending}
+        correctionsError={corrections.isError ? corrections.error : undefined}
+        onSeasonChange={setSelectedSeason}
+        onCorrect={async (memberId, week, slot, teamId, reason) => {
+          if (season === undefined) return;
+          await correctMemberPick(id, memberId, season, week, slot, teamId, reason);
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: correctionsQuery(id, season).queryKey }),
+            queryClient.invalidateQueries({ queryKey: ['admin-member-picks', id] }),
+            queryClient.invalidateQueries({ queryKey: ['board', id] }),
+            queryClient.invalidateQueries({ queryKey: ['usage', id] }),
+            queryClient.invalidateQueries({ queryKey: ['standings', id] }),
+            queryClient.invalidateQueries({ queryKey: ['history', id] }),
+          ]);
+          toast.show('Pick corrected and recorded in the audit log', 'success');
+        }}
+      />
+
+      <CommissionerWorkbooks leagueId={id} />
+
       <CommissionerRoster
         members={members.data}
         onRename={(member) => {
@@ -161,31 +189,6 @@ export function CommissionerPage() {
         }}
         busy={remove.isPending || restore.isPending || transfer.isPending}
       />
-
-      {teams.isError && <Alert severity="error">{errorMessage(teams.error)}</Alert>}
-      <CommissionerCorrection
-        members={activeMembers}
-        teams={teams.data ?? []}
-        seasons={seasons.data ?? []}
-        season={season}
-        corrections={corrections.data?.corrections ?? []}
-        correctionsLoading={corrections.isPending}
-        correctionsError={corrections.isError ? corrections.error : undefined}
-        onSeasonChange={setSelectedSeason}
-        onCorrect={async (memberId, week, slot, teamId, reason) => {
-          if (season === undefined) return;
-          await correctMemberPick(id, memberId, season, week, slot, teamId, reason);
-          await Promise.all([
-            queryClient.invalidateQueries({ queryKey: correctionsQuery(id, season).queryKey }),
-            queryClient.invalidateQueries({ queryKey: ['board', id] }),
-            queryClient.invalidateQueries({ queryKey: ['standings', id] }),
-            queryClient.invalidateQueries({ queryKey: ['history', id] }),
-          ]);
-          toast.show('Pick corrected and recorded in the audit log', 'success');
-        }}
-      />
-
-      <CommissionerWorkbooks leagueId={id} />
 
       <RenameMemberDialog
         target={renameTarget}

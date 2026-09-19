@@ -276,6 +276,28 @@ describe('commissioner pick corrections', () => {
     );
   });
 
+  it('reads a member’s current picks for the correction form', async () => {
+    const { owner, guest, leagueId, guestMemberId } = await setup();
+    await guest.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'KC' });
+
+    const picks = await owner.get<{
+      week: number;
+      picks: { slot: string; teamId: string; source: string }[];
+    }>(`/leagues/${String(leagueId)}/admin/members/${String(guestMemberId)}/picks/1`);
+
+    expect(picks.status).toBe(200);
+    expect(picks.body.week).toBe(1);
+    expect(picks.body.picks).toEqual([
+      expect.objectContaining({ slot: 'win', teamId: 'KC', source: 'app' }),
+    ]);
+
+    // A regular member cannot read someone else's picks through the admin surface.
+    const forbidden = await guest.get(
+      `/leagues/${String(leagueId)}/admin/members/${String(guestMemberId)}/picks/1`,
+    );
+    expect(forbidden.status).toBe(403);
+  });
+
   it('rejects a regular member and does not allow cross-league targets', async () => {
     const { owner, guest, leagueId, guestMemberId } = await setup();
 

@@ -10,15 +10,12 @@ import {
   correctionsResponseSchema,
   type CorrectionsResponse,
   type CreateLeagueRequest,
-  type HeadToHead,
-  headToHeadSchema,
   type JoinLeagueRequest,
   type JoinPreview,
   joinPreviewSchema,
   type League,
-  type LeagueMember,
-  leagueMemberSchema,
   leagueSchema,
+  memberPicksResponseSchema,
   type LoginRequest,
   type RegisterRequest,
   type SeasonHistory,
@@ -45,7 +42,6 @@ import { z } from 'zod';
 import { ApiError, download, request, requestVoid } from './client';
 
 const leaguesResponseSchema = z.object({ leagues: z.array(leagueSchema) });
-const membersResponseSchema = z.object({ members: z.array(leagueMemberSchema) });
 const meResponseSchema = z.object({ user: userSchema });
 
 /**
@@ -117,16 +113,6 @@ export const leagueQuery = (leagueId: number) =>
       request(`/leagues/${String(leagueId)}`, { schema: leagueSchema, signal }),
   });
 
-export const membersQuery = (leagueId: number) =>
-  queryOptions({
-    queryKey: ['members', leagueId] as const,
-    queryFn: ({ signal }) =>
-      request(`/leagues/${String(leagueId)}/members`, {
-        schema: membersResponseSchema,
-        signal,
-      }).then((data) => data.members),
-  });
-
 export const adminMembersQuery = (leagueId: number) =>
   queryOptions({
     queryKey: ['admin-members', leagueId] as const,
@@ -145,6 +131,27 @@ export const correctionsQuery = (leagueId: number, season: SeasonArg) =>
         schema: correctionsResponseSchema,
         signal,
       }),
+  });
+
+/**
+ * A member's picks for one week, as the owner sees them.
+ *
+ * Fetched by the correction form to prefill its team picker with whatever the selected
+ * slot currently holds, so the owner corrects from the truth rather than from memory.
+ */
+export const memberPicksQuery = (
+  leagueId: number,
+  season: SeasonArg,
+  memberId: number,
+  week: number,
+) =>
+  queryOptions({
+    queryKey: ['admin-member-picks', leagueId, seasonKey(season), memberId, week] as const,
+    queryFn: ({ signal }) =>
+      request(
+        `/leagues/${String(leagueId)}/admin/members/${String(memberId)}/picks/${String(week)}${query(seasonQuery(season))}`,
+        { schema: memberPicksResponseSchema, signal },
+      ),
   });
 
 export const adminWorkbooksQuery = (leagueId: number) =>
@@ -234,18 +241,6 @@ export const historyQuery = (leagueId: number, season: SeasonArg) =>
       }),
   });
 
-/** Two members compared week by week. Totals only — no member's picks travel. */
-export const headToHeadQuery = (leagueId: number, season: SeasonArg, a: number, b: number) =>
-  queryOptions({
-    queryKey: ['head-to-head', leagueId, seasonKey(season), a, b] as const,
-    queryFn: ({ signal }) =>
-      request(
-        `/leagues/${String(leagueId)}/head-to-head${query(seasonQuery(season), `a=${String(a)}`, `b=${String(b)}`)}`,
-        { schema: headToHeadSchema, signal },
-      ),
-    enabled: a !== b,
-  });
-
 /**
  * The honours board, back to 2007.
  *
@@ -327,10 +322,8 @@ export type {
   Board,
   Champions,
   CorrectionsResponse,
-  HeadToHead,
   JoinPreview,
   League,
-  LeagueMember,
   SeasonHistory,
   Seasons,
   Standings,

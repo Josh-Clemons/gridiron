@@ -63,6 +63,18 @@ export const correctionsResponseSchema = z.object({
   corrections: z.array(correctionSchema),
 });
 
+/**
+ * A member's current picks for one week, as the owner sees them.
+ *
+ * The correction form uses this to prefill its team picker with whatever the slot
+ * currently holds before a correction replaces or clears it.
+ */
+export const memberPicksResponseSchema = z.object({
+  season: seasonSchema,
+  week: weekSchema,
+  picks: z.array(pickSchema),
+});
+
 /** The owner-facing view of one active or removed roster slot. */
 export const adminMemberSchema = z.object({
   id: idSchema,
@@ -103,6 +115,7 @@ export type CorrectPickRequest = z.infer<typeof correctPickRequestSchema>;
 export type Correction = z.infer<typeof correctionSchema>;
 export type CorrectPickResponse = z.infer<typeof correctPickResponseSchema>;
 export type CorrectionsResponse = z.infer<typeof correctionsResponseSchema>;
+export type MemberPicks = z.infer<typeof memberPicksResponseSchema>;
 export type AdminMember = z.infer<typeof adminMemberSchema>;
 export type AdminMembersResponse = z.infer<typeof adminMembersResponseSchema>;
 export type RenameMemberRequest = z.infer<typeof renameMemberRequestSchema>;

@@ -3,7 +3,6 @@ export * from './errors';
 export * from './admin';
 export * from './auth';
 export * from './champions';
-export * from './head-to-head';
 export * from './history';
 export * from './leagues';
 export * from './picks';
