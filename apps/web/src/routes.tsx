@@ -1,5 +1,11 @@
 import type { QueryClient } from '@tanstack/react-query';
-import { createRootRouteWithContext, createRoute, Outlet, redirect } from '@tanstack/react-router';
+import {
+  createRootRouteWithContext,
+  createRoute,
+  Outlet,
+  redirect,
+  useRouteContext,
+} from '@tanstack/react-router';
 import { sessionQuery } from './api/queries';
 import { AppShell } from './components/AppShell';
 import { ChampionsPage } from './pages/ChampionsPage';
@@ -13,6 +19,7 @@ import { LoginPage } from './pages/LoginPage';
 import { PickPage } from './pages/PickPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { StandingsPage } from './pages/StandingsPage';
 import { UsagePage } from './pages/UsagePage';
 
@@ -133,6 +140,15 @@ const leaguesRoute = createRoute({
   component: LeaguesPage,
 });
 
+const settingsRoute = createRoute({
+  getParentRoute: () => authedRoute,
+  path: '/settings',
+  component: function Settings() {
+    const { user } = useRouteContext({ from: '/_authed' });
+    return <SettingsPage user={user} />;
+  },
+});
+
 const joinRoute = createRoute({
   getParentRoute: () => authedRoute,
   path: '/join',
@@ -198,6 +214,7 @@ export const routeTree = rootRoute.addChildren([
   resetPasswordRoute,
   authedRoute.addChildren([
     leaguesRoute,
+    settingsRoute,
     joinRoute,
     leagueRoute.addChildren([
       pickRoute,

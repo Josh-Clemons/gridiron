@@ -1,9 +1,11 @@
 import { createHash, randomBytes } from 'node:crypto';
 import {
+  changePasswordRequestSchema,
   forgotPasswordRequestSchema,
   loginRequestSchema,
   registerRequestSchema,
   resetPasswordRequestSchema,
+  updateProfileRequestSchema,
   type SessionResponse,
   type User,
 } from '@gridiron/contracts';
@@ -17,6 +19,7 @@ import {
   purgeExpiredResetTokens,
   purgeExpiredSessions,
   revokeAllSessions,
+  revokeOtherSessions,
   revokeSession,
   setSessionCookie,
   type SessionUser,
@@ -126,6 +129,67 @@ export function authRoutes(deps: Deps) {
   });
 
   app.get('/auth/me', requireAuth(deps), (c) => c.json({ user: toUser(c.get('user')) }));
+
+  /**
+   * Update the signed-in player's own profile.
+   *
+   * `displayName` is the global label new leagues default to; nothing here touches an
+   * existing league's roster label, which belongs to the commissioner (Phase 7 rename).
+   * The email change is guarded by the `lower(email)` unique index — a collision is
+   * caught rather than declared as an ON CONFLICT target, same as registration.
+   */
+  app.patch('/auth/me', requireAuth(deps), async (c) => {
+    const user = c.get('user');
+    const body = await readJson(c, updateProfileRequestSchema);
+
+    let updated;
+    try {
+      const rows = await deps.db
+        .update(users)
+        .set({ displayName: body.displayName, email: body.email, updatedAt: deps.now() })
+        .where(eq(users.id, user.id))
+        .returning();
+      updated = rows[0];
+    } catch (error) {
+      if (isUniqueViolation(error)) throw conflict('that email is already registered');
+      throw error;
+    }
+    if (updated === undefined) throw new Error('profile update matched no user');
+
+    return c.json({ user: toUser(updated) });
+  });
+
+  /**
+   * Change the signed-in player's password.
+   *
+   * Requires the current password so a hijacked session can't lock the owner out, and
+   * drops every other session so a hijacker who *was* in gets evicted at the same
+   * instant. The caller's own session survives — they just proved who they are.
+   */
+  app.post('/auth/me/password', requireAuth(deps), async (c) => {
+    const user = c.get('user');
+    const body = await readJson(c, changePasswordRequestSchema);
+
+    const rows = await deps.db
+      .select({ passwordHash: users.passwordHash })
+      .from(users)
+      .where(eq(users.id, user.id))
+      .limit(1);
+    const row = rows[0];
+    if (row === undefined) throw new Error('password change matched no user');
+
+    const ok = await verifyPassword(row.passwordHash, body.currentPassword);
+    if (!ok) throw unauthorized('current password is wrong');
+
+    const passwordHash = await hashPassword(body.newPassword);
+    await deps.db
+      .update(users)
+      .set({ passwordHash, updatedAt: deps.now() })
+      .where(eq(users.id, user.id));
+
+    await revokeOtherSessions(deps, user.id, c.get('sessionId'));
+    return c.body(null, 204);
+  });
 
   /**
    * Start a password reset.

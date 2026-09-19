@@ -6,6 +6,7 @@ import {
   boardSchema,
   type Champions,
   championsSchema,
+  type ChangePasswordRequest,
   correctionsResponseSchema,
   type CorrectionsResponse,
   type CreateLeagueRequest,
@@ -30,6 +31,8 @@ import {
   type TeamUsage,
   teamUsageSchema,
   teamsResponseSchema,
+  type UpdateProfileRequest,
+  type User,
   type Workbook,
   type WorkbooksResponse,
   workbooksResponseSchema,
@@ -265,6 +268,16 @@ export const resetPassword = (token: string, password: string): Promise<SessionR
     body: { token, password },
     schema: sessionResponseSchema,
   });
+
+/** Change the signed-in player's own display name and email. Answers with the user. */
+export const updateProfile = (body: UpdateProfileRequest): Promise<User> =>
+  request('/auth/me', { method: 'PATCH', body, schema: meResponseSchema }).then(
+    (data) => data.user,
+  );
+
+/** Change the signed-in player's password; requires the current one. */
+export const changePassword = (body: ChangePasswordRequest): Promise<void> =>
+  requestVoid('/auth/me/password', { method: 'POST', body });
 
 export const createLeague = (body: CreateLeagueRequest): Promise<League> =>
   request('/leagues', { method: 'POST', body, schema: leagueSchema });

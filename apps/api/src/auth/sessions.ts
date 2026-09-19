@@ -1,6 +1,6 @@
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import { passwordResetTokens, sessions, users } from '@gridiron/schema';
-import { and, eq, isNull, lt } from 'drizzle-orm';
+import { and, eq, isNull, lt, ne } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import type { Config } from '../config';
@@ -94,6 +94,21 @@ export async function revokeSession(deps: Deps, sessionId: number): Promise<void
 /** Every session for a user — used after a password reset. */
 export async function revokeAllSessions(deps: Deps, userId: number): Promise<void> {
   await deps.db.delete(sessions).where(eq(sessions.userId, userId));
+}
+
+/**
+ * Every session *except* the caller's own — used when a password is changed from an
+ * authenticated session. The changer keeps their seat; anyone else logged in as them
+ * is dropped.
+ */
+export async function revokeOtherSessions(
+  deps: Deps,
+  userId: number,
+  keepSessionId: number,
+): Promise<void> {
+  await deps.db
+    .delete(sessions)
+    .where(and(eq(sessions.userId, userId), ne(sessions.id, keepSessionId)));
 }
 
 /** Housekeeping for expired rows; cheap enough to run opportunistically at login. */

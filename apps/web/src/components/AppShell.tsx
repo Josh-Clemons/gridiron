@@ -1,8 +1,11 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link, Outlet, useNavigate } from '@tanstack/react-router';
@@ -40,6 +43,11 @@ export function AppShell() {
           >
             Gridiron
           </Typography>
+          <Tooltip title="Settings">
+            <IconButton color="inherit" component={Link} to="/settings" aria-label="Settings">
+              <AccountCircleIcon />
+            </IconButton>
+          </Tooltip>
           <Button
             color="inherit"
             onClick={() => {

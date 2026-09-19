@@ -38,6 +38,30 @@ export const resetPasswordRequestSchema = z.object({
   password: passwordSchema,
 });
 
+/**
+ * The signed-in player's own settings.
+ *
+ * Both fields are always sent — the form shows the current values and saves them back
+ * together. `displayName` is the default roster label for leagues created or joined
+ * from now on; existing league labels are the commissioner's, never touched here.
+ */
+export const updateProfileRequestSchema = z.object({
+  displayName: displayNameSchema,
+  email: emailSchema,
+});
+
+/**
+ * Changing a password requires proving the current one.
+ *
+ * A session is proof of identity only up to the moment the browser is left unlocked;
+ * requiring the old password means a hijacked session can't silently lock the owner
+ * out.
+ */
+export const changePasswordRequestSchema = z.object({
+  currentPassword: passwordSchema,
+  newPassword: passwordSchema,
+});
+
 /** The authenticated user. Deliberately no password hash, and no other user's email. */
 export const userSchema = z.object({
   id: idSchema,
@@ -56,5 +80,7 @@ export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 export type ForgotPasswordRequest = z.infer<typeof forgotPasswordRequestSchema>;
 export type ResetPasswordRequest = z.infer<typeof resetPasswordRequestSchema>;
+export type UpdateProfileRequest = z.infer<typeof updateProfileRequestSchema>;
+export type ChangePasswordRequest = z.infer<typeof changePasswordRequestSchema>;
 export type User = z.infer<typeof userSchema>;
 export type SessionResponse = z.infer<typeof sessionResponseSchema>;

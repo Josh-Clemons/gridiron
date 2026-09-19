@@ -290,6 +290,106 @@ describe('password reset', () => {
   });
 });
 
+describe('account settings', () => {
+  it('updates the display name and email, and the session reflects it', async () => {
+    const client = await signUp(harness.app, 'me@example.com', 'Before');
+
+    const updated = await client.patch<{ user: { email: string; displayName: string } }>(
+      '/auth/me',
+      { displayName: 'After', email: 'NEW@example.com' },
+    );
+
+    expect(updated.status).toBe(200);
+    expect(updated.body.user.displayName).toBe('After');
+    expect(updated.body.user.email).toBe('new@example.com');
+
+    const me = await client.get<{ user: { email: string; displayName: string } }>('/auth/me');
+    expect(me.body.user.email).toBe('new@example.com');
+    expect(me.body.user.displayName).toBe('After');
+  });
+
+  it('refuses an email another account already uses', async () => {
+    await signUp(harness.app, 'taken@example.com');
+    const client = await signUp(harness.app, 'me2@example.com');
+
+    const response = await client.patch('/auth/me', {
+      displayName: 'Me2',
+      email: 'TAKEN@example.com',
+    });
+
+    expect(response.status).toBe(409);
+  });
+
+  it('changes the password, requiring the current one, and evicts other sessions', async () => {
+    const primary = await signUp(harness.app, 'pwd@example.com');
+    const other = new ApiClient(harness.app);
+    await other.post('/auth/login', { email: 'pwd@example.com', password: PASSWORD });
+
+    const wrong = await primary.post('/auth/me/password', {
+      currentPassword: 'wrong password!!',
+      newPassword: 'whatever at all',
+    });
+    expect(wrong.status).toBe(401);
+
+    const changed = await primary.post('/auth/me/password', {
+      currentPassword: PASSWORD,
+      newPassword: 'a brand new password',
+    });
+    expect(changed.status).toBe(204);
+
+    // The changer keeps their own seat; the other browser is dropped.
+    expect((await primary.get('/auth/me')).status).toBe(200);
+    expect((await other.get('/auth/me')).status).toBe(401);
+
+    const fresh = new ApiClient(harness.app);
+    expect(
+      (await fresh.post('/auth/login', { email: 'pwd@example.com', password: PASSWORD })).status,
+    ).toBe(401);
+    expect(
+      (
+        await fresh.post('/auth/login', {
+          email: 'pwd@example.com',
+          password: 'a brand new password',
+        })
+      ).status,
+    ).toBe(200);
+  });
+
+  it('leaves existing league roster labels to the commissioner', async () => {
+    const client = await signUp(harness.app, 'label@example.com', 'Original');
+    const created = await client.post<{ id: number }>('/leagues', { name: 'My League' });
+    const leagueId = created.body.id;
+
+    await client.patch('/auth/me', { displayName: 'New Name', email: 'label@example.com' });
+
+    const members = await client.get<{ members: { displayName: string }[] }>(
+      `/leagues/${String(leagueId)}/members`,
+    );
+    expect(members.body.members[0]?.displayName).toBe('Original');
+  });
+
+  it('requires a session', async () => {
+    const anonymous = new ApiClient(harness.app);
+
+    expect(
+      (
+        await anonymous.patch('/auth/me', {
+          displayName: 'X',
+          email: 'x@example.com',
+        })
+      ).status,
+    ).toBe(401);
+    expect(
+      (
+        await anonymous.post('/auth/me/password', {
+          currentPassword: 'something',
+          newPassword: 'something else',
+        })
+      ).status,
+    ).toBe(401);
+  });
+});
+
 describe('rate limiting', () => {
   it('cuts off repeated login attempts from one address', async () => {
     // Off by default under test — dozens of accounts get created per second here —
