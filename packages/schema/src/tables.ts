@@ -311,6 +311,41 @@ export const picks = pgTable(
 );
 
 // ---------------------------------------------------------------------------
+// Reminders
+// ---------------------------------------------------------------------------
+
+/**
+ * One reminder sent, per member per week.
+ *
+ * The Phase 8 reminder job emails a member who hasn't finished their three picks
+ * shortly before kickoff. This row is the dedup guard: re-running the job — or cron
+ * firing it every quarter hour — sends nobody a second email. The unique index makes
+ * "already reminded" a database invariant rather than a check someone can forget.
+ */
+export const pickReminders = pgTable(
+  'pick_reminders',
+  {
+    id: id(),
+    leagueMemberId: bigint('league_member_id', { mode: 'number' })
+      .notNull()
+      .references(() => leagueMembers.id, { onDelete: 'cascade' }),
+    seasonId: bigint('season_id', { mode: 'number' })
+      .notNull()
+      .references(() => seasons.id, { onDelete: 'cascade' }),
+    week: integer().notNull(),
+    sentAt: createdAt(),
+  },
+  (table) => [
+    uniqueIndex('pick_reminders_member_season_week_key').on(
+      table.leagueMemberId,
+      table.seasonId,
+      table.week,
+    ),
+    index('pick_reminders_season_week_idx').on(table.seasonId, table.week),
+  ],
+);
+
+// ---------------------------------------------------------------------------
 // Commissioner actions
 // -------------------------------------------------------------------------
 
@@ -498,6 +533,7 @@ export const leagueMembersRelations = relations(leagueMembers, ({ one, many }) =
   league: one(leagues, { fields: [leagueMembers.leagueId], references: [leagues.id] }),
   user: one(users, { fields: [leagueMembers.userId], references: [users.id] }),
   picks: many(picks),
+  reminders: many(pickReminders),
 }));
 
 export const picksRelations = relations(picks, ({ one }) => ({

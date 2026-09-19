@@ -21,6 +21,7 @@ export interface Harness {
 const MUTABLE_TABLES = [
   'pick_corrections',
   'picks',
+  'pick_reminders',
   'sessions',
   'password_reset_tokens',
   'champions',

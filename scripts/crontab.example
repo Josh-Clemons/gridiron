@@ -23,6 +23,7 @@
 PATH=/usr/local/bin:/usr/bin:/bin
 
 SYNC=docker compose -f /home/josh/Applications/gridiron/docker-compose.yml exec -T gridiron-api pnpm exec tsx src/sync/cli.ts
+REMINDER=docker compose -f /home/josh/Applications/gridiron/docker-compose.yml exec -T gridiron-api pnpm exec tsx src/reminder/cli.ts
 LOG=/home/josh/logs/gridiron-sync.log
 
 # --- Schedule -----------------------------------------------------------------
@@ -46,3 +47,12 @@ LOG=/home/josh/logs/gridiron-sync.log
 
 # A daily backstop, for a score corrected days later or a window we missed.
 30 6 * * *   $SYNC results >> $LOG 2>&1
+
+# --- Reminders -----------------------------------------------------------------
+# 15 minutes before the next kickoff, to members who haven't finished their three
+# picks. Idempotent and deduplicated: outside the window it sends nothing, and a
+# member reminded once this week never gets a second email no matter how often this
+# runs. Mirrors the results windows, so the Sunday noon games remind around 11:45.
+*/15 11-23 * * 0   $REMINDER >> $LOG 2>&1
+*/15 18-23 * * 4   $REMINDER >> $LOG 2>&1
+*/15 18-23 * * 1   $REMINDER >> $LOG 2>&1
