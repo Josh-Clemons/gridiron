@@ -1,15 +1,19 @@
+import DownloadIcon from '@mui/icons-material/Download';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams, useSearch } from '@tanstack/react-router';
-import { seasonsQuery, standingsQuery } from '../api/queries';
+import { useState } from 'react';
+import { downloadStandingsCsv, seasonsQuery, standingsQuery } from '../api/queries';
 import { errorMessage } from '../components/AuthLayout';
 import { SeasonNav } from '../components/SeasonNav';
 import { StandingsTable } from '../components/StandingsTable';
+import { useToast } from '../components/Toast';
 import { WeekNav } from '../components/WeekNav';
 
 /**
@@ -22,6 +26,8 @@ export function StandingsPage() {
   const { leagueId } = useParams({ from: '/_authed/leagues/$leagueId' });
   const search = useSearch({ from: '/_authed/leagues/$leagueId/standings' });
   const navigate = useNavigate();
+  const toast = useToast();
+  const [downloading, setDownloading] = useState(false);
   const standings = useQuery(standingsQuery(Number(leagueId), search.season, search.week));
   const seasons = useQuery(seasonsQuery(Number(leagueId)));
 
@@ -75,9 +81,29 @@ export function StandingsPage() {
             }}
           />
         </Stack>
-        <Typography variant="body2" color="text.secondary">
-          {standings.data.rows.length} players · {standings.data.season.year}
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap" useFlexGap>
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<DownloadIcon />}
+            loading={downloading}
+            onClick={() => {
+              setDownloading(true);
+              downloadStandingsCsv(Number(leagueId), search.season)
+                .catch(() => {
+                  toast.show('could not download the standings', 'error');
+                })
+                .finally(() => {
+                  setDownloading(false);
+                });
+            }}
+          >
+            CSV
+          </Button>
+          <Typography variant="body2" color="text.secondary">
+            {standings.data.rows.length} players · {standings.data.season.year}
+          </Typography>
+        </Stack>
       </Stack>
 
       <Paper variant="outlined" sx={{ maxHeight: '70dvh', overflow: 'auto' }}>

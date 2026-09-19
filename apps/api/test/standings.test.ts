@@ -174,6 +174,32 @@ describe('standings', () => {
   });
 });
 
+describe('standings CSV', () => {
+  it('exports ranked season totals as CSV', async () => {
+    const { owner, leagueId } = await twoPlayerLeague();
+    await owner.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'KC' });
+    await finish(2026, 1, { KC: 'KC', BUF: 'BUF', DAL: 'DAL', SF: 'SF' });
+
+    const csv = await owner.getRaw(`/leagues/${String(leagueId)}/standings.csv`);
+    expect(csv.status).toBe(200);
+    expect(csv.contentType).toContain('text/csv');
+
+    const text = new TextDecoder().decode(csv.body);
+    expect(text).toBe('Rank,Player,Season Points\r\n1,Owner,5\r\n2,Guest,0\r\n');
+  });
+
+  it('quotes a roster label that contains a comma', async () => {
+    const { owner, leagueId } = await twoPlayerLeague();
+    await harness.db
+      .insert(leagueMembers)
+      .values({ leagueId, displayName: 'Daly, Twins', userId: null });
+
+    const csv = await owner.getRaw(`/leagues/${String(leagueId)}/standings.csv`);
+    const text = new TextDecoder().decode(csv.body);
+    expect(text).toContain('"Daly, Twins"');
+  });
+});
+
 describe('a full-size league', () => {
   it("serves a 72-member board well under 30 KB and without anyone else's picks", async () => {
     const owner = await signUp(harness.app, 'commish@example.com', 'Commish');

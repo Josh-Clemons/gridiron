@@ -11,8 +11,9 @@ import { loadGames, loadLeaguePicks } from '../data/picks';
 import { assertWeekInSeason, currentWeek, resolveSeason, type SeasonRow } from '../data/seasons';
 import type { Deps } from '../deps';
 import { buildBoard } from '../domain/board';
+import { standingsCsv } from '../domain/csv';
 import { buildUsage, clearPick, putPick } from '../domain/picks';
-import { computeStandings } from '../domain/standings';
+import { computeStandings, rankMembers, scoreMembers } from '../domain/standings';
 import type { AppEnv } from '../http/context';
 import { requireAuth } from '../http/middleware';
 import { readJson, readParams, readQuery } from '../http/validate';
@@ -103,6 +104,44 @@ export function boardRoutes(deps: Deps) {
       }),
     };
     return c.json(response);
+  });
+
+  /** The same standings as CSV, for a spreadsheet.
+   *
+   * Every member can download it — standings are visible to the whole league, and the
+   * file ships exactly the integers the table on screen shows, never a pick. It is
+   * ranked by season points and answers with a filename that carries the season.
+   */
+  app.get('/leagues/:leagueId/standings.csv', async (c) => {
+    const { leagueId } = readParams(c, leagueParamSchema);
+    const query = readQuery(c, seasonQuerySchema);
+
+    const membership = await requireMembership(deps, leagueId, c.get('user').id);
+    const season = await resolveSeason(deps, query.season);
+
+    const [games, picks, members] = await Promise.all([
+      loadGames(deps, season.id),
+      loadLeaguePicks(deps, leagueId, season.id),
+      listMembers(deps, leagueId),
+    ]);
+
+    const rows = rankMembers(
+      scoreMembers({
+        members,
+        picks,
+        games,
+        weekCount: season.weekCount,
+        selfMemberId: membership.memberId,
+      }),
+    );
+
+    return new Response(standingsCsv(rows), {
+      status: 200,
+      headers: {
+        'content-type': 'text/csv; charset=utf-8',
+        'content-disposition': `attachment; filename="standings-${String(season.year)}.csv"`,
+      },
+    });
   });
 
   return app;

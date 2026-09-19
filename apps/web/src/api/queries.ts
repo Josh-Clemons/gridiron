@@ -40,7 +40,7 @@ import {
 } from '@gridiron/contracts';
 import { queryOptions } from '@tanstack/react-query';
 import { z } from 'zod';
-import { ApiError, request, requestVoid } from './client';
+import { ApiError, download, request, requestVoid } from './client';
 
 const leaguesResponseSchema = z.object({ leagues: z.array(leagueSchema) });
 const membersResponseSchema = z.object({ members: z.array(leagueMemberSchema) });
@@ -245,6 +245,25 @@ export const championsQuery = (leagueId: number) =>
       request(`/leagues/${String(leagueId)}/champions`, { schema: championsSchema, signal }),
     staleTime: 5 * 60_000,
   });
+
+/**
+ * Download the season standings as a CSV file.
+ *
+ * The server builds the file from the same ranked rows the standings page renders, so
+ * the two can never disagree. Same-origin, so the session cookie rides along like any
+ * other request.
+ */
+export async function downloadStandingsCsv(leagueId: number, season: SeasonArg): Promise<void> {
+  const { blob, filename } = await download(
+    `/leagues/${String(leagueId)}/standings.csv${query(seasonQuery(season))}`,
+  );
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
 
 export const login = (body: LoginRequest): Promise<SessionResponse> =>
   request('/auth/login', { method: 'POST', body, schema: sessionResponseSchema });
