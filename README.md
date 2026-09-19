@@ -72,6 +72,8 @@ password hashing, and Zod validation at every boundary.
 ```
 POST   /auth/register | /auth/login | /auth/logout
 GET    /auth/me
+PATCH  /auth/me                     change your display name or email
+POST   /auth/me/password            change your password (needs the current one)
 POST   /auth/forgot-password | /auth/reset-password
 GET    /leagues                       leagues you belong to
 POST   /leagues                       create one, you become owner
@@ -99,6 +101,8 @@ GET    /leagues/:id/board?week=N      one week: games, your picks, everyone's to
 PUT    /leagues/:id/picks/:week/:slot { "teamId": "KC" }
 DELETE /leagues/:id/picks/:week/:slot
 GET    /leagues/:id/standings?week=N
+GET    /leagues/:id/standings.csv?season=YYYY   the same standings as CSV
+GET    /leagues/:id/head-to-head?a=N&b=N        two members, week by week
 GET    /leagues/:id/usage             teams left in each of Win/Place/Show
 GET    /teams                         the 32 teams and their names, no session needed
 GET    /health
@@ -149,6 +153,18 @@ response is a few kilobytes of games, your three picks and everyone's totals as
 integers. Standings are aggregated server-side; no member's picks are ever sent to
 another member's browser.
 
+Behind the pick page sit the season's other views: standings (with a CSV download),
+a member × week history grid, a **head-to-head** comparison of any two members, and
+the champions board. The pick page itself speaks the offseason: once every week is
+final it swaps to a "season complete" banner pointing at the final standings and the
+champions, and before any game is scheduled it says so rather than showing an empty
+week.
+
+A signed-in player has a **settings** page (`/settings`) for their own account: change
+the display name (the default roster label for leagues joined from now on — an
+existing league's label stays the commissioner's) and email, and change the password
+with the current one as proof. Changing the password evicts every other session.
+
 The dev server proxies `/api` to the API with the prefix stripped, which is the same
 shape Caddy serves in production — so the session cookie is first-party in both, and
 `SameSite=Lax` means what it says. Production does the stripping with Caddy's
@@ -168,6 +184,7 @@ pnpm sync schedule                 # every week of the current season
 pnpm sync schedule --season 2020   # backfill a finished season, results included
 pnpm sync results                  # the live week and the one before it
 pnpm sync results --week 7
+pnpm reminder                      # email members behind on their picks, pre-kickoff
 ```
 
 Cron runs exactly these commands — see `scripts/crontab.example` — so the automated
@@ -175,6 +192,14 @@ path and the manual one can't diverge. Every run is idempotent: rows that alread
 are left alone, and re-running after a failure is always safe. Failures exit non-zero
 and alert. The alerter can post to Matrix, but no token is configured yet, so today a
 failure goes to stderr and cron mails it to the local user.
+
+The reminder is the same shape as the sync: a job cron fires every quarter hour through
+the game-day windows, and running it by hand is always safe. Fifteen minutes before the
+live week's next kickoff — the Sunday noon game in a normal week — it emails every
+claimed member who hasn't finished their three picks. One email per member per week is
+a database invariant (`pick_reminders`), so a member is never nagged twice no matter
+how often the job runs. Spreadsheet players with no account yet have no address to
+reach and are simply skipped.
 
 Nothing incrementally mutates a score. Standings are derived from `games` and `picks` on
 read, so **writing a result _is_ the rescore**, and a result ESPN later corrects simply
