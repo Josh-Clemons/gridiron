@@ -5,6 +5,7 @@ import { listMembers } from '../data/leagues';
 import { loadGames, loadLeaguePicks, type PickRow } from '../data/picks';
 import type { SeasonRow } from '../data/seasons';
 import type { Deps } from '../deps';
+import { settledByWeek } from './history';
 import { computeStandings, groupGamesByWeek } from './standings';
 
 /**
@@ -46,6 +47,11 @@ export async function buildBoard(
   const seasonPoints =
     standings.find((row) => row.memberId === membership.memberId)?.seasonPoints ?? 0;
 
+  // The offseason signal: every week has games and every one of them is final. A
+  // week with no games at all is not settled, so a half-synced season reads as
+  // still in progress rather than falsely complete.
+  const seasonComplete = settledByWeek(games, season.weekCount).every((entry) => entry.settled);
+
   return {
     season: { id: season.id, year: season.year, weekCount: season.weekCount },
     week,
@@ -55,6 +61,7 @@ export async function buildBoard(
     weekScore: toWireWeekScore(week, myPicks, weekGames),
     seasonPoints,
     standings,
+    seasonComplete,
   };
 }
 

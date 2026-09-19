@@ -259,6 +259,39 @@ describe('head-to-head', () => {
   });
 });
 
+describe('offseason', () => {
+  it('reports the season incomplete while weeks remain unplayed', async () => {
+    const { owner, leagueId } = await twoPlayerLeague();
+    const board = await owner.get<{ seasonComplete: boolean }>(
+      `/leagues/${String(leagueId)}/board?week=1`,
+    );
+    expect(board.body.seasonComplete).toBe(false);
+  });
+
+  it('reports the season complete once every week is final', async () => {
+    const { owner, leagueId } = await twoPlayerLeague();
+    await finish(2026, 1, { KC: 'KC', BUF: 'BUF', DAL: 'DAL', SF: 'SF' });
+
+    // One final game settles each remaining week — no need for a full 16-game slate.
+    for (let week = 2; week <= 18; week += 1) {
+      // eslint-disable-next-line no-await-in-loop -- sequential inserts, one per week
+      await insertGames(harness.db, 2026, week, [
+        {
+          home: 'KC',
+          away: 'DEN',
+          kickoff: new Date(SUNDAY.getTime() + week * 86_400_000),
+          winner: 'KC',
+        },
+      ]);
+    }
+
+    const board = await owner.get<{ seasonComplete: boolean }>(
+      `/leagues/${String(leagueId)}/board?week=1`,
+    );
+    expect(board.body.seasonComplete).toBe(true);
+  });
+});
+
 describe('a full-size league', () => {
   it("serves a 72-member board well under 30 KB and without anyone else's picks", async () => {
     const owner = await signUp(harness.app, 'commish@example.com', 'Commish');

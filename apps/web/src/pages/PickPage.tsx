@@ -110,6 +110,22 @@ export function PickPage() {
         </Typography>
       </Stack>
 
+      {board.data.seasonComplete && (
+        <Alert severity="success">
+          <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap" useFlexGap>
+            <Typography variant="body2">
+              The {board.data.season.year} season is complete.
+            </Typography>
+            <Link to="/leagues/$leagueId/standings" params={{ leagueId }} search={{ ...search }}>
+              Final standings
+            </Link>
+            <Link to="/leagues/$leagueId/champions" params={{ leagueId }} search={{}}>
+              Champions
+            </Link>
+          </Stack>
+        </Alert>
+      )}
+
       <ScoreSummary
         weekScore={board.data.weekScore}
         seasonPoints={board.data.seasonPoints}

@@ -110,6 +110,12 @@ export const boardSchema = z.object({
   weekScore: weekScoreSchema,
   seasonPoints: z.int().nonnegative(),
   standings: z.array(standingRowSchema),
+  /**
+   * True when every week of the season is fully played — the offseason state. The pick
+   * page uses it to say "season complete" instead of presenting a board with nothing
+   * left to do.
+   */
+  seasonComplete: z.boolean(),
 });
 
 /**

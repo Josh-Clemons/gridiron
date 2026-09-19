@@ -78,6 +78,7 @@ const board: Board = {
   weekScore: { week: 3, base: 0, trifecta: 0, total: 0, settled: false },
   seasonPoints: 9,
   standings: [],
+  seasonComplete: false,
 };
 
 /** SF is already spent at Win, back in week 1 — rule 6. */
