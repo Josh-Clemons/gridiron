@@ -4,8 +4,8 @@ import { currentWeek, resolveSeason } from '../data/seasons';
 import type { Deps } from '../deps';
 import { groupGamesByWeek } from './standings';
 
-/** Remind this far ahead of a kickoff — "15 minutes before the noon game". */
-const REMINDER_LEAD_MS = 15 * 60_000;
+/** Remind this far ahead of a kickoff — "60 minutes before the noon game". */
+const REMINDER_LEAD_MS = 60 * 60_000;
 
 /**
  * Weekday in the league's timezone (America/Chicago), host-TZ independent.
@@ -30,13 +30,13 @@ export interface ReminderResult {
 }
 
 /**
- * Remind members who haven't finished their picks, 15 minutes before the Sunday games.
+ * Remind members who haven't finished their picks, 60 minutes before the Sunday games.
  *
  * The league makes its picks against the Sunday slate, when the majority of games
  * play, so Thursday-night and Monday-night games are deliberately not a trigger: the
  * window opens when the live week's earliest still-upcoming *Sunday* kickoff is within
  * {@link REMINDER_LEAD_MS}. In a normal week that kickoff is the noon game, and the
- * reminder fires around 11:45 Central.
+ * reminder fires around 11:00 Central.
  *
  * One email per member per week, enforced by the `pick_reminders` unique index rather
  * than by trusting the schedule to run the job once. Safe to run every quarter hour.

@@ -17,9 +17,9 @@ beforeEach(async () => {
   await harness.reset();
 });
 
-/** Week 1 of 2026. Sunday noon Central = 17:00 UTC; 11:45 Central = 16:45 UTC. */
+/** Week 1 of 2026. Sunday noon Central = 17:00 UTC; 11:00 Central = 16:00 UTC. */
 const SUNDAY_NOON = new Date('2026-09-13T17:00:00Z');
-const ELEVEN_FORTY_FIVE = new Date('2026-09-13T16:45:00Z');
+const ELEVEN = new Date('2026-09-13T16:00:00Z');
 
 async function leagueWithTwoAccounts(): Promise<{
   owner: ApiClient;
@@ -53,7 +53,7 @@ describe('pick reminders', () => {
   it('reminds members behind on picks and skips those who finished', async () => {
     const { guest, leagueId } = await leagueWithTwoAccounts();
     await finishPicks(guest, leagueId);
-    harness.setNow(ELEVEN_FORTY_FIVE);
+    harness.setNow(ELEVEN);
 
     const result = await runReminders(harness.deps);
 
@@ -62,10 +62,10 @@ describe('pick reminders', () => {
     expect(harness.mailer.lastTo('guest@example.com')).toBeUndefined();
   });
 
-  it('sends nothing more than 15 minutes before the Sunday kickoff', async () => {
+  it('sends nothing more than 60 minutes before the Sunday kickoff', async () => {
     await leagueWithTwoAccounts();
-    // 11:00 Central, an hour out.
-    harness.setNow(new Date('2026-09-13T16:00:00Z'));
+    // 10:00 Central, two hours out.
+    harness.setNow(new Date('2026-09-13T15:00:00Z'));
 
     const result = await runReminders(harness.deps);
 
@@ -92,7 +92,7 @@ describe('pick reminders', () => {
 
   it('sends one reminder per member per week, no matter how often it runs', async () => {
     await leagueWithTwoAccounts();
-    harness.setNow(ELEVEN_FORTY_FIVE);
+    harness.setNow(ELEVEN);
 
     const first = await runReminders(harness.deps);
     const second = await runReminders(harness.deps);
@@ -109,7 +109,7 @@ describe('pick reminders', () => {
     await harness.db
       .insert(leagueMembers)
       .values({ leagueId, displayName: 'No Account', userId: null });
-    harness.setNow(ELEVEN_FORTY_FIVE);
+    harness.setNow(ELEVEN);
 
     const result = await runReminders(harness.deps);
 

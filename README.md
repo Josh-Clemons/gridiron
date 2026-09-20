@@ -194,7 +194,7 @@ and alert. The alerter can post to Matrix, but no token is configured yet, so to
 failure goes to stderr and cron mails it to the local user.
 
 The reminder is the same shape as the sync: a job cron fires every quarter hour on
-Sunday, and running it by hand is always safe. Fifteen minutes before the live week's
+Sunday, and running it by hand is always safe. Sixty minutes before the live week's
 earliest Sunday kickoff — the noon game in a normal week — it emails every claimed
 member who hasn't finished their three picks. Thursday and Monday games are deliberately
 not a trigger: the league picks against the Sunday slate, when the majority of games
