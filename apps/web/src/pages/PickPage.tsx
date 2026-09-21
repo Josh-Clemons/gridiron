@@ -153,14 +153,9 @@ export function PickPage() {
       <Paper variant="outlined" sx={{ p: 2 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1}>
           <Typography variant="h3">Standings</Typography>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Link to="/leagues/$leagueId/league-picks" params={{ leagueId }} search={{ ...search }}>
-              League picks
-            </Link>
-            <Link to="/leagues/$leagueId/standings" params={{ leagueId }} search={{ ...search }}>
-              See all {board.data.standings.length}
-            </Link>
-          </Stack>
+          <Link to="/leagues/$leagueId/standings" params={{ leagueId }} search={{ ...search }}>
+            See all {board.data.standings.length}
+          </Link>
         </Stack>
         <StandingsTable rows={board.data.standings} week={board.data.week} compact />
       </Paper>

@@ -11,10 +11,15 @@ import { loadGames, loadLeaguePicks } from '../data/picks';
 import { assertWeekInSeason, currentWeek, resolveSeason, type SeasonRow } from '../data/seasons';
 import type { Deps } from '../deps';
 import { buildBoard } from '../domain/board';
-import { buildLeaguePicks } from '../domain/league-picks';
 import { standingsCsv } from '../domain/csv';
 import { buildUsage, clearPick, putPick } from '../domain/picks';
-import { computeStandings, rankMembers, scoreMembers } from '../domain/standings';
+import {
+  computeStandings,
+  groupGamesByWeek,
+  lockedPicksOf,
+  rankMembers,
+  scoreMembers,
+} from '../domain/standings';
 import type { AppEnv } from '../http/context';
 import { requireAuth } from '../http/middleware';
 import { readJson, readParams, readQuery } from '../http/validate';
@@ -43,24 +48,6 @@ export function boardRoutes(deps: Deps) {
     const week = await resolveWeek(deps, season, query.week);
 
     return c.json(await buildBoard(deps, membership, season, week));
-  });
-
-  /**
-   * What the league picked this week — locked picks only, one row per member.
-   *
-   * The privacy rule is relaxed exactly here and nowhere else: a pick whose game has
-   * kicked off can no longer be changed, so it can no longer be copied. Every other
-   * endpoint on this router still answers with integers only.
-   */
-  app.get('/leagues/:leagueId/league-picks', async (c) => {
-    const { leagueId } = readParams(c, leagueParamSchema);
-    const query = readQuery(c, weekQuerySchema);
-
-    const membership = await requireMembership(deps, leagueId, c.get('user').id);
-    const season = await resolveSeason(deps, query.season);
-    const week = await resolveWeek(deps, season, query.week);
-
-    return c.json(await buildLeaguePicks(deps, membership, season, week));
   });
 
   app.put('/leagues/:leagueId/picks/:week/:slot', async (c) => {
@@ -96,6 +83,13 @@ export function boardRoutes(deps: Deps) {
     return c.json(await buildUsage(deps, membership, season));
   });
 
+  /**
+   * The standings, with each member's locked picks for the week riding on their row.
+   *
+   * The privacy rule is relaxed exactly here and nowhere else: a pick whose game has
+   * kicked off can no longer be changed, so it can no longer be copied. The board's
+   * standings stay integers-only, so the pick page's payload does not grow.
+   */
   app.get('/leagues/:leagueId/standings', async (c) => {
     const { leagueId } = readParams(c, leagueParamSchema);
     const query = readQuery(c, weekQuerySchema);
@@ -110,6 +104,9 @@ export function boardRoutes(deps: Deps) {
       listMembers(deps, leagueId),
     ]);
 
+    const now = deps.now();
+    const weekGames = groupGamesByWeek(games).get(week) ?? [];
+
     const response: Standings = {
       season: { id: season.id, year: season.year, weekCount: season.weekCount },
       week,
@@ -120,7 +117,15 @@ export function boardRoutes(deps: Deps) {
         weekCount: season.weekCount,
         week,
         selfMemberId: membership.memberId,
-      }),
+      }).map((row) => ({
+        ...row,
+        picks: lockedPicksOf(
+          week,
+          picks.filter((pick) => pick.memberId === row.memberId),
+          weekGames,
+          now,
+        ),
+      })),
     };
     return c.json(response);
   });

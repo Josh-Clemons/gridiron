@@ -24,7 +24,7 @@ const SUNDAY = new Date('2026-09-13T17:00:00Z');
 /** Between the two: the Thursday pick is locked, nothing else is. */
 const FRIDAY = new Date('2026-09-11T12:00:00Z');
 
-interface Entry {
+interface Row {
   readonly memberId: number;
   readonly displayName: string;
   readonly isSelf: boolean;
@@ -34,7 +34,7 @@ interface Entry {
 
 interface Body {
   readonly week: number;
-  readonly entries: Entry[];
+  readonly rows: Row[];
 }
 
 async function twoPlayerLeague(): Promise<{
@@ -68,13 +68,13 @@ async function makePick(
   expect(response.status).toBe(200);
 }
 
-const entryOf = (body: Body, name: string): Entry => {
-  const entry = body.entries.find((candidate) => candidate.displayName === name);
-  if (entry === undefined) throw new Error(`no entry for ${name}`);
-  return entry;
+const rowOf = (body: Body, name: string): Row => {
+  const row = body.rows.find((candidate) => candidate.displayName === name);
+  if (row === undefined) throw new Error(`no row for ${name}`);
+  return row;
 };
 
-describe('league picks', () => {
+describe('locked picks on the standings', () => {
   it('shows a pick once its own game kicks off, and not before', async () => {
     const { owner, guest, leagueId } = await twoPlayerLeague();
 
@@ -83,26 +83,24 @@ describe('league picks', () => {
     await makePick(guest, leagueId, 'win', 'BUF');
     await makePick(guest, leagueId, 'place', 'DAL');
 
-    // Before anything kicks off, every member is present with all slots open —
-    // visible, but with nothing in them.
+    // Before anything kicks off, every member has a row but no picks in it.
     harness.setNow(new Date('2026-09-10T12:00:00Z'));
-    const early = await owner.get<Body>(`/leagues/${String(leagueId)}/league-picks?week=1`);
+    const early = await owner.get<Body>(`/leagues/${String(leagueId)}/standings?week=1`);
     expect(early.status).toBe(200);
-    expect(early.body.entries).toHaveLength(2);
-    for (const row of early.body.entries) {
+    expect(early.body.rows).toHaveLength(2);
+    for (const row of early.body.rows) {
       expect(row.picks).toEqual([]);
     }
 
     // After Thursday's kickoff, only the Thursday pick appears — Sunday picks
     // stay hidden, and the guest's week reads as three open slots.
     harness.setNow(FRIDAY);
-    const board = await owner.get<Body>(`/leagues/${String(leagueId)}/league-picks?week=1`);
+    const board = await owner.get<Body>(`/leagues/${String(leagueId)}/standings?week=1`);
     expect(board.status).toBe(200);
-    expect(board.body.entries).toHaveLength(2);
-    const entry = entryOf(board.body, 'Owner');
-    expect(entry.displayName).toBe('Owner');
-    expect(entry.picks).toEqual([{ slot: 'win', teamId: 'KC', outcome: 'pending', points: 0 }]);
-    expect(entryOf(board.body, 'Guest').picks).toEqual([]);
+    expect(board.body.rows).toHaveLength(2);
+    const ownerRow = rowOf(board.body, 'Owner');
+    expect(ownerRow.picks).toEqual([{ slot: 'win', teamId: 'KC', outcome: 'pending', points: 0 }]);
+    expect(rowOf(board.body, 'Guest').picks).toEqual([]);
   });
 
   it('reports outcomes and points for finished games', async () => {
@@ -118,9 +116,9 @@ describe('league picks', () => {
       .where(and(eq(games.week, 1), eq(games.homeTeamId, kcRow.id)));
 
     harness.setNow(new Date('2026-09-14T12:00:00Z'));
-    const board = await owner.get<Body>(`/leagues/${String(leagueId)}/league-picks?week=1`);
-    const entry = entryOf(board.body, 'Owner');
-    expect(entry.picks).toEqual([
+    const board = await owner.get<Body>(`/leagues/${String(leagueId)}/standings?week=1`);
+    const ownerRow = rowOf(board.body, 'Owner');
+    expect(ownerRow.picks).toEqual([
       { slot: 'win', teamId: 'KC', outcome: 'win', points: 5 },
       { slot: 'show', teamId: 'BUF', outcome: 'pending', points: 0 },
     ]);
@@ -151,11 +149,11 @@ describe('league picks', () => {
     });
 
     harness.setNow(new Date('2026-09-14T12:00:00Z'));
-    const board = await owner.get<Body>(`/leagues/${String(leagueId)}/league-picks?week=1`);
+    const board = await owner.get<Body>(`/leagues/${String(leagueId)}/standings?week=1`);
     expect(board.status).toBe(200);
     // Every member has a row, but the stray pick appears in none of them.
-    expect(board.body.entries).toHaveLength(2);
-    for (const row of board.body.entries) {
+    expect(board.body.rows).toHaveLength(2);
+    for (const row of board.body.rows) {
       expect(row.picks).toEqual([]);
     }
   });
@@ -163,7 +161,7 @@ describe('league picks', () => {
   it('is only for members', async () => {
     const { leagueId } = await twoPlayerLeague();
     const stranger = await signUp(harness.app, 'stranger@example.com', 'Stranger');
-    const response = await stranger.get(`/leagues/${String(leagueId)}/league-picks?week=1`);
+    const response = await stranger.get(`/leagues/${String(leagueId)}/standings?week=1`);
     expect(response.status).toBe(404);
   });
 });

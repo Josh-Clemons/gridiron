@@ -16,7 +16,6 @@ import {
   type League,
   leagueSchema,
   memberPicksResponseSchema,
-  leaguePicksSchema,
   type LoginRequest,
   type RegisterRequest,
   type SeasonHistory,
@@ -191,22 +190,6 @@ export const boardQuery = (leagueId: number, season: SeasonArg, week: number | u
       request(
         `/leagues/${String(leagueId)}/board${query(seasonQuery(season), week === undefined ? undefined : `week=${String(week)}`)}`,
         { schema: boardSchema, signal },
-      ),
-  });
-
-/**
- * What the league picked this week — locked picks only, one row per member.
- *
- * `week: undefined` asks the server for the live week, matching the board and
- * standings keys so tab-switching within one week stays consistent.
- */
-export const leaguePicksQuery = (leagueId: number, season: SeasonArg, week: number | undefined) =>
-  queryOptions({
-    queryKey: ['league-picks', leagueId, seasonKey(season), week ?? 'current'] as const,
-    queryFn: ({ signal }) =>
-      request(
-        `/leagues/${String(leagueId)}/league-picks${query(seasonQuery(season), week === undefined ? undefined : `week=${String(week)}`)}`,
-        { schema: leaguePicksSchema, signal },
       ),
   });
 

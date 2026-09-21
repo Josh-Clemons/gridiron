@@ -83,13 +83,6 @@ export const standingRowSchema = z.object({
   rank: z.int().positive(),
 });
 
-export const standingsSchema = z.object({
-  season: seasonSchema,
-  /** The week `weekPoints` refers to. */
-  week: weekSchema,
-  rows: z.array(standingRowSchema),
-});
-
 /**
  * Everything the pick page needs for one week, in one response.
  *
@@ -137,8 +130,7 @@ export const teamUsageSchema = z.object({
 });
 
 /**
- * Another member's pick, visible only because its game has kicked off.
- * There is no `locked` field because it is always true — the endpoint drops every
+ * Another member's pick, visible only because its game has kicked off. There is no `locked` field because it is always true — the endpoint drops every
  * pick whose game has not started, so an unlockable pick never travels. `source`
  * is absent for the same reason: whose finger tapped the button is not the
  * viewer's business.
@@ -150,28 +142,26 @@ export const leaguePickSchema = z.object({
   points: z.int().nonnegative(),
 });
 
-/** One member's row of the League Picks view: everything they hold that is locked. */
-export const leaguePickEntrySchema = z.object({
-  memberId: idSchema,
-  displayName: displayNameSchema,
-  isSelf: z.boolean(),
-  /** Standings rank, so the list can be read top-down like the standings. */
-  rank: z.int().positive(),
+/**
+ * A standings row with that member's locked picks for the week attached.
+ *
+ * This is the one deliberate relaxation of "no member's picks ever travel": a pick
+ * whose game has kicked off (rule 9) can no longer be changed, so it can no longer
+ * be copied. Every member has a row — a week still open (or simply never picked)
+ * shows as an empty `picks` array, which the table renders as three dashes. An
+ * unlockable pick never travels, current week or historical.
+ *
+ * Only the `/standings` endpoint ships these rows. The board's standings stay
+ * integers-only, so the pick page's payload does not grow.
+ */
+export const standingWithPicksRowSchema = standingRowSchema.extend({
   picks: z.array(leaguePickSchema),
 });
-
-/**
- * What the league picked this week, one row per member — locked picks only.
- *
- * Every active member has a row, including those whose whole week is still open or
- * simply never picked: their `picks` array is empty and the view renders the slots
- * as "—". Showing who has and hasn't picked is fine here — nothing in the response
- * can be acted on, because an unlockable pick never travels.
- */
-export const leaguePicksSchema = z.object({
+export const standingsSchema = z.object({
   season: seasonSchema,
+  /** The week `weekPoints` and `picks` refer to. */
   week: weekSchema,
-  entries: z.array(leaguePickEntrySchema),
+  rows: z.array(standingWithPicksRowSchema),
 });
 
 export type Season = z.infer<typeof seasonSchema>;
@@ -186,5 +176,4 @@ export type Standings = z.infer<typeof standingsSchema>;
 export type Board = z.infer<typeof boardSchema>;
 export type TeamUsage = z.infer<typeof teamUsageSchema>;
 export type LeaguePick = z.infer<typeof leaguePickSchema>;
-export type LeaguePickEntry = z.infer<typeof leaguePickEntrySchema>;
-export type LeaguePicks = z.infer<typeof leaguePicksSchema>;
+export type StandingWithPicks = z.infer<typeof standingWithPicksRowSchema>;

@@ -1,5 +1,5 @@
-import type { StandingRow } from '@gridiron/contracts';
-import { type Game, type Pick, scoreWeek } from '@gridiron/rules';
+import type { LeaguePick, StandingRow } from '@gridiron/contracts';
+import { type Game, isLocked, type Pick, scoreWeek } from '@gridiron/rules';
 import type { PickRow } from '../data/picks';
 
 export interface MemberRow {
@@ -151,4 +151,42 @@ export function groupGamesByWeek(games: readonly Game[]): Map<number, Game[]> {
     list.push(game);
   }
   return byWeek;
+}
+
+/**
+ * A member's visible picks for one week: every pick whose game exists in the week
+ * and has kicked off (rule 9).
+ *
+ * This is the one place the "no member's picks ever travel" rule bends — a locked
+ * pick can no longer be changed, so it can no longer be copied. The filter is
+ * server-side and fail-closed: a pick with no matching game in the week, or whose
+ * game has not started, is dropped here and never reaches the wire. `scoreWeek`
+ * supplies the outcome and points, so this can never disagree with the standings
+ * about what a pick is worth.
+ */
+export function lockedPicksOf(
+  week: number,
+  memberPicks: readonly PickRow[],
+  weekGames: readonly Game[],
+  now: Date,
+): LeaguePick[] {
+  const score = scoreWeek(week, memberPicks, weekGames);
+
+  const result: LeaguePick[] = [];
+  for (const pick of memberPicks.filter((candidate) => candidate.week === week)) {
+    const game = weekGames.find(
+      (candidate) => candidate.homeTeam === pick.teamId || candidate.awayTeam === pick.teamId,
+    );
+    // No matching game, or the game has not kicked off: invisible, without exception.
+    if (game === undefined || !isLocked(game, now)) continue;
+
+    const slotScore = score.slots.find((entry) => entry.slot === pick.slot);
+    result.push({
+      slot: pick.slot,
+      teamId: pick.teamId,
+      outcome: slotScore?.outcome ?? ('pending' as const),
+      points: slotScore?.points ?? 0,
+    });
+  }
+  return result;
 }

@@ -19,8 +19,9 @@ import { WeekNav } from '../components/WeekNav';
 /**
  * The whole league, aggregated server-side.
  *
- * 72 rows of integers, which is the entire payload — no member's picks are sent to
- * anyone else's browser, at any point, for any reason.
+ * 72 rows of totals — and, since Phase 9, each row carries that member's locked
+ * picks for the week, revealed when the row is expanded. A pick still open never
+ * travels: there is nothing here that could be copied before its game kicks off.
  */
 export function StandingsPage() {
   const { leagueId } = useParams({ from: '/_authed/leagues/$leagueId' });

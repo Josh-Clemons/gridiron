@@ -102,7 +102,7 @@ PUT    /leagues/:id/picks/:week/:slot { "teamId": "KC" }
 DELETE /leagues/:id/picks/:week/:slot
 GET    /leagues/:id/standings?week=N
 GET    /leagues/:id/standings.csv?season=YYYY   the same standings as CSV
-GET    /leagues/:id/league-picks?week=N  what everyone picked, locked picks only
+GET    /leagues/:id/standings?week=N  ranks plus each member's locked picks
 GET    /leagues/:id/usage             teams left in each of Win/Place/Show
 GET    /teams                         the 32 teams and their names, no session needed
 GET    /health
@@ -151,14 +151,14 @@ game, so a Thursday pick freezes while the rest of the week stays open.
 One week at a time is load-bearing: 72 members × 18 weeks is ~3,900 picks, and the board
 response is a few kilobytes of games, your three picks and everyone's totals as
 integers. Standings are aggregated server-side; no member's picks are ever sent to
-another member's browser — with one deliberate exception: the **League Picks** view,
-which shows what everyone took once each pick's own game has kicked off. A locked pick
-can no longer be changed, so it can no longer be copied; nothing still open ever
-travels.
+another member's browser — with one deliberate exception: each standings row carries
+that member's **locked** picks for the week, revealed by expanding the row. A pick
+whose game has kicked off can no longer be changed, so it can no longer be copied;
+nothing still open ever travels.
 
-Behind the pick page sit the season's other views: standings (with a CSV download),
-League Picks, a member × week history grid, and
-the champions board. The pick page itself speaks the offseason: once every week is
+Behind the pick page sit the season's other views: standings (with a CSV download,
+and each member's locked picks an expanded row away), a member × week history grid,
+and the champions board. The pick page itself speaks the offseason: once every week is
 final it swaps to a "season complete" banner pointing at the final standings and the
 champions, and before any game is scheduled it says so rather than showing an empty
 week.
