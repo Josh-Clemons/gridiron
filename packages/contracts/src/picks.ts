@@ -136,6 +136,43 @@ export const teamUsageSchema = z.object({
   ),
 });
 
+/**
+ * Another member's pick, visible only because its game has kicked off.
+ *
+ * There is no `locked` field because it is always true — the endpoint drops every
+ * pick whose game has not started, so an unlockable pick never travels. `source`
+ * is absent for the same reason: whose finger tapped the button is not the
+ * viewer's business.
+ */
+export const leaguePickSchema = z.object({
+  slot: slotSchema,
+  teamId: teamCodeSchema,
+  outcome: pickOutcomeSchema,
+  points: z.int().nonnegative(),
+});
+
+/** One member's row of the League Picks view: everything they hold that is locked. */
+export const leaguePickEntrySchema = z.object({
+  memberId: idSchema,
+  displayName: displayNameSchema,
+  isSelf: z.boolean(),
+  /** Standings rank, so the list can be read top-down like the standings. */
+  rank: z.int().positive(),
+  picks: z.array(leaguePickSchema),
+});
+
+/**
+ * What the league picked this week, one row per member — locked picks only.
+ *
+ * A member with no locked pick yet is absent from `entries` entirely: the view shows
+ * what is visible, not who has or hasn't finished picking.
+ */
+export const leaguePicksSchema = z.object({
+  season: seasonSchema,
+  week: weekSchema,
+  entries: z.array(leaguePickEntrySchema),
+});
+
 export type Season = z.infer<typeof seasonSchema>;
 export type Game = z.infer<typeof gameSchema>;
 export type Pick = z.infer<typeof pickSchema>;
@@ -147,3 +184,6 @@ export type StandingRow = z.infer<typeof standingRowSchema>;
 export type Standings = z.infer<typeof standingsSchema>;
 export type Board = z.infer<typeof boardSchema>;
 export type TeamUsage = z.infer<typeof teamUsageSchema>;
+export type LeaguePick = z.infer<typeof leaguePickSchema>;
+export type LeaguePickEntry = z.infer<typeof leaguePickEntrySchema>;
+export type LeaguePicks = z.infer<typeof leaguePicksSchema>;

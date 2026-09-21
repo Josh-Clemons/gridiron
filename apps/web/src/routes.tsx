@@ -14,6 +14,7 @@ import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { JoinPage } from './pages/JoinPage';
 import { LeagueLayout } from './pages/LeagueLayout';
+import { LeaguePicksPage } from './pages/LeaguePicksPage';
 import { LeaguesPage } from './pages/LeaguesPage';
 import { LoginPage } from './pages/LoginPage';
 import { PickPage } from './pages/PickPage';
@@ -187,6 +188,13 @@ const standingsRoute = createRoute({
   component: StandingsPage,
 });
 
+const leaguePicksRoute = createRoute({
+  getParentRoute: () => leagueRoute,
+  path: '/league-picks',
+  validateSearch: weekSearch,
+  component: LeaguePicksPage,
+});
+
 const historyRoute = createRoute({
   getParentRoute: () => leagueRoute,
   path: '/history',
@@ -219,6 +227,7 @@ export const routeTree = rootRoute.addChildren([
     joinRoute,
     leagueRoute.addChildren([
       pickRoute,
+      leaguePicksRoute,
       usageRoute,
       standingsRoute,
       historyRoute,
