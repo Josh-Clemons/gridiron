@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { alpha } from '@mui/material/styles';
 import type { LeaguePick, LeaguePickEntry, Team } from '@gridiron/contracts';
-import { SLOTS, SLOT_LABELS, SLOT_POINTS, type Slot } from '@gridiron/rules';
+import { SLOTS, type Slot } from '@gridiron/rules';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams, useSearch } from '@tanstack/react-router';
 import { useMemo } from 'react';
@@ -26,8 +26,8 @@ import { teamLogoUrl } from '../lib/logos';
  *
  * The list holds locked picks only. That is the server's decision, not this page's:
  * a pick that hasn't kicked off never travels, so there is nothing here to filter
- * and nothing that could leak a pick still open to copying. Members with nothing
- * locked yet simply aren't in the list.
+ * and nothing that could leak a pick still open to copying. A member whose slots
+ * are all still open — or simply never picked — shows three dashes, not an absence.
  */
 export function LeaguePicksPage() {
   const { leagueId } = useParams({ from: '/_authed/leagues/$leagueId' });
@@ -96,15 +96,12 @@ export function LeaguePicksPage() {
           />
         </Stack>
         <Typography variant="body2" color="text.secondary">
-          {String(entries.length)} locked · {String(season.year)}
+          {String(entries.length)} players · {String(season.year)}
         </Typography>
       </Stack>
 
       {entries.length === 0 ? (
-        <Alert severity="info">
-          No picks have locked yet for week {String(week)}. A pick appears here once its own game
-          kicks off.
-        </Alert>
+        <Alert severity="info">This league has no members yet.</Alert>
       ) : (
         <Paper variant="outlined" sx={{ maxHeight: '70dvh', overflow: 'auto' }}>
           {entries.map((entry, index) => (
@@ -174,26 +171,14 @@ function SlotCell({
   readonly pick: LeaguePick | undefined;
   readonly team: Team | undefined;
 }) {
-  const label = (
-    <Typography variant="caption" sx={{ fontWeight: 700 }}>
-      {SLOT_LABELS[slot]}
-      <Box component="span" sx={{ opacity: 0.65 }}>
-        {' '}
-        {String(SLOT_POINTS[slot])}
-      </Box>
-    </Typography>
-  );
-
   if (pick === undefined) {
     // The slot is genuinely empty — either never picked or, for a game that has
     // kicked off, rejected by the importer. Either way it scores 0 and shows as —.
     return (
       <Stack
         alignItems="center"
-        spacing={0.25}
         sx={{ px: 1.25, py: 0.75, borderRadius: 2, bgcolor: 'action.hover' }}
       >
-        {label}
         <RemoveIcon color="disabled" sx={{ fontSize: 20 }} />
       </Stack>
     );
@@ -211,20 +196,15 @@ function SlotCell({
         bgcolor: (theme) => alpha(theme.palette.slot[slot].main, 0.12),
       }}
     >
-      <Stack alignItems="center" spacing={0.25}>
-        {label}
-        <Stack direction="row" alignItems="center" spacing={0.5}>
-          <Box
-            component="img"
-            src={teamLogoUrl(pick.teamId)}
-            alt={team?.name ?? pick.teamId}
-            sx={{ width: 20, height: 20 }}
-          />
-          <Typography variant="caption" sx={{ fontWeight: 600 }}>
-            {pick.teamId}
-          </Typography>
-        </Stack>
-      </Stack>
+      <Box
+        component="img"
+        src={teamLogoUrl(pick.teamId)}
+        alt={team?.name ?? pick.teamId}
+        sx={{ width: 20, height: 20 }}
+      />
+      <Typography variant="caption" sx={{ fontWeight: 600 }}>
+        {pick.teamId}
+      </Typography>
       <OutcomeMark outcome={pick.outcome} points={pick.points} />
     </Stack>
   );

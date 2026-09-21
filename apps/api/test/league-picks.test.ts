@@ -83,20 +83,26 @@ describe('league picks', () => {
     await makePick(guest, leagueId, 'win', 'BUF');
     await makePick(guest, leagueId, 'place', 'DAL');
 
-    // Before anything kicks off, nobody is visible.
+    // Before anything kicks off, every member is present with all slots open —
+    // visible, but with nothing in them.
     harness.setNow(new Date('2026-09-10T12:00:00Z'));
     const early = await owner.get<Body>(`/leagues/${String(leagueId)}/league-picks?week=1`);
     expect(early.status).toBe(200);
-    expect(early.body.entries).toEqual([]);
+    expect(early.body.entries).toHaveLength(2);
+    for (const row of early.body.entries) {
+      expect(row.picks).toEqual([]);
+    }
 
-    // After Thursday's kickoff, only the Thursday pick appears.
+    // After Thursday's kickoff, only the Thursday pick appears — Sunday picks
+    // stay hidden, and the guest's week reads as three open slots.
     harness.setNow(FRIDAY);
     const board = await owner.get<Body>(`/leagues/${String(leagueId)}/league-picks?week=1`);
     expect(board.status).toBe(200);
-    expect(board.body.entries).toHaveLength(1);
+    expect(board.body.entries).toHaveLength(2);
     const entry = entryOf(board.body, 'Owner');
     expect(entry.displayName).toBe('Owner');
     expect(entry.picks).toEqual([{ slot: 'win', teamId: 'KC', outcome: 'pending', points: 0 }]);
+    expect(entryOf(board.body, 'Guest').picks).toEqual([]);
   });
 
   it('reports outcomes and points for finished games', async () => {
@@ -147,7 +153,11 @@ describe('league picks', () => {
     harness.setNow(new Date('2026-09-14T12:00:00Z'));
     const board = await owner.get<Body>(`/leagues/${String(leagueId)}/league-picks?week=1`);
     expect(board.status).toBe(200);
-    expect(board.body.entries).toEqual([]);
+    // Every member has a row, but the stray pick appears in none of them.
+    expect(board.body.entries).toHaveLength(2);
+    for (const row of board.body.entries) {
+      expect(row.picks).toEqual([]);
+    }
   });
 
   it('is only for members', async () => {

@@ -138,7 +138,6 @@ export const teamUsageSchema = z.object({
 
 /**
  * Another member's pick, visible only because its game has kicked off.
- *
  * There is no `locked` field because it is always true — the endpoint drops every
  * pick whose game has not started, so an unlockable pick never travels. `source`
  * is absent for the same reason: whose finger tapped the button is not the
@@ -164,8 +163,10 @@ export const leaguePickEntrySchema = z.object({
 /**
  * What the league picked this week, one row per member — locked picks only.
  *
- * A member with no locked pick yet is absent from `entries` entirely: the view shows
- * what is visible, not who has or hasn't finished picking.
+ * Every active member has a row, including those whose whole week is still open or
+ * simply never picked: their `picks` array is empty and the view renders the slots
+ * as "—". Showing who has and hasn't picked is fine here — nothing in the response
+ * can be acted on, because an unlockable pick never travels.
  */
 export const leaguePicksSchema = z.object({
   season: seasonSchema,

@@ -18,7 +18,10 @@ import { groupGamesByWeek, rankMembers, scoreMembers } from './standings';
  * is no client-side filtering to get wrong.
  *
  * Rows are ordered like the standings (rank order) so the list reads top-down as
- * "the people I'm racing", and members with nothing locked yet are absent entirely.
+ * "the people I'm racing". Every active member has a row — a member whose week is
+ * still open (or simply never picked) appears with an empty `picks` array, which the
+ * view renders as three "—" slots. Who has picked is visible, but there is nothing
+ * to exploit: nothing still open ever travels.
  */
 export async function buildLeaguePicks(
   deps: Deps,
@@ -46,18 +49,18 @@ export async function buildLeaguePicks(
     }),
   );
 
-  const entries = ranked.flatMap(({ row, rank }) => {
-    const picks = lockedPicksOf(
+  const entries = ranked.map(({ row, rank }) => ({
+    memberId: row.memberId,
+    displayName: row.displayName,
+    isSelf: row.isSelf,
+    rank,
+    picks: lockedPicksOf(
       week,
       leaguePicks.filter((pick) => pick.memberId === row.memberId),
       weekGames,
       now,
-    );
-    if (picks.length === 0) return [];
-    return [
-      { memberId: row.memberId, displayName: row.displayName, isSelf: row.isSelf, rank, picks },
-    ];
-  });
+    ),
+  }));
 
   return {
     season: { id: season.id, year: season.year, weekCount: season.weekCount },
