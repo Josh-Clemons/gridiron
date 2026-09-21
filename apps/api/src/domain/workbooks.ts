@@ -15,8 +15,14 @@ import {
 import type { Deps } from '../deps';
 import { badRequest, forbidden } from '../http/errors';
 
-/** 10 MB — the workbooks are a few hundred KB; anything larger is not a workbook. */
-const MAX_BYTES = 10 * 1024 * 1024;
+/**
+ * 10 MB — the workbooks are a few hundred KB; anything larger is not a workbook.
+ *
+ * Exported because the request-body limit in `app.ts` must let a workbook through
+ * while keeping every other route capped. The two must stay in lockstep, so the
+ * number lives here, in the layer that owns the workbook rules.
+ */
+export const MAX_WORKBOOK_BYTES = 10 * 1024 * 1024;
 const EXTENSIONS = new Set(['.xlsx', '.xls']);
 
 function assertOwner(actor: Membership): void {
@@ -66,7 +72,7 @@ export async function uploadWorkbook(
   const extension = extensionOf(input.originalName);
   if (extension === undefined) throw badRequest('only .xlsx or .xls workbooks');
   if (input.bytes.byteLength === 0) throw badRequest('the workbook is empty');
-  if (input.bytes.byteLength > MAX_BYTES) throw badRequest('the workbook is too large');
+  if (input.bytes.byteLength > MAX_WORKBOOK_BYTES) throw badRequest('the workbook is too large');
 
   const season = await resolveSeason(deps, input.seasonYear);
   const storedName = `${randomUUID()}${extension}`;

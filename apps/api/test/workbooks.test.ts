@@ -122,6 +122,24 @@ describe('workbook upload and apply', () => {
     expect(downloaded.contentType).toBe('application/octet-stream');
   });
 
+  it('accepts a workbook larger than the JSON body limit', async () => {
+    const { owner, leagueId } = await setup();
+
+    // 200 KB — past the 64 KB cap every non-upload route keeps. A real workbook is
+    // this size; the upload route must not inherit the JSON limit.
+    const form = new FormData();
+    form.append('file', new File([new Uint8Array(200 * 1024)], 'workbook.xlsx'));
+    form.append('season', '2026');
+
+    const response = await owner.postForm<{ originalName: string }>(
+      `/leagues/${String(leagueId)}/admin/workbooks`,
+      form,
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body.originalName).toBe('workbook.xlsx');
+  });
+
   it('rejects a non-workbook file and a missing season', async () => {
     const { owner, leagueId } = await setup();
 
