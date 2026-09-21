@@ -2,10 +2,18 @@ import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { ImporterError } from '../src/deps';
 import { ApiClient, createHarness, signUp, type Harness } from './helpers';
 
 let harness: Harness;
 const jobs: { year: number; apply: boolean }[] = [];
+
+/** Swap per test: the default is the cooperative fake the happy-path tests use. */
+let importer: (job: {
+  readonly leagueId: number;
+  readonly year: number;
+  readonly apply: boolean;
+}) => Promise<unknown> = () => Promise.resolve(makeReport(false));
 
 function makeReport(apply: boolean): Record<string, unknown> {
   return {
@@ -38,10 +46,7 @@ function makeReport(apply: boolean): Record<string, unknown> {
 beforeAll(async () => {
   harness = await createHarness({
     env: { WORKBOOKS_DIR: mkdtempSync(join(tmpdir(), 'gridiron-workbooks-')) },
-    runImporter: (job) => {
-      jobs.push({ year: job.year, apply: job.apply });
-      return Promise.resolve(makeReport(job.apply));
-    },
+    runImporter: (job) => importer(job),
   });
 });
 
@@ -49,8 +54,8 @@ afterAll(async () => {
   await harness.close();
 });
 
-async function setup(): Promise<{ owner: ApiClient; leagueId: number }> {
-  const owner = await signUp(harness.app, 'owner@example.com', 'Commissioner');
+async function setup(email = 'owner@example.com'): Promise<{ owner: ApiClient; leagueId: number }> {
+  const owner = await signUp(harness.app, email, 'Commissioner');
   const created = await owner.post<{ id: number }>('/leagues', { name: 'Grid Iron' });
   return { owner, leagueId: created.body.id };
 }
@@ -64,6 +69,10 @@ function workbookForm(season = '2026'): FormData {
 
 beforeEach(async () => {
   jobs.length = 0;
+  importer = (job) => {
+    jobs.push({ year: job.year, apply: job.apply });
+    return Promise.resolve(makeReport(job.apply));
+  };
   await harness.reset();
 });
 
@@ -169,5 +178,119 @@ describe('workbook upload and apply', () => {
       (await guest.postForm(`/leagues/${String(leagueId)}/admin/workbooks`, workbookForm())).status,
     ).toBe(403);
     expect((await guest.get(`/leagues/${String(leagueId)}/admin/workbooks`)).status).toBe(403);
+  });
+});
+
+describe('the import seam', () => {
+  it("answers 400 with the importer's own sentence when the run fails fatally", async () => {
+    const { owner, leagueId } = await setup();
+    importer = () =>
+      Promise.reject(new ImporterError('no "Scores & Ranking" sheet in this workbook'));
+
+    const response = await owner.postForm<{ error: { code: string; message: string } }>(
+      `/leagues/${String(leagueId)}/admin/workbooks`,
+      workbookForm(),
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body.error.message).toBe('no "Scores & Ranking" sheet in this workbook');
+  });
+
+  it("answers 500 without detail when the failure is not the file's fault", async () => {
+    const { owner, leagueId } = await setup();
+    // A database fault, not an ImporterError: the uploader must not see it dressed up
+    // as their mistake, and the message must not leak internals.
+    importer = () => Promise.reject(new Error('connect ECONNREFUSED 127.0.0.1:5433'));
+
+    const response = await owner.postForm<{ error: { code: string; message: string } }>(
+      `/leagues/${String(leagueId)}/admin/workbooks`,
+      workbookForm(),
+    );
+
+    expect(response.status).toBe(500);
+    expect(response.body.error.message).toBe('internal error');
+  });
+
+  it('refuses a second import for the same league while one is running', async () => {
+    const { owner, leagueId } = await setup();
+    // A completed upload first, so there is a workbook to apply.
+    const uploaded = await owner.postForm<{ id: number }>(
+      `/leagues/${String(leagueId)}/admin/workbooks`,
+      workbookForm(),
+    );
+
+    let release: (() => void) | undefined;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    importer = (job) => {
+      jobs.push({ year: job.year, apply: job.apply });
+      return new Promise((resolve) => {
+        void gate.then(() => {
+          resolve(makeReport(false));
+        });
+      });
+    };
+
+    // An apply is in flight and gated; the upload arriving beside it must be refused
+    // with 409 before it writes anything to disk or the database.
+    const inFlight = owner.post(
+      `/leagues/${String(leagueId)}/admin/workbooks/${String(uploaded.body.id)}/apply`,
+    );
+    await new Promise<void>((resolve) => {
+      setImmediate(resolve);
+    });
+
+    const refused = await owner.postForm(
+      `/leagues/${String(leagueId)}/admin/workbooks`,
+      workbookForm(),
+    );
+    expect(refused.status).toBe(409);
+
+    release?.();
+    expect((await inFlight).status).toBe(200);
+    // The refused upload never reached the importer — the upload, then the gated apply.
+    expect(jobs).toEqual([
+      { year: 2026, apply: false },
+      { year: 2026, apply: true },
+    ]);
+  });
+
+  it('lets two different leagues import at once', async () => {
+    const first = await setup('first@example.com');
+    const second = await setup('second@example.com');
+
+    let release: (() => void) | undefined;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    importer = (job) => {
+      jobs.push({ year: job.year, apply: job.apply });
+      // Only the first league is gated; a second league must be free to run beside it.
+      if (job.leagueId !== first.leagueId) return Promise.resolve(makeReport(false));
+      return new Promise((resolve) => {
+        void gate.then(() => {
+          resolve(makeReport(false));
+        });
+      });
+    };
+
+    const inFlight = first.owner.postForm(
+      `/leagues/${String(first.leagueId)}/admin/workbooks`,
+      workbookForm(),
+    );
+    await new Promise<void>((resolve) => {
+      setImmediate(resolve);
+    });
+
+    // A different league is a different lock — this one must go through.
+    const other = await second.owner.postForm(
+      `/leagues/${String(second.leagueId)}/admin/workbooks`,
+      workbookForm(),
+    );
+    expect(other.status).toBe(200);
+
+    release?.();
+    expect((await inFlight).status).toBe(200);
   });
 });

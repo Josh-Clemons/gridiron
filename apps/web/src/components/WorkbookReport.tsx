@@ -7,7 +7,14 @@ import type { WorkbookReport as WorkbookReportData } from '@gridiron/contracts';
 import { SLOT_LABELS } from '@gridiron/rules';
 
 /** The importer's findings, rendered for the confirmation screen. */
-export function WorkbookReport({ report }: { report: WorkbookReportData | null }) {
+export function WorkbookReport({
+  report,
+  title = 'Latest validation report',
+}: {
+  readonly report: WorkbookReportData | null;
+  /** The per-workbook rows name the file they belong to; this is the old heading. */
+  readonly title?: string;
+}) {
   if (report === null) {
     return <Alert severity="info">No validation report yet — upload a workbook first.</Alert>;
   }
@@ -51,7 +58,7 @@ export function WorkbookReport({ report }: { report: WorkbookReportData | null }
   return (
     <Paper variant="outlined" sx={{ p: { xs: 1.5, sm: 2 } }}>
       <Typography variant="h3" mb={1}>
-        Latest validation report
+        {title}
       </Typography>
       <Typography variant="body2" color="text.secondary" mb={1.5}>
         {report.playerCount} players · {report.picksInSheet} picks · {report.importable} importable

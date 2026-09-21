@@ -116,4 +116,23 @@ describe('pick reminders', () => {
     expect(result.sent).toBe(0);
     expect(harness.mailer.sent).toHaveLength(0);
   });
+
+  it('never emails members of an archived league, whose picks are frozen', async () => {
+    const { owner, leagueId } = await leagueWithTwoAccounts();
+    // Archive it: putPick is now forbidden, so a "finish your picks" email for this
+    // league would be a link to a door that no longer opens.
+    expect(
+      (
+        await owner.post<{ archivedAt: string | null }>(
+          `/leagues/${String(leagueId)}/admin/archive`,
+        )
+      ).body.archivedAt,
+    ).not.toBeNull();
+    harness.setNow(ELEVEN);
+
+    const result = await runReminders(harness.deps);
+
+    expect(result.sent).toBe(0);
+    expect(harness.mailer.sent).toHaveLength(0);
+  });
 });

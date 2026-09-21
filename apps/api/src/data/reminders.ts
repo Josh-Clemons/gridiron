@@ -18,10 +18,11 @@ export interface ReminderTarget {
  * hasn't been reminded yet.
  *
  * Unclaimed roster slots — the spreadsheet players with no account — have no email to
- * reach, so they are naturally excluded by the `users` join. Reminded members are
- * excluded by the `pick_reminders` left join: a reminder is one per member per week,
- * and the row is what guarantees that even a job firing every quarter hour sends it
- * once.
+ * reach, so they are naturally excluded by the `users` join. Archived leagues are
+ * excluded too: their picks are frozen, so a "finish your picks" email for one is a
+ * link to a door that no longer opens. Reminded members are excluded by the
+ * `pick_reminders` left join: a reminder is one per member per week, and the row is
+ * what guarantees that even a job firing every quarter hour sends it once.
  */
 export async function membersNeedingReminder(
   deps: Deps,
@@ -57,7 +58,9 @@ export async function membersNeedingReminder(
         eq(pickReminders.week, week),
       ),
     )
-    .where(and(isNull(leagueMembers.removedAt), isNull(pickReminders.id)))
+    .where(
+      and(isNull(leagueMembers.removedAt), isNull(leagues.archivedAt), isNull(pickReminders.id)),
+    )
     .groupBy(
       leagueMembers.id,
       leagueMembers.leagueId,

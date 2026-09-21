@@ -12,8 +12,8 @@ import {
   updateWorkbookReport,
   type WorkbookRow,
 } from '../data/workbooks';
-import type { Deps } from '../deps';
-import { badRequest, forbidden } from '../http/errors';
+import { ImporterError, type Deps } from '../deps';
+import { badRequest, conflict, forbidden } from '../http/errors';
 
 /**
  * 10 MB — the workbooks are a few hundred KB; anything larger is not a workbook.
@@ -54,13 +54,64 @@ function toWire(row: WorkbookRow): Workbook {
 }
 
 /**
+ * Run the importer for a league, parse its report, and translate a fatal failure.
+ *
+ * The lock is the other half of this: one import at a time per league. The importer
+ * reconciles the sheet against picks already in the database, so two runs racing — a
+ * dry run against an apply, most likely — would each read a state the other is
+ * changing. In-process, because the API runs as one container; a second replica would
+ * move this to the database.
+ */
+const importingLeagues = new Set<number>();
+
+async function withLeagueImport<T>(leagueId: number, run: () => Promise<T>): Promise<T> {
+  if (importingLeagues.has(leagueId)) {
+    throw conflict(
+      'another import is already running for this league — try again once it finishes',
+    );
+  }
+  importingLeagues.add(leagueId);
+  try {
+    return await run();
+  } finally {
+    importingLeagues.delete(leagueId);
+  }
+}
+
+/**
+ * Run the importer once and parse its report into the wire shape.
+ *
+ * A fatal importer failure (`ImporterError`) is the uploader's file talking — a drifted
+ * layout, an unknown name — so it becomes a 400 carrying the sentence the importer
+ * wrote. Anything else — a database fault, a report that does not match the contract —
+ * is a genuine 500 and propagates untouched rather than being dressed up as the
+ * user's mistake.
+ */
+async function importReport(
+  deps: Deps,
+  job: {
+    readonly file: string;
+    readonly leagueId: number;
+    readonly year: number;
+    readonly apply: boolean;
+  },
+) {
+  try {
+    return workbookReportSchema.parse(await deps.runImporter(job));
+  } catch (error) {
+    if (error instanceof ImporterError) throw badRequest(error.message);
+    throw error;
+  }
+}
+
+/**
  * Store an uploaded workbook and run a dry-run validation against it.
  *
  * The write is two-phase: the bytes land on disk and the row is recorded, then the
  * importer runs as a dry run and its report is stored. A report full of rejections or
  * conflicts is still a success — those are the findings the confirmation screen shows.
- * A fatal failure (a drifted layout, an unknown name) throws, and the row stays with a
- * null report so the upload itself is not lost.
+ * A fatal failure (a drifted layout, an unknown name) throws with the importer's own
+ * sentence, and the row stays with a null report so the upload itself is not lost.
  */
 export async function uploadWorkbook(
   deps: Deps,
@@ -74,38 +125,37 @@ export async function uploadWorkbook(
   if (input.bytes.byteLength === 0) throw badRequest('the workbook is empty');
   if (input.bytes.byteLength > MAX_WORKBOOK_BYTES) throw badRequest('the workbook is too large');
 
-  const season = await resolveSeason(deps, input.seasonYear);
-  const storedName = `${randomUUID()}${extension}`;
-  const directory = join(deps.config.workbooksDir, String(actor.leagueId));
-  await mkdir(directory, { recursive: true });
-  const file = join(directory, storedName);
-  await writeFile(file, input.bytes);
+  // The lock wraps the whole write, not just the importer run: a league mid-import
+  // refuses a second upload before anything lands on disk, so a 409 never leaves a
+  // half-recorded workbook behind.
+  return withLeagueImport(actor.leagueId, async () => {
+    const season = await resolveSeason(deps, input.seasonYear);
+    const storedName = `${randomUUID()}${extension}`;
+    const directory = join(deps.config.workbooksDir, String(actor.leagueId));
+    await mkdir(directory, { recursive: true });
+    const file = join(directory, storedName);
+    await writeFile(file, input.bytes);
 
-  const row = await insertWorkbook(deps, {
-    leagueId: actor.leagueId,
-    memberId: actor.memberId,
-    seasonId: season.id,
-    originalName: input.originalName,
-    storedName,
-  });
+    const row = await insertWorkbook(deps, {
+      leagueId: actor.leagueId,
+      memberId: actor.memberId,
+      seasonId: season.id,
+      originalName: input.originalName,
+      storedName,
+    });
 
-  try {
-    const report = await deps.runImporter({
+    const report = await importReport(deps, {
       file,
       leagueId: actor.leagueId,
       year: season.year,
       apply: false,
     });
-    const parsed = workbookReportSchema.parse(report);
     const updated = await updateWorkbookReport(deps, actor.leagueId, row.id, {
-      report: parsed,
+      report,
       appliedAt: null,
     });
     return toWire(updated);
-  } catch (error) {
-    if (error instanceof Error) throw badRequest(error.message);
-    throw error;
-  }
+  });
 }
 
 /** Re-run the importer with `--apply` — the confirmation step. */
@@ -117,18 +167,19 @@ export async function applyWorkbook(
   assertOwner(actor);
   const row = await requireWorkbook(deps, actor.leagueId, workbookId);
 
-  const report = await deps.runImporter({
-    file: filePath(deps, row),
-    leagueId: actor.leagueId,
-    year: row.seasonYear,
-    apply: true,
+  return withLeagueImport(actor.leagueId, async () => {
+    const report = await importReport(deps, {
+      file: filePath(deps, row),
+      leagueId: actor.leagueId,
+      year: row.seasonYear,
+      apply: true,
+    });
+    const updated = await updateWorkbookReport(deps, actor.leagueId, workbookId, {
+      report,
+      appliedAt: deps.now(),
+    });
+    return toWire(updated);
   });
-  const parsed = workbookReportSchema.parse(report);
-  const updated = await updateWorkbookReport(deps, actor.leagueId, workbookId, {
-    report: parsed,
-    appliedAt: deps.now(),
-  });
-  return toWire(updated);
 }
 
 export async function listWorkbookUploads(
