@@ -5,12 +5,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { useState } from 'react';
 import { correctMemberPick } from '../api/mutations';
-import {
-  adminMembersQuery,
-  correctionsQuery,
-  seasonsQuery,
-  teamsQuery,
-} from '../api/queries';
+import { adminMembersQuery, correctionsQuery, seasonsQuery, teamsQuery } from '../api/queries';
 import { errorMessage } from '../components/AuthLayout';
 import { CommissionerCorrection } from '../components/CommissionerCorrection';
 import { useToast } from '../components/Toast';
