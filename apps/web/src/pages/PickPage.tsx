@@ -142,7 +142,7 @@ export function PickPage() {
           teams={teamsByCode}
           now={now}
           onSelect={(slot, teamId) => {
-            setPick.mutate({ slot, teamId });
+            setPick.mutate({ slot, teamId, teamName: teamsByCode.get(teamId)?.name ?? teamId });
           }}
           onClear={(slot) => {
             clearPick.mutate(slot);

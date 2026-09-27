@@ -13,6 +13,7 @@ import {
   type Workbook,
   workbookSchema,
 } from '@gridiron/contracts';
+import { SLOT_LABELS } from '@gridiron/rules';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../components/Toast';
 import { reasonForWire } from '../lib/rejections';
@@ -112,6 +113,8 @@ export const correctMemberPick = (
 interface PickTarget {
   readonly slot: Slot;
   readonly teamId: string;
+  /** Display name for the success toast — members think of their team by name, not code. */
+  readonly teamName: string;
 }
 
 const pickPath = (leagueId: number, season: SeasonArg, week: number, slot: Slot): string =>
@@ -201,7 +204,7 @@ export function usePickMutations(leagueId: number, season: SeasonArg, week: numb
       if (context?.previous !== undefined) queryClient.setQueryData(boardKey, context.previous);
       report(error);
     },
-    onSuccess: (response: PutPickResponse) => {
+    onSuccess: (response: PutPickResponse, variables: PickTarget) => {
       // The server's row replaces the optimistic one — same pick, but with its real
       // source, lock state and timestamp, and the week score it computed alongside.
       queryClient.setQueryData<Board>(boardKey, (board) =>
@@ -216,6 +219,7 @@ export function usePickMutations(leagueId: number, season: SeasonArg, week: numb
               weekScore: response.weekScore,
             },
       );
+      toast.show(`${variables.teamName} saved to ${SLOT_LABELS[variables.slot]}`, 'success');
     },
     onSettled: invalidateDerived,
   });
@@ -237,10 +241,11 @@ export function usePickMutations(leagueId: number, season: SeasonArg, week: numb
       if (context?.previous !== undefined) queryClient.setQueryData(boardKey, context.previous);
       report(error);
     },
-    onSuccess: (response) => {
+    onSuccess: (response, slot: Slot) => {
       queryClient.setQueryData<Board>(boardKey, (board) =>
         board === undefined ? board : { ...board, weekScore: response.weekScore },
       );
+      toast.show(`${SLOT_LABELS[slot]} pick cleared`);
     },
     onSettled: invalidateDerived,
   });
