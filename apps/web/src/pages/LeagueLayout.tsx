@@ -51,6 +51,28 @@ export function LeagueLayout() {
   // active, so the test is a path segment match rather than an exact suffix.
   const tab = TABS.find((name) => location.pathname.includes(`/${name}`)) ?? 'picks';
 
+  /*
+   * Every hook runs before the pending/error early returns below. The two at the
+   * end here (openWorkbooks, steps) used to sit after them, which meant the first
+   * render — while the league is still pending — ran fewer hooks than the second,
+   * and React threw "rendered more hooks than during the previous render" the
+   * moment the data arrived. Hook order is a layout invariant, not a style choice.
+   */
+  // Commissioners are the league's owner plus platform admins; the extra tour
+  // section and the Commissioner tab both follow this one predicate. While the
+  // league is still loading there is no role yet, so the member steps stand in.
+  const commissioner = league.data?.role === 'owner' || user.isAdmin;
+  const openWorkbooks = useCallback(() => {
+    void navigate({ to: '/leagues/$leagueId/admin/workbooks', params: { leagueId } });
+  }, [leagueId, navigate]);
+  const steps = useMemo(
+    () =>
+      commissioner
+        ? [...memberTourSteps, ...commissionerTourSteps(openWorkbooks)]
+        : memberTourSteps,
+    [commissioner, openWorkbooks],
+  );
+
   if (league.isPending) {
     return (
       <Box display="flex" justifyContent="center" py={6}>
@@ -73,20 +95,6 @@ export function LeagueLayout() {
         toast.show(`Invite code: ${league.data.inviteCode}`, 'info');
       });
   };
-
-  // Commissioners are the league's owner plus platform admins; the extra tour
-  // section and the Commissioner tab both follow this one predicate.
-  const commissioner = league.data.role === 'owner' || user.isAdmin;
-  const openWorkbooks = useCallback(() => {
-    void navigate({ to: '/leagues/$leagueId/admin/workbooks', params: { leagueId } });
-  }, [leagueId, navigate]);
-  const steps = useMemo(
-    () =>
-      commissioner
-        ? [...memberTourSteps, ...commissionerTourSteps(openWorkbooks)]
-        : memberTourSteps,
-    [commissioner, openWorkbooks],
-  );
 
   return (
     <Stack spacing={2}>

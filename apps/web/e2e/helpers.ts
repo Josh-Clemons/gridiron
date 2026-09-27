@@ -62,6 +62,21 @@ export async function createLeagueThroughUi(page: Page, name: string): Promise<n
   return Number(match?.[1]);
 }
 
+/**
+ * Send the first-visit guided tour on its way.
+ *
+ * The tour is modal - on a phone it is the whole screen - so a test that means to
+ * interact with the league page beneath it dismisses it first. Every e2e user is a
+ * fresh account, so the tour always shows on their first league page; skipping it
+ * also marks it seen, which is why later reloads in the same test never see it again.
+ */
+export async function dismissTour(page: Page): Promise<void> {
+  const skip = page.getByRole('button', { name: 'Skip', exact: true });
+  await expect(skip).toBeVisible({ timeout: 10_000 });
+  await skip.click();
+  await expect(page.getByText(/Step \d+ of \d+/u)).toBeHidden();
+}
+
 async function getJson(page: Page, path: string): Promise<unknown> {
   const response = await page.request.get(`/api${path}`);
   expect(response.ok(), `GET ${path} → ${String(response.status())}`).toBe(true);

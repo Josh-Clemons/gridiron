@@ -6,6 +6,7 @@
 import { expect, test } from '@playwright/test';
 import {
   createLeagueThroughUi,
+  dismissTour,
   fetchBoard,
   fetchLeague,
   fetchTeamNames,
@@ -38,6 +39,7 @@ test('register, create a league, admit a second player, and make a week of picks
 
   const commissioner = await registerThroughUi(page, 'commish');
   const leagueId = await createLeagueThroughUi(page, `E2E ${String(Date.now())}`);
+  await dismissTour(page);
 
   const league = await fetchLeague(page, leagueId);
   await expect(page.getByRole('heading', { name: league.name })).toBeVisible();
@@ -60,8 +62,10 @@ test('register, create a league, admit a second player, and make a week of picks
       await expect(joiner.getByRole('heading', { name: league.name })).toBeVisible();
       await joiner.getByRole('button', { name: 'Join league' }).click();
 
-      // Landing on the league's own page is the join succeeding.
+      // Landing on the league's own page is the join succeeding. The joiner is a
+      // fresh account too, so their first league page shows them the tour first.
       await expect(joiner).toHaveURL(new RegExp(`/leagues/${String(leagueId)}`, 'u'));
+      await dismissTour(joiner);
       await expect(joiner.getByText(league.inviteCode, { exact: true })).toBeVisible();
     } finally {
       await joinerContext.close();
@@ -140,6 +144,7 @@ test('register, create a league, admit a second player, and make a week of picks
 test('the history grid and the honours board are reachable from the tabs', async ({ page }) => {
   const user = await registerThroughUi(page, 'archive');
   const leagueId = await createLeagueThroughUi(page, `E2E Archive ${String(Date.now())}`);
+  await dismissTour(page);
 
   await page.getByRole('tab', { name: 'History' }).click();
   await expect(page).toHaveURL(new RegExp(`/leagues/${String(leagueId)}/history`, 'u'));
@@ -166,6 +171,7 @@ test('an illegal team is greyed out with its reason, not rejected after the clic
 }) => {
   await registerThroughUi(page, 'rules');
   const leagueId = await createLeagueThroughUi(page, `E2E Rules ${String(Date.now())}`);
+  await dismissTour(page);
 
   const board = await fetchBoard(page, leagueId);
   const names = await fetchTeamNames(page);
