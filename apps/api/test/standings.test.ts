@@ -175,7 +175,7 @@ describe('standings', () => {
 });
 
 describe('standings CSV', () => {
-  it('exports ranked season totals as CSV', async () => {
+  it('exports ranked season totals with per-week picks and points', async () => {
     const { owner, leagueId } = await twoPlayerLeague();
     await owner.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'KC' });
     await finish(2026, 1, { KC: 'KC', BUF: 'BUF', DAL: 'DAL', SF: 'SF' });
@@ -185,7 +185,61 @@ describe('standings CSV', () => {
     expect(csv.contentType).toContain('text/csv');
 
     const text = new TextDecoder().decode(csv.body);
-    expect(text).toBe('Rank,Player,Season Points\r\n1,Owner,5\r\n2,Guest,0\r\n');
+    const [header, ownerRow, guestRow] = text.trimEnd().split('\r\n');
+
+    // 18 weeks × (5, 3, 1 pick columns + one points column) after the three fixed ones.
+    const columns = header?.split(',');
+    expect(columns?.slice(0, 3)).toEqual(['Rank', 'Player', 'Season Points']);
+    expect(columns?.slice(3, 7)).toEqual(['5', '3', '1', 'W1']);
+    expect(columns?.slice(7, 11)).toEqual(['5', '3', '1', 'W2']);
+    expect(columns).toHaveLength(3 + 18 * 4);
+    expect(columns?.at(-1)).toBe('W18');
+
+    // No game has kicked off yet, so every pick column is blank; the scored points
+    // still appear. Owner took KC (5 points) in week 1, guest took nothing.
+    expect(ownerRow?.split(',')).toEqual([
+      '1',
+      'Owner',
+      '5',
+      '',
+      '',
+      '',
+      '5',
+      ...Array.from({ length: 17 }, () => ['', '', '', '0']).flat(),
+    ]);
+    expect(guestRow?.split(',')).toEqual([
+      '2',
+      'Guest',
+      '0',
+      ...Array.from({ length: 18 }, () => ['', '', '', '0']).flat(),
+    ]);
+  });
+
+  it("includes each member's locked picks once their games have kicked off", async () => {
+    const { owner, guest, leagueId } = await twoPlayerLeague();
+    await owner.put(`/leagues/${String(leagueId)}/picks/1/win`, { teamId: 'KC' });
+    await guest.put(`/leagues/${String(leagueId)}/picks/1/place`, { teamId: 'NYJ' });
+    await finish(2026, 1, { KC: 'KC', BUF: 'BUF', DAL: 'DAL', SF: 'SF' });
+
+    // Before kickoff the pick columns are blank — the totals are all that travel.
+    const early = new TextDecoder().decode(
+      (await owner.getRaw(`/leagues/${String(leagueId)}/standings.csv`)).body,
+    );
+    expect(early.trimEnd().split('\r\n')[1]?.split(',')[3]).toBe('');
+
+    // After kickoff, the picks lock and appear under 5/3/1.
+    harness.setNow(new Date('2026-09-14T12:00:00Z'));
+    const text = new TextDecoder().decode(
+      (await owner.getRaw(`/leagues/${String(leagueId)}/standings.csv`)).body,
+    );
+    const rows = text.trimEnd().split('\r\n');
+    const ownerRow = rows.find((row) => row.startsWith('1,Owner'));
+    const guestRow = rows.find((row) => row.startsWith('2,Guest'));
+
+    // Win (5) in week 1 for the owner; Place (3) for the guest.
+    expect(ownerRow?.split(',')[3]).toBe('KC');
+    expect(ownerRow?.split(',')[6]).toBe('5');
+    expect(guestRow?.split(',')[4]).toBe('NYJ');
   });
 
   it('quotes a roster label that contains a comma', async () => {

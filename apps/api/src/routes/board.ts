@@ -132,9 +132,10 @@ export function boardRoutes(deps: Deps) {
 
   /** The same standings as CSV, for a spreadsheet.
    *
-   * Every member can download it — standings are visible to the whole league, and the
-   * file ships exactly the integers the table on screen shows, never a pick. It is
-   * ranked by season points and answers with a filename that carries the season.
+   * Every member can download it — standings are visible to the whole league. Each row
+   * carries the season total, each week's points, and each member's locked picks; a
+   * pick whose game has not kicked off never appears, exactly as on the standings
+   * page. Ranked by season points; the filename carries the season.
    */
   app.get('/leagues/:leagueId/standings.csv', async (c) => {
     const { leagueId } = readParams(c, leagueParamSchema);
@@ -159,13 +160,21 @@ export function boardRoutes(deps: Deps) {
       }),
     );
 
-    return new Response(standingsCsv(rows), {
-      status: 200,
-      headers: {
-        'content-type': 'text/csv; charset=utf-8',
-        'content-disposition': `attachment; filename="standings-${String(season.year)}.csv"`,
+    return new Response(
+      standingsCsv(rows, {
+        picks,
+        games,
+        weekCount: season.weekCount,
+        now: deps.now(),
+      }),
+      {
+        status: 200,
+        headers: {
+          'content-type': 'text/csv; charset=utf-8',
+          'content-disposition': `attachment; filename="standings-${String(season.year)}.csv"`,
+        },
       },
-    });
+    );
   });
 
   return app;

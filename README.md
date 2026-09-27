@@ -105,7 +105,7 @@ GET    /leagues/:id/board?week=N      one week: games, your picks, everyone's to
 PUT    /leagues/:id/picks/:week/:slot { "teamId": "KC" }
 DELETE /leagues/:id/picks/:week/:slot
 GET    /leagues/:id/standings?week=N
-GET    /leagues/:id/standings.csv?season=YYYY   the same standings as CSV
+GET    /leagues/:id/standings.csv?season=YYYY   totals, weekly points, and locked picks as CSV
 GET    /leagues/:id/standings?week=N  ranks plus each member's locked picks
 GET    /leagues/:id/usage             teams left in each of Win/Place/Show
 GET    /teams                         the 32 teams and their names, no session needed
