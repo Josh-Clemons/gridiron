@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 import { scoreSeason, type Game } from '@gridiron/rules';
 import type { Membership } from '../data/leagues';
-import { listMembers } from '../data/leagues';
+import { isCommissioner, listMembers } from '../data/leagues';
 import { loadGames, loadLeaguePicks, type PickRow } from '../data/picks';
 import { resolveSeason } from '../data/seasons';
 import type { TeamRow } from '../data/teams';
@@ -19,7 +19,7 @@ const HISTORY_SHEET = 'Selection History';
  * offset it relies on, so a drift would be caught there, not silently reproduced here.
  */
 function assertOwner(actor: Membership): void {
-  if (actor.role !== 'owner') throw forbidden('only the owner can do that');
+  if (!isCommissioner(actor)) throw forbidden('only the owner can do that');
 }
 
 /**

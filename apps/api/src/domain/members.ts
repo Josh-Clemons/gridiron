@@ -1,4 +1,5 @@
 import type { AdminMember, AdminMemberResponse, AdminMembersResponse } from '@gridiron/contracts';
+import { isCommissioner } from '../data/leagues';
 import type { Membership } from '../data/leagues';
 import {
   listManagedMembers,
@@ -12,7 +13,7 @@ import type { Deps } from '../deps';
 import { conflict, forbidden } from '../http/errors';
 
 function assertOwner(actor: Membership): void {
-  if (actor.role !== 'owner') throw forbidden('only the owner can do that');
+  if (!isCommissioner(actor)) throw forbidden('only the owner can do that');
   if (actor.archivedAt !== null) throw forbidden('this league is archived');
 }
 

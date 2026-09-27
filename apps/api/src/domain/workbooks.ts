@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { Workbook, WorkbooksResponse } from '@gridiron/contracts';
 import { workbookReportSchema } from '@gridiron/contracts';
+import { isCommissioner } from '../data/leagues';
 import type { Membership } from '../data/leagues';
 import { resolveSeason } from '../data/seasons';
 import {
@@ -26,7 +27,7 @@ export const MAX_WORKBOOK_BYTES = 10 * 1024 * 1024;
 const EXTENSIONS = new Set(['.xlsx', '.xls']);
 
 function assertOwner(actor: Membership): void {
-  if (actor.role !== 'owner') throw forbidden('only the owner can do that');
+  if (!isCommissioner(actor)) throw forbidden('only the owner can do that');
 }
 
 function extensionOf(originalName: string): string | undefined {

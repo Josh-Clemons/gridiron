@@ -1,5 +1,5 @@
 import type { League, RegenerateInviteResponse } from '@gridiron/contracts';
-import { countMembers } from '../data/leagues';
+import { countMembers, isCommissioner } from '../data/leagues';
 import type { Membership } from '../data/leagues';
 import {
   regenerateInviteCode,
@@ -11,7 +11,7 @@ import type { Deps } from '../deps';
 import { forbidden } from '../http/errors';
 
 function assertOwner(actor: Membership): void {
-  if (actor.role !== 'owner') throw forbidden('only the owner can do that');
+  if (!isCommissioner(actor)) throw forbidden('only the owner can do that');
 }
 
 function toWireLeague(row: LeagueAdminRow, actor: Membership, memberCount: number): League {

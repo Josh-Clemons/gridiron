@@ -7,6 +7,7 @@ import type {
 import { toWireRejection } from '@gridiron/contracts';
 import { validatePick, type Slot } from '@gridiron/rules';
 import { listCorrections, recordCorrection, type CorrectionRow } from '../data/corrections';
+import { isCommissioner } from '../data/leagues';
 import type { MemberRow, Membership } from '../data/leagues';
 import {
   loadGames,
@@ -47,7 +48,7 @@ export async function correctPick(
   teamCode: string | null,
   reason: string,
 ): Promise<CorrectPickResponse> {
-  if (actor.role !== 'owner') throw forbidden('only the owner can do that');
+  if (!isCommissioner(actor)) throw forbidden('only the owner can do that');
   if (actor.archivedAt !== null) throw forbidden('this league is archived');
 
   const catalog = await deps.teams();
@@ -168,7 +169,7 @@ export async function getMemberPicks(
   season: SeasonRow,
   week: number,
 ): Promise<MemberPicks> {
-  if (actor.role !== 'owner') throw forbidden('only the owner can do that');
+  if (!isCommissioner(actor)) throw forbidden('only the owner can do that');
 
   const now = deps.now();
   const [weekGames, seasonPicks] = await Promise.all([

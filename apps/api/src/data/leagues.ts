@@ -1,5 +1,5 @@
 import { randomInt } from 'node:crypto';
-import { leagueMembers, leagues, picks } from '@gridiron/schema';
+import { leagueMembers, leagues, picks, users } from '@gridiron/schema';
 import { and, count, eq, isNull, sql } from 'drizzle-orm';
 import type { Deps } from '../deps';
 import { conflict, forbidden, notFound } from '../http/errors';
@@ -23,6 +23,12 @@ export interface Membership {
   /** The member's roster label — what the correction log records as "who acted". */
   readonly displayName: string;
   readonly role: 'owner' | 'member';
+  /**
+   * Whether the underlying account is a platform admin, who may use the owner's
+   * tools in any league they belong to. Belonging is still required — an admin
+   * never bypasses the membership gate.
+   */
+  readonly isAdmin: boolean;
   readonly leagueName: string;
   readonly inviteCode: string;
   readonly createdAt: Date;
@@ -48,6 +54,7 @@ export async function requireMembership(
       memberId: leagueMembers.id,
       displayName: leagueMembers.displayName,
       role: leagueMembers.role,
+      isAdmin: users.isAdmin,
       leagueName: leagues.name,
       inviteCode: leagues.inviteCode,
       createdAt: leagues.createdAt,
@@ -55,6 +62,7 @@ export async function requireMembership(
     })
     .from(leagueMembers)
     .innerJoin(leagues, eq(leagues.id, leagueMembers.leagueId))
+    .innerJoin(users, eq(users.id, leagueMembers.userId))
     .where(
       and(
         eq(leagueMembers.leagueId, leagueId),
@@ -85,8 +93,19 @@ export async function countMembers(deps: Deps, leagueId: number): Promise<number
  * is told nothing exists at the first, and a plain member is turned away at the
  * second — by then the league's existence is no secret to them.
  */
+/**
+ * Who may use the commissioner's tools: the league's owner, or a platform admin.
+ *
+ * An admin gets owner powers in any league they belong to, but never bypasses the
+ * membership gate — the correction log still records them as a real member of the
+ * league they are acting on.
+ */
+export function isCommissioner(membership: Pick<Membership, 'role' | 'isAdmin'>): boolean {
+  return membership.role === 'owner' || membership.isAdmin;
+}
+
 export function requireOwner(membership: Membership): Membership {
-  if (membership.role !== 'owner') throw forbidden('only the owner can do that');
+  if (!isCommissioner(membership)) throw forbidden('only the owner can do that');
   return membership;
 }
 
@@ -138,6 +157,7 @@ export function listMemberships(deps: Deps, userId: number): Promise<Membership[
       memberId: leagueMembers.id,
       displayName: leagueMembers.displayName,
       role: leagueMembers.role,
+      isAdmin: users.isAdmin,
       leagueName: leagues.name,
       inviteCode: leagues.inviteCode,
       createdAt: leagues.createdAt,
@@ -145,6 +165,7 @@ export function listMemberships(deps: Deps, userId: number): Promise<Membership[
     })
     .from(leagueMembers)
     .innerJoin(leagues, eq(leagues.id, leagueMembers.leagueId))
+    .innerJoin(users, eq(users.id, leagueMembers.userId))
     .where(and(eq(leagueMembers.userId, userId), isNull(leagueMembers.removedAt)))
     .orderBy(leagues.name);
 }
@@ -159,6 +180,7 @@ export function listMemberships(deps: Deps, userId: number): Promise<Membership[
 export async function createLeague(
   deps: Deps,
   userId: number,
+  isAdmin: boolean,
   name: string,
   displayName: string,
 ): Promise<Membership> {
@@ -183,6 +205,7 @@ export async function createLeague(
           memberId: member.id,
           displayName: member.displayName,
           role: 'owner' as const,
+          isAdmin,
           leagueName: league.name,
           inviteCode: league.inviteCode,
           createdAt: league.createdAt,
@@ -273,6 +296,7 @@ export interface JoinInput {
 export async function joinLeague(
   deps: Deps,
   userId: number,
+  isAdmin: boolean,
   accountName: string,
   input: JoinInput,
 ): Promise<Membership> {
@@ -309,6 +333,7 @@ export async function joinLeague(
     memberId,
     displayName,
     role,
+    isAdmin,
     leagueName: league.name,
     inviteCode: league.inviteCode,
     createdAt: league.createdAt,

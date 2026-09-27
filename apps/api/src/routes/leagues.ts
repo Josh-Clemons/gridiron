@@ -51,7 +51,7 @@ export function leagueRoutes(deps: Deps) {
   app.post('/leagues', async (c) => {
     const user = c.get('user');
     const body = await readJson(c, createLeagueRequestSchema);
-    const membership = await createLeague(deps, user.id, body.name, user.displayName);
+    const membership = await createLeague(deps, user.id, user.isAdmin, body.name, user.displayName);
     return c.json(toLeague(membership, 1), 201);
   });
 
@@ -99,7 +99,7 @@ export function leagueRoutes(deps: Deps) {
   app.post('/leagues/join', async (c) => {
     const user = c.get('user');
     const body = await readJson(c, joinLeagueRequestSchema);
-    const membership = await joinLeague(deps, user.id, user.displayName, {
+    const membership = await joinLeague(deps, user.id, user.isAdmin, user.displayName, {
       inviteCode: body.inviteCode,
       ...(body.claimMemberId === undefined ? {} : { claimMemberId: body.claimMemberId }),
       ...(body.displayName === undefined ? {} : { displayName: body.displayName }),
