@@ -9,7 +9,11 @@ import {
 import { sessionQuery } from './api/queries';
 import { AppShell } from './components/AppShell';
 import { ChampionsPage } from './pages/ChampionsPage';
+import { CommissionerLeaguePage } from './pages/CommissionerLeaguePage';
 import { CommissionerPage } from './pages/CommissionerPage';
+import { CommissionerPicksPage } from './pages/CommissionerPicksPage';
+import { CommissionerRosterPage } from './pages/CommissionerRosterPage';
+import { CommissionerWorkbooksPage } from './pages/CommissionerWorkbooksPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { JoinPage } from './pages/JoinPage';
@@ -201,10 +205,49 @@ const championsRoute = createRoute({
   component: ChampionsPage,
 });
 
+/**
+ * The commissioner's tools, one section per route. Splitting them this way keeps
+ * each page's data fetching to itself — the audit trail query only runs when the
+ * Picks tab is open, the workbook list only when Workbooks is.
+ */
 const commissionerRoute = createRoute({
   getParentRoute: () => leagueRoute,
   path: '/admin',
   component: CommissionerPage,
+});
+
+const commissionerIndexRoute = createRoute({
+  getParentRoute: () => commissionerRoute,
+  path: '/',
+  beforeLoad: ({ params }) => {
+    // The bare `/admin` URL lands on the workbooks, where in-season work happens.
+    // oxlint-disable-next-line typescript/only-throw-error
+    throw redirect({ to: '/leagues/$leagueId/admin/workbooks', params });
+  },
+});
+
+const commissionerWorkbooksRoute = createRoute({
+  getParentRoute: () => commissionerRoute,
+  path: '/workbooks',
+  component: CommissionerWorkbooksPage,
+});
+
+const commissionerPicksRoute = createRoute({
+  getParentRoute: () => commissionerRoute,
+  path: '/picks',
+  component: CommissionerPicksPage,
+});
+
+const commissionerRosterRoute = createRoute({
+  getParentRoute: () => commissionerRoute,
+  path: '/roster',
+  component: CommissionerRosterPage,
+});
+
+const commissionerLeagueRoute = createRoute({
+  getParentRoute: () => commissionerRoute,
+  path: '/league',
+  component: CommissionerLeaguePage,
 });
 
 export const routeTree = rootRoute.addChildren([
@@ -223,7 +266,13 @@ export const routeTree = rootRoute.addChildren([
       standingsRoute,
       historyRoute,
       championsRoute,
-      commissionerRoute,
+      commissionerRoute.addChildren([
+        commissionerIndexRoute,
+        commissionerWorkbooksRoute,
+        commissionerPicksRoute,
+        commissionerRosterRoute,
+        commissionerLeagueRoute,
+      ]),
     ]),
   ]),
 ]);

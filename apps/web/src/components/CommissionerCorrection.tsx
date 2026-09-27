@@ -3,8 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from '@mui/material/CircularProgress';
-import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
@@ -17,6 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { memberPicksQuery } from '../api/queries';
 import { errorMessage } from './AuthLayout';
+import { CorrectionHistory } from './CorrectionHistory';
 
 const SLOTS: readonly Slot[] = ['win', 'place', 'show'];
 
@@ -269,46 +268,5 @@ export function CommissionerCorrection({
         />
       </Paper>
     </Stack>
-  );
-}
-
-function CorrectionHistory({
-  corrections,
-  loading,
-  error,
-}: {
-  readonly corrections: readonly Correction[];
-  readonly loading: boolean;
-  readonly error: unknown;
-}) {
-  if (error !== undefined) return <Alert severity="error">{errorMessage(error)}</Alert>;
-  if (loading) return <CircularProgress size={24} />;
-  if (corrections.length === 0) {
-    return <Typography color="text.secondary">No corrections recorded for this season.</Typography>;
-  }
-  return (
-    <Stack spacing={1.25} divider={<Divider />}>
-      {corrections.map((correction) => (
-        <CorrectionRow key={correction.id} correction={correction} />
-      ))}
-    </Stack>
-  );
-}
-
-function CorrectionRow({ correction }: { correction: Correction }) {
-  return (
-    <Box>
-      <Typography variant="body2" fontWeight={600}>
-        {correction.targetName} · Week {correction.week} · {SLOT_LABELS[correction.slot]}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        {correction.fromTeamId ?? 'Empty'} → {correction.toTeamId ?? 'Cleared'} · by{' '}
-        {correction.actorName}
-      </Typography>
-      <Typography variant="body2">{correction.reason}</Typography>
-      <Typography variant="caption" color="text.secondary">
-        {new Date(correction.createdAt).toLocaleString()}
-      </Typography>
-    </Box>
   );
 }

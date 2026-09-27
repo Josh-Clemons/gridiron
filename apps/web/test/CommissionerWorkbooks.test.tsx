@@ -106,7 +106,7 @@ describe('CommissionerWorkbooks', () => {
     await user.click(reportButtons[0]!);
     await screen.findByText('Validation report');
     // The older workbook's report is the clean one — one clean upload for each.
-    expect(screen.getByText(/Clean — everything in the workbook would import/)).toBeVisible();
+    expect(screen.getByText(/Clean — everything in the workbook would import/u)).toBeVisible();
   });
 
   it('confirms before applying, and restates what validation found', async () => {

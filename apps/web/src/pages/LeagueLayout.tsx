@@ -24,7 +24,9 @@ export function LeagueLayout() {
   const location = useLocation();
   const toast = useToast();
 
-  const tab = TABS.find((name) => location.pathname.endsWith(`/${name}`)) ?? 'picks';
+  // Sub-routes (`/admin/workbooks`, `/admin/picks`, …) must keep the Commissioner tab
+  // active, so the test is a path segment match rather than an exact suffix.
+  const tab = TABS.find((name) => location.pathname.includes(`/${name}`)) ?? 'picks';
 
   if (league.isPending) {
     return (
