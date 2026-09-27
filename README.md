@@ -10,9 +10,10 @@ locks at its own kickoff.
 
 This replaces the earlier `gridiron-react` / `gridiron_java` pair. The full phased plan
 lives at `~/.claude/plans/rustling-floating-pike.md` — **all phases (0–9) are shipped
-and live in production.** The plan file is now historical record; the only known
-follow-up is importer error-path testing (the importer has never been run against a
-workbook containing errors).
+and live in production.** The plan file is now historical record; the known follow-ups are
+importer error-path testing (the importer has never been run against a
+workbook containing errors) and the Mark Swan operator link — its design is settled
+in [`docs/mark-operator-link.md`](docs/mark-operator-link.md), not yet built.
 
 ## Layout
 
