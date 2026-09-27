@@ -13,6 +13,7 @@ export interface SessionUser {
   readonly email: string;
   readonly displayName: string;
   readonly isAdmin: boolean;
+  readonly hasSeenTour: boolean;
   readonly createdAt: Date;
 }
 
@@ -59,6 +60,7 @@ export async function findSession(deps: Deps, token: string): Promise<ActiveSess
       email: users.email,
       displayName: users.displayName,
       isAdmin: users.isAdmin,
+      hasSeenTour: users.hasSeenTour,
       createdAt: users.createdAt,
     })
     .from(sessions)
@@ -82,6 +84,7 @@ export async function findSession(deps: Deps, token: string): Promise<ActiveSess
       email: row.email,
       displayName: row.displayName,
       isAdmin: row.isAdmin,
+      hasSeenTour: row.hasSeenTour,
       createdAt: row.createdAt,
     },
   };

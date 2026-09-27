@@ -12,8 +12,9 @@ This replaces the earlier `gridiron-react` / `gridiron_java` pair. The full phas
 lives at `~/.claude/plans/rustling-floating-pike.md` — **all phases (0–9) are shipped
 and live in production.** The plan file is now historical record; the known follow-ups are
 importer error-path testing (the importer has never been run against a
-workbook containing errors) and the Mark Swan operator link — its design is settled
-in [`docs/mark-operator-link.md`](docs/mark-operator-link.md), not yet built.
+workbook containing errors) and promoting Mark Swan to commissioner once his account
+exists — the guided tour and the platform-admin role it needs are built
+(see [`docs/mark-operator-link.md`](docs/mark-operator-link.md)).
 
 ## Layout
 

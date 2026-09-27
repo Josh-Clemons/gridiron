@@ -43,6 +43,13 @@
       "when": 1789788282802,
       "tag": "0005_short_spencer_smythe",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790545605216,
+      "tag": "0006_wooden_malcolm_colcord",
+      "breakpoints": true
     }
   ]
 }

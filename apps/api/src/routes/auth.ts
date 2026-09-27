@@ -5,6 +5,7 @@ import {
   loginRequestSchema,
   registerRequestSchema,
   resetPasswordRequestSchema,
+  tourSeenRequestSchema,
   updateProfileRequestSchema,
   type SessionResponse,
   type User,
@@ -39,6 +40,7 @@ function toUser(user: SessionUser): User {
     email: user.email,
     displayName: user.displayName,
     isAdmin: user.isAdmin,
+    hasSeenTour: user.hasSeenTour,
     createdAt: user.createdAt.toISOString(),
   };
 }
@@ -129,6 +131,26 @@ export function authRoutes(deps: Deps) {
   });
 
   app.get('/auth/me', requireAuth(deps), (c) => c.json({ user: toUser(c.get('user')) }));
+
+  /**
+   * Mark the first-visit guided tour seen — or reset it, from Settings'
+   * "show me around again".
+   *
+   * One flag per account, not per device: storing it here rather than localStorage
+   * means a member who signs in on a new phone is not re-toured.
+   */
+  app.put('/auth/me/tour', requireAuth(deps), async (c) => {
+    const user = c.get('user');
+    const body = await readJson(c, tourSeenRequestSchema);
+    const rows = await deps.db
+      .update(users)
+      .set({ hasSeenTour: body.seen, updatedAt: deps.now() })
+      .where(eq(users.id, user.id))
+      .returning();
+    const updated = rows[0];
+    if (updated === undefined) throw new Error('tour flag matched no user');
+    return c.json({ user: toUser(updated) });
+  });
 
   /**
    * Update the signed-in player's own profile.

@@ -141,6 +141,8 @@ export const users = pgTable(
     passwordHash: text('password_hash').notNull(),
     displayName: text('display_name').notNull(),
     isAdmin: boolean('is_admin').notNull().default(false),
+    /** Whether the signed-in player has finished the first-visit guided tour. */
+    hasSeenTour: boolean('has_seen_tour').notNull().default(false),
     createdAt: createdAt(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
   },

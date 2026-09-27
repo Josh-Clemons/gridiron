@@ -62,12 +62,20 @@ export const changePasswordRequestSchema = z.object({
   newPassword: passwordSchema,
 });
 
+/**
+ * Mark the first-visit guided tour seen, or reset it from Settings' "show me around
+ * again" so the tour returns on the next league visit.
+ */
+export const tourSeenRequestSchema = z.object({ seen: z.boolean() });
+
 /** The authenticated user. Deliberately no password hash, and no other user's email. */
 export const userSchema = z.object({
   id: idSchema,
   email: emailSchema,
   displayName: displayNameSchema,
   isAdmin: z.boolean(),
+  /** Whether the signed-in player has finished the first-visit guided tour. */
+  hasSeenTour: z.boolean(),
   createdAt: instantSchema,
 });
 

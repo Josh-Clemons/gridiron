@@ -307,6 +307,15 @@ export const updateProfile = (body: UpdateProfileRequest): Promise<User> =>
 export const changePassword = (body: ChangePasswordRequest): Promise<void> =>
   requestVoid('/auth/me/password', { method: 'POST', body });
 
+/**
+ * Mark the guided tour seen, or reset it from Settings' "show me around again" so it
+ * returns on the next league visit. Answers with the updated user.
+ */
+export const setTourSeen = (seen: boolean): Promise<User> =>
+  request('/auth/me/tour', { method: 'PUT', body: { seen }, schema: meResponseSchema }).then(
+    (data) => data.user,
+  );
+
 export const createLeague = (body: CreateLeagueRequest): Promise<League> =>
   request('/leagues', { method: 'POST', body, schema: leagueSchema });
 

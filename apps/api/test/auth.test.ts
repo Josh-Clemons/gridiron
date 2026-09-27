@@ -427,3 +427,39 @@ describe('unauthenticated access', () => {
     expect((await anonymous.post('/leagues', { name: 'Nope' })).status).toBe(401);
   });
 });
+
+describe('guided tour flag', () => {
+  it('marks the tour seen, reflects it in the session, and resets on request', async () => {
+    const client = await signUp(harness.app, 'tour@example.com');
+
+    // A fresh account has not seen the tour.
+    const before = await client.get<{ user: { hasSeenTour: boolean } }>('/auth/me');
+    expect(before.body.user.hasSeenTour).toBe(false);
+
+    const seen = await client.put<{ user: { hasSeenTour: boolean } }>('/auth/me/tour', {
+      seen: true,
+    });
+    expect(seen.status).toBe(200);
+    expect(seen.body.user.hasSeenTour).toBe(true);
+
+    const after = await client.get<{ user: { hasSeenTour: boolean } }>('/auth/me');
+    expect(after.body.user.hasSeenTour).toBe(true);
+
+    // "Show me around again" resets the same flag.
+    const reset = await client.put<{ user: { hasSeenTour: boolean } }>('/auth/me/tour', {
+      seen: false,
+    });
+    expect(reset.status).toBe(200);
+    expect(reset.body.user.hasSeenTour).toBe(false);
+  });
+
+  it('refuses a body without the flag, and a request without a session', async () => {
+    const client = await signUp(harness.app, 'tour2@example.com');
+
+    const invalid = await client.put('/auth/me/tour', {});
+    expect(invalid.status).toBe(400);
+
+    const anonymous = new ApiClient(harness.app);
+    expect((await anonymous.put('/auth/me/tour', { seen: true })).status).toBe(401);
+  });
+});

@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { changePassword, sessionQuery, updateProfile } from '../api/queries';
+import { changePassword, sessionQuery, setTourSeen, updateProfile } from '../api/queries';
 import { errorMessage, fieldErrors } from '../components/AuthLayout';
 import { useToast } from '../components/Toast';
 
@@ -26,6 +26,7 @@ export function SettingsPage({ user }: { user: User }) {
         <Typography variant="h2">Settings</Typography>
         <ProfileForm user={user} />
         <PasswordForm />
+        <TourForm />
       </Stack>
     </Container>
   );
@@ -102,6 +103,48 @@ function ProfileForm({ user }: { user: User }) {
             </Button>
           </Stack>
         </form>
+      </Stack>
+    </Paper>
+  );
+}
+
+/**
+ * "Show me around again": reset the tour flag, and the next league visit starts it.
+ *
+ * It does not launch the tour here because the tour's anchors - the league's tabs
+ * and the workbooks - are not on this page.
+ */
+function TourForm() {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  const reset = useMutation({
+    mutationFn: () => setTourSeen(false),
+    onSuccess: (updated) => {
+      queryClient.setQueryData(sessionQuery().queryKey, updated);
+      toast.show('The tour starts next time you open a league', 'success');
+    },
+  });
+
+  return (
+    <Paper elevation={0} variant="outlined" sx={{ p: { xs: 2.5, sm: 3 } }}>
+      <Stack spacing={2}>
+        <div>
+          <Typography variant="h3">Guided tour</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+            A quick walkthrough of the league pages - picks, standings, and the rest.
+          </Typography>
+        </div>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            reset.mutate();
+          }}
+          loading={reset.isPending}
+          fullWidth
+        >
+          Show me around again
+        </Button>
       </Stack>
     </Paper>
   );

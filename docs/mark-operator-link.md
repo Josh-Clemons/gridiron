@@ -1,9 +1,17 @@
 # Mark Swan operator link — design
 
-> Status: **design settled, not yet built.** The decisions below came out of a
-> deliberate design conversation (September 2026). No code until this document
-> has been reviewed. See the phased plan's open item
-> (`~/.claude/plans/rustling-floating-pike.md`) for the origin of this feature.
+> Status: **mostly built (September 2026).** The tutorial shipped, simplified from the
+> design below per the build conversation: one-liner steps, one tour with a
+> commissioner section, a server-side seen flag (`users.has_seen_tour`), a "show me
+> around again" item in Settings, and a reusable `GuidedTour` component
+> (`apps/web/src/components/GuidedTour.tsx`, content in `apps/web/src/lib/tour.ts`).
+>
+> The **authentication design changed outright: there is no magic link.** Mark is
+> the league's commissioner (`league_members.role = 'owner'`) with a normal app
+> account, and Josh holds a platform admin flag (`users.is_admin`, enforced by
+> `isCommissioner` in `apps/api/src/data/leagues.ts`) that grants owner powers in
+> any league he belongs to — never bypassing membership. The magic link + short
+> code below remains an option, not a plan.
 
 ## The problem
 
@@ -45,6 +53,11 @@ does not need to understand this beyond the tutorial's one-liner: _if the
 report says conflict, that's a member's own app pick — tell Josh._
 
 ## Authentication
+
+**Deferred — not built, and not missed yet.** Mark signs in with a normal app
+account (email + password). The magic link below was designed before the simpler
+commissioner-account + platform-admin arrangement was chosen; it is kept here for
+the record in case Mark ever asks for it.
 
 Mark clicks a link and enters a short code. That's the entire login
 experience.

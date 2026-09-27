@@ -108,7 +108,7 @@ export function CommissionerWorkbooks({ leagueId }: { readonly leagueId: number 
 
   return (
     <Stack spacing={2}>
-      <Card variant="outlined" sx={{ p: { xs: 1.5, sm: 2 } }}>
+      <Card id="tour-workbooks-upload" variant="outlined" sx={{ p: { xs: 1.5, sm: 2 } }}>
         <Typography variant="h3" mb={0.5}>
           Upload a workbook
         </Typography>
@@ -158,6 +158,7 @@ export function CommissionerWorkbooks({ leagueId }: { readonly leagueId: number 
 
       <Stack direction="row" justifyContent="flex-end">
         <Button
+          id="tour-workbooks-download"
           variant="outlined"
           startIcon={<DownloadIcon />}
           onClick={() => {
@@ -170,7 +171,7 @@ export function CommissionerWorkbooks({ leagueId }: { readonly leagueId: number 
         </Button>
       </Stack>
 
-      <Card variant="outlined" sx={{ p: { xs: 1.5, sm: 2 } }}>
+      <Card id="tour-workbooks-uploads" variant="outlined" sx={{ p: { xs: 1.5, sm: 2 } }}>
         <Typography variant="h3" mb={1.5}>
           Uploads ({workbooks.data.length})
         </Typography>
