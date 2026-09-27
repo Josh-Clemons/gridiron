@@ -183,6 +183,8 @@ describe('standings CSV', () => {
     const csv = await owner.getRaw(`/leagues/${String(leagueId)}/standings.csv`);
     expect(csv.status).toBe(200);
     expect(csv.contentType).toContain('text/csv');
+    // Per-league content with locked picks: never cacheable.
+    expect(csv.headers.get('cache-control')).toBe('no-store');
 
     const text = new TextDecoder().decode(csv.body);
     const [header, ownerRow, guestRow] = text.trimEnd().split('\r\n');

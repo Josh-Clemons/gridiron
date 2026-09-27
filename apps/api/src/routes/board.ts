@@ -171,6 +171,9 @@ export function boardRoutes(deps: Deps) {
         status: 200,
         headers: {
           'content-type': 'text/csv; charset=utf-8',
+          // The response is per-league and carries locked picks, so it must never be
+          // stored by a browser or a shared cache (Cloudflare caches `.csv` by default).
+          'cache-control': 'no-store',
           'content-disposition': `attachment; filename="standings-${String(season.year)}.csv"`,
         },
       },

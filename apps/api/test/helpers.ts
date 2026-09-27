@@ -135,7 +135,7 @@ export class ApiClient {
   /** A GET whose body is raw bytes, not JSON — the download route. */
   async getRaw(
     path: string,
-  ): Promise<{ status: number; body: Uint8Array; contentType: string | null }> {
+  ): Promise<{ status: number; body: Uint8Array; contentType: string | null; headers: Headers }> {
     const headers: Record<string, string> = {};
     if (this.cookies.size > 0) {
       headers['cookie'] = [...this.cookies].map(([name, value]) => `${name}=${value}`).join('; ');
@@ -143,7 +143,12 @@ export class ApiClient {
     const response = await this.app.request(`http://localhost${path}`, { method: 'GET', headers });
     this.absorbCookies(response);
     const body = new Uint8Array(await response.arrayBuffer());
-    return { status: response.status, body, contentType: response.headers.get('content-type') };
+    return {
+      status: response.status,
+      body,
+      contentType: response.headers.get('content-type'),
+      headers: response.headers,
+    };
   }
 
   private async sendForm<T>(method: string, path: string, form: FormData): Promise<ResponseOf<T>> {

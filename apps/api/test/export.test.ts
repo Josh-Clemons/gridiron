@@ -38,6 +38,8 @@ describe('workbook export', () => {
     expect(response.contentType).toBe(
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
+    // Owner-only content; never cacheable.
+    expect(response.headers.get('cache-control')).toBe('no-store');
 
     const book = XLSX.read(Buffer.from(response.body), { type: 'buffer' });
     expect(book.SheetNames).toEqual(['Scores & Ranking', 'Selection History']);

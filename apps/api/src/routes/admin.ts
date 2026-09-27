@@ -135,6 +135,8 @@ export function adminRoutes(deps: Deps) {
       status: 200,
       headers: {
         'content-type': 'application/octet-stream',
+        // Owner-only content; a shared cache must never hand it to anyone else.
+        'cache-control': 'no-store',
         'content-disposition': `attachment; filename="${safeName}"`,
       },
     });
@@ -151,6 +153,8 @@ export function adminRoutes(deps: Deps) {
       status: 200,
       headers: {
         'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        // Owner-only content; a shared cache must never hand it to anyone else.
+        'cache-control': 'no-store',
         'content-disposition': `attachment; filename="${safeName}"`,
       },
     });
