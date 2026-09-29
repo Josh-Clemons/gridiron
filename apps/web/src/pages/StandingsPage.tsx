@@ -107,7 +107,26 @@ export function StandingsPage() {
         </Stack>
       </Stack>
 
-      <Paper variant="outlined" sx={{ maxHeight: '70dvh', overflow: 'auto' }}>
+      {/*
+        The standings overflow on every screen — 72 rows under a sticky header —
+        but desktop overlay scrollbars auto-hide until the pointer enters, which
+        reads as a page cut short. Styling the scrollbar switches it to classic
+        mode, always rendered, so the rest of the league is discoverable.
+      */}
+      <Paper
+        variant="outlined"
+        sx={{
+          maxHeight: '70dvh',
+          overflow: 'auto',
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgba(0, 0, 0, 0.25) transparent',
+          '&::-webkit-scrollbar': { width: 8 },
+          '&::-webkit-scrollbar-thumb': {
+            bgcolor: 'rgba(0, 0, 0, 0.25)',
+            borderRadius: 1,
+          },
+        }}
+      >
         <StandingsTable rows={standings.data.rows} week={standings.data.week} />
       </Paper>
     </Stack>
